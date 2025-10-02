@@ -9,9 +9,9 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Pei En
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/pei3nn.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/johndoe)]
@@ -29,11 +29,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### coolprogrammer000
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/coolprogrammer000.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/coolprogrammer000/)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Data
@@ -48,12 +48,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Dong Jun
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/dongjunnn.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/dongjunnn)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Coding
