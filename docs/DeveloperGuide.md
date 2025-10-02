@@ -319,8 +319,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to edit a specific person's tags from the list of persons
-4.  AddressBook deletes the person
+3.  User requests to add a specific person's tags from the list of persons
+4.  AddressBook adds tags to the person
 
     Use case ends.
 
