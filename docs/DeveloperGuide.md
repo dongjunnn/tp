@@ -313,6 +313,52 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+**Use Case: Add a tag to a person**
+
+**MSS**
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person's tags from the list of persons
+4.  AddressBook deletes the person
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+* 3b. The given tag is invalid.
+  * 3a1. AddressBook shows an error message.
+      Use case resumes at step 2.
+
+**Use Case: Add a person**
+
+**MSS**
+
+1.  User requests to add a new person with their details.
+2.  AddressBook adds the person with their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The person's details are invalid.
+  * 1a1. AddressBook shows an error message.
+    Use case ends.
+
+* 1b. The person has a duplicate name with another contact.
+
+    * 1a1. AddressBook shows a warning message edits the newest person's name with a number behind.
+      Use case resumes at step 2.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
@@ -320,7 +366,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
 *{More to be added}*
 
 ### Glossary
