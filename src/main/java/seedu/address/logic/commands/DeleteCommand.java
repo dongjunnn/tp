@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,11 +32,26 @@ public class DeleteCommand extends Command {
 
     private final List<Index> targetIndexes;
 
+    /**
+     * Constructs a DeleteCommand that deletes the persons at the given indexes.
+     * A defensive copy of {@code targetIndexes} is made.
+     *
+     * @param targetIndexes the list of indexes (one-based) to delete
+     */
     public DeleteCommand(List<Index> targetIndexes) {
         requireNonNull(targetIndexes);
         this.targetIndexes = new ArrayList<>(targetIndexes);
     }
 
+    /**
+     * Executes the delete command: validates requested indexes, prepares the readable message
+     * in ascending/display order, then performs deletions in descending order so earlier
+     * deletions do not shift later indexes.
+     *
+     * @param model the model to operate on
+     * @return the command result containing the deleted person names
+     * @throws CommandException if any requested index is invalid
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

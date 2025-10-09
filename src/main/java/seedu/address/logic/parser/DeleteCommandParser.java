@@ -33,7 +33,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             try {
                 indexes.add(ParserUtil.parseIndex(token));
             } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                                            DeleteCommand.MESSAGE_USAGE), pe);
             }
         }
 
