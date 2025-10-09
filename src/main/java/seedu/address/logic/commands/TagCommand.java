@@ -30,8 +30,8 @@ public class TagCommand extends Command{
             + "[" + PREFIX_TAG + "TAG ]..."
             + "Example: " + COMMAND_WORD + " "
             + "1 2 3"
-            + PREFIX_TAG + "Website Redesign "
-            + PREFIX_TAG + "High Priority";
+            + PREFIX_TAG + "websiteRedesign "
+            + PREFIX_TAG + "highPriority";
 
     public static final String MESSAGE_SUCCESS = "Tagged %s to %d person(s)";
 
