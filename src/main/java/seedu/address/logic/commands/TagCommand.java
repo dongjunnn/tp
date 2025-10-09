@@ -17,8 +17,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tags the people identified using their displayed index from the address
- * book with the given tags.
+ * Tags the people identified using their displayed index from the
+ * address book with the given tags.
  */
 public class TagCommand extends Command {
     public static final String COMMAND_WORD = "tag";
