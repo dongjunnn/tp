@@ -262,28 +262,43 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Manages a large number of contacts and collaborators.
+* Prefers desktop apps and keyboard-driven interactions over mouse use.
+* Fast typist and comfortable with CLI or command-based apps.
+* Needs quick access to contact info and project associations.
+* Values efficiency, organization, and minimal disruption to creative flow.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Targeted at tech content creators who manage their projects and clients independently. 
+It will allow them to manage their projects and clients easily within the app by 
+providing quick access to contact details and their information.
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
+| Priority | As a …​ | I want to …​                                    | So that I can…​                                                                                 |
+| -------- |---------|-------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| `* * *`  | content creator | quickly add new contacts                       | save project and collaborators' details without interrupting my creative flow                   |
+| `* * *`  | content creator | search my contacts by name, platform or role | immediately find collaborators when planning a project or sending an email                      |
+| `* * *`  | content creator | associate contacts with specific projects or videos | see who is involved in which project at a glance                                               |
+| `* * *`  | content creator | delete outdated or duplicate contacts         | keep my contact list clean and relevant                                                        |
+| `* * *`  | content creator | group contacts into categories like sponsors or editors | organise my network logically and avoid mixing up roles                                       |
+| `* * *`  | content creator | assign the same contact to multiple projects | avoid re-entering the same person multiple times                                               |
+| `* * *`  | content creator | store all of a collaborator’s info in one profile | access email, Discord, socials, phone, etc., without switching apps                            |
+| `* * *`  | creator managing multiple projects and roles | tag contacts (sponsor, editor, collab, Project Alpha) | quickly find everyone related to a role or project                                            |
+| `* * *`  | content creator | update a contact’s details                     | keep information accurate                                                                       |
+| `* *`    | creator managing sponsors and collaborators | add notes to each contact and see them in a timeline | recall past interactions easily and follow up efficiently                                      |
+| `* *`    | content creator | export contact details as CSV                  | back up my data                                                                                 |
+| `* *`    | content creator working with many collaborators | quickly get a list of all their emails      | easily disseminate information                                                                 |
+| `* * *`  | content creator | bookmark certain contacts as high priority    | not miss notifications from collaborators like sponsors or recurring editors                   |
+| `* * *`  | busy content creator | add an event to an unscheduled list/group | schedule them when I have free time                                                           |
+| `* * *`  | content creator | rank my tasks                                  | ensure tasks with higher priority appear higher on the list                                     |
+| `* * *`  | content creator | get reminders of upcoming tasks               | stay aware of what I need to do when I enter the app                                           |
+| `* * *`  | content creator | upload a profile picture for collaborators    | visually recognize them                                                                        |
+| `* * *`  | content creator | sort my tasks into weeks                       | see my todos for this week and the upcoming week easily                                        |
+| `* * *`  | content creator | get warnings when scheduling conflicting events | avoid double-booking or overlapping tasks                                                     |
+| `* * *`  | content creator | view my events in a calendar format            | easily see my schedule                                                                         |
 *{More to be added}*
 
 ### Use cases
@@ -368,6 +383,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  Should be able to respond to user input within 1 second.
 5.  A user should be able to make use of every feature in the AddressBook within the CLI.
+6.  IndiDex should maintain data persistence so that user data remains consistent and recoverable across restarts.
+7.  IndiDex should provide clear feedback messages for all invalid commands or inputs, without crashing.
+8.  Input commands' results and help messages should follow structurally consistent text formatting across all commands.
+
+*{More to be added}*
 
 ### Glossary
 
