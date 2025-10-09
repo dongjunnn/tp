@@ -1,0 +1,49 @@
+package seedu.address.logic.parser;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+/**
+ * Parses input arguments and creates a new TagCommand object
+ */
+public class TagCommandParser implements Parser<TagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns a TagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public TagCommand parse(String userInput) throws ParseException {
+        ArgumentMultimap argumentMultimap =
+                ArgumentTokenizer.tokenize(userInput, PREFIX_TAG);
+
+        String preamble = argumentMultimap.getPreamble();
+        if (preamble.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+
+        List<String> indexStrings = Arrays.asList(preamble.trim().split("\\s+"));
+        List<Index> indexes = new ArrayList<>();
+        for (String s : indexStrings) {
+            indexes.add(ParserUtil.parseIndex(s));
+        }
+
+        Set<Tag> tags = ParserUtil.parseTags(argumentMultimap.getAllValues(CliSyntax.PREFIX_TAG));
+        if (tags.isEmpty()) {
+            throw new ParseException("At least one tag must be provided.\n" + TagCommand.MESSAGE_USAGE);
+        }
+
+        return new TagCommand(indexes, tags);
+    }
+}
