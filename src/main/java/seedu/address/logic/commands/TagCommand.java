@@ -1,5 +1,13 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -8,19 +16,11 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
 /**
  * Tags the people identified using their displayed index from the address
  * book with the given tags.
  */
-public class TagCommand extends Command{
+public class TagCommand extends Command {
     public static final String COMMAND_WORD = "tag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -38,6 +38,9 @@ public class TagCommand extends Command{
     private final List<Index> targetIndexes;
     private final Set<Tag> tagsToAdd;
 
+    /**
+     * Creates a TagCommand to add the specified Tags to the specified Persons.
+     */
     public TagCommand(List<Index> targetIndexes, Set<Tag> tagsToAdd) {
         requireNonNull(targetIndexes);
         this.targetIndexes = targetIndexes;
@@ -51,7 +54,7 @@ public class TagCommand extends Command{
         List<Person> lastShownList = model.getFilteredPersonList();
 
         for (Index index : targetIndexes) {
-            if(index.getZeroBased()>= lastShownList.size()) {
+            if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
