@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX [INDEX]... (each must be a positive integer). You may also provide ranges like 3-5.\n"
             + "Example: " + COMMAND_WORD + " 1 3 5";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
 
     private final List<Index> targetIndexes;
 
@@ -60,22 +61,27 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        // Map to Person objects
-        List<Person> personsToDelete = zeroBasedSet.stream()
-                .map(lastShownList::get)
-                .collect(Collectors.toList());
+        // Create a sorted list of zero-based indexes in ascending display order (for readable output)
+        List<Integer> indexesAsc = new ArrayList<>(zeroBasedSet);
+        Collections.sort(indexesAsc); // ascending order by displayed index
 
-        // Delete in descending order of their positions in the displayed list so index-shifts don't break us
-        personsToDelete.sort(Comparator.comparingInt(lastShownList::indexOf).reversed());
-
-        List<String> deletedNames = new ArrayList<>();
-        for (Person p : personsToDelete) {
-            model.deletePerson(p);
-            deletedNames.add(Messages.format(p));
+        List<String> deletedNamesForMessage = new ArrayList<>();
+        for (Integer i : indexesAsc) {
+            deletedNamesForMessage.add(Messages.format(lastShownList.get(i)));
         }
 
-        String resultMessage = String.join(", ", deletedNames);
+        // Delete by descending index so earlier deletions don't shift later indexes
+        List<Integer> indexesDesc = new ArrayList<>(indexesAsc);
+        Collections.reverse(indexesDesc); // now descending
+        for (Integer idx : indexesDesc) {
+            Person p = lastShownList.get(idx);
+            model.deletePerson(p);
+        }
+
+        // Build final message showing names in ascending/display order
+        String resultMessage = String.join(",\n", deletedNamesForMessage);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, resultMessage));
+
     }
 
     @Override
