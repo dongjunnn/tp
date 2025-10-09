@@ -34,13 +34,26 @@ public class DeleteCommand extends Command {
 
     /**
      * Constructs a DeleteCommand that deletes the persons at the given indexes.
-     * A defensive copy of {@code targetIndexes} is made.
+     * The provided list is normalized (deduplicated and sorted ascending by zero-based index)
+     * and a defensive copy is stored.
      *
      * @param targetIndexes the list of indexes (one-based) to delete
      */
     public DeleteCommand(List<Index> targetIndexes) {
         requireNonNull(targetIndexes);
-        this.targetIndexes = new ArrayList<>(targetIndexes);
+
+        // Normalize: dedupe by zero-based index, sort ascending, and store as Index objects
+        Set<Integer> zeroBasedSet = new HashSet<>();
+        for (Index idx : targetIndexes) {
+            zeroBasedSet.add(idx.getZeroBased());
+        }
+
+        List<Index> normalized = zeroBasedSet.stream()
+                .sorted() // ascending zero-based order
+                .map(Index::fromZeroBased)
+                .collect(Collectors.toList());
+
+        this.targetIndexes = new ArrayList<>(normalized); // defensive copy
     }
 
     /**
@@ -107,12 +120,13 @@ public class DeleteCommand extends Command {
             return false;
         }
         DeleteCommand otherCommand = (DeleteCommand) other;
-        return new HashSet<>(this.targetIndexes).equals(new HashSet<>(otherCommand.targetIndexes));
+        // Since we normalize in constructor, list equality is deterministic and sufficient
+        return this.targetIndexes.equals(otherCommand.targetIndexes);
     }
 
     @Override
     public int hashCode() {
-        return new HashSet<>(targetIndexes).hashCode();
+        return targetIndexes.hashCode();
     }
 
     @Override
