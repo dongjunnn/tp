@@ -108,8 +108,6 @@ public class Person {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && discordHandle.equals(otherPerson.discordHandle)
-                && linkedInProfile.equals(otherPerson.linkedInProfile)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags);
     }
@@ -127,8 +125,6 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("discord", discordHandle)
-                .add("linkedIn", linkedInProfile)
                 .add("address", address)
                 .add("tags", tags)
                 .toString();
