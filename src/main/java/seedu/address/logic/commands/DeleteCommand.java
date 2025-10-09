@@ -2,7 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -19,16 +24,17 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the persons identified by the index numbers used in the displayed person list.\n"
+            + "Parameters: INDEX [INDEX]... (each must be a positive integer). You may also provide ranges like 3-5.\n"
+            + "Example: " + COMMAND_WORD + " 1 3 5";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
 
-    private final Index targetIndex;
+    private final List<Index> targetIndexes;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(List<Index> targetIndexes) {
+        requireNonNull(targetIndexes);
+        this.targetIndexes = new ArrayList<>(targetIndexes);
     }
 
     @Override
@@ -36,13 +42,40 @@ public class DeleteCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndexes.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        // Convert to zero-based ints and deduplicate
+        Set<Integer> zeroBasedSet = new HashSet<>();
+        for (Index idx : targetIndexes) {
+            zeroBasedSet.add(idx.getZeroBased());
+        }
+
+        // Validate all indexes BEFORE deleting to avoid partial state changes
+        List<Integer> invalid = zeroBasedSet.stream()
+                .filter(i -> i < 0 || i >= lastShownList.size())
+                .collect(Collectors.toList());
+        if (!invalid.isEmpty()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        // Map to Person objects
+        List<Person> personsToDelete = zeroBasedSet.stream()
+                .map(lastShownList::get)
+                .collect(Collectors.toList());
+
+        // Delete in descending order of their positions in the displayed list so index-shifts don't break us
+        personsToDelete.sort(Comparator.comparingInt(lastShownList::indexOf).reversed());
+
+        List<String> deletedNames = new ArrayList<>();
+        for (Person p : personsToDelete) {
+            model.deletePerson(p);
+            deletedNames.add(Messages.format(p));
+        }
+
+        String resultMessage = String.join(", ", deletedNames);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, resultMessage));
     }
 
     @Override
@@ -50,20 +83,22 @@ public class DeleteCommand extends Command {
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof DeleteCommand)) {
             return false;
         }
+        DeleteCommand otherCommand = (DeleteCommand) other;
+        return new HashSet<>(this.targetIndexes).equals(new HashSet<>(otherCommand.targetIndexes));
+    }
 
-        DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+    @Override
+    public int hashCode() {
+        return new HashSet<>(targetIndexes).hashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("targetIndexes", targetIndexes)
                 .toString();
     }
 }
