@@ -17,14 +17,21 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names or phone numbers "
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD
+            + ": Finds all persons whose names, phone numbers or emails "
             + "contain any of the specified keywords (case-insensitive) and "
             + "displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Note: To search emails, include '@' in your search term.\n"
+            + "Examples:\n"
             + "Examples:\n"
             + COMMAND_WORD + " John\n"
             + COMMAND_WORD + " 87884397\n"
-            + COMMAND_WORD + " John 87884397";
+            + COMMAND_WORD + " john@\n"
+            + COMMAND_WORD + " @gmail.com\n"
+            + COMMAND_WORD + " john@gmail.com\n"
+            + COMMAND_WORD + " John 87884397 @gmail.com";
 
     private final Predicate<Person> predicate;
 
