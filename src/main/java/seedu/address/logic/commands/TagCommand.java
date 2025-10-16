@@ -68,6 +68,8 @@ public class TagCommand extends Command {
                     personToTag.getName(),
                     personToTag.getPhone(),
                     personToTag.getEmail(),
+                    personToTag.getDiscordHandle(),
+                    personToTag.getLinkedInProfile(),
                     personToTag.getAddress(),
                     updatedTags
             );

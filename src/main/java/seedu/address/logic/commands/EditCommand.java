@@ -98,10 +98,20 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        String updatedDiscordHandle = editPersonDescriptor.getDiscordHandle().orElse(personToEdit.getDiscordHandle());
+        String updatedLinkedInProfile = editPersonDescriptor.getLinkedInProfile()
+                .orElse(personToEdit.getLinkedInProfile());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(
+                updatedName,
+                updatedPhone,
+                updatedEmail,
+                updatedDiscordHandle,
+                updatedLinkedInProfile,
+                updatedAddress,
+                updatedTags);
     }
 
     @Override
@@ -136,6 +146,8 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
+        private String discordHandle;
+        private String linkedInProfile;
         private Address address;
         private Set<Tag> tags;
 
@@ -149,6 +161,8 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
+            setDiscordHandle(toCopy.discordHandle);
+            setLinkedInProfile(toCopy.linkedInProfile);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
         }
@@ -157,7 +171,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, discordHandle, linkedInProfile, address, tags);
         }
 
         public void setName(Name name) {
@@ -182,6 +196,22 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
+        }
+
+        public void setDiscordHandle(String discordHandle) {
+            this.discordHandle = discordHandle;
+        }
+
+        public Optional<String> getDiscordHandle() {
+            return Optional.ofNullable(discordHandle);
+        }
+
+        public void setLinkedInProfile(String linkedInProfile) {
+            this.linkedInProfile = linkedInProfile;
+        }
+
+        public Optional<String> getLinkedInProfile() {
+            return Optional.ofNullable(linkedInProfile);
         }
 
         public void setAddress(Address address) {
@@ -224,6 +254,8 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
+                    && Objects.equals(discordHandle, otherEditPersonDescriptor.discordHandle)
+                    && Objects.equals(linkedInProfile, otherEditPersonDescriptor.linkedInProfile)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
@@ -234,6 +266,8 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
+                    .add("discordHandle", discordHandle)
+                    .add("linkedInProfile", linkedInProfile)
                     .add("address", address)
                     .add("tags", tags)
                     .toString();
