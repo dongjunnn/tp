@@ -106,13 +106,14 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        final Priority modelPriority;
         if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
-        }
-        if (!Priority.isValidPriority(priority)) {
+            modelPriority = new Priority("0");
+        } else if (!Priority.isValidPriority(priority)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+        } else {
+            modelPriority = new Priority(priority);
         }
-        final Priority modelPriority = new Priority(priority);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelPriority, modelTags);
