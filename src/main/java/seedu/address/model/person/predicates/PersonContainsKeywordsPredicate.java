@@ -1,9 +1,10 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicates;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.Person;
 
 /**
  * Tests that a {@code Person}'s name or phone contains any of the keywords given.
@@ -11,6 +12,7 @@ import seedu.address.commons.util.ToStringBuilder;
 public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     private final NameContainsKeywordsPredicate namePredicate;
     private final PhoneContainsKeywordsPredicate phonePredicate;
+    private final EmailContainsKeywordsPredicate emailPredicate;
 
     /**
      * Constructs a {@code PersonContainsKeywordsPredicate}.
@@ -20,12 +22,15 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.namePredicate = new NameContainsKeywordsPredicate(keywords);
         this.phonePredicate = new PhoneContainsKeywordsPredicate(keywords);
+        this.emailPredicate = new EmailContainsKeywordsPredicate(keywords);
     }
 
     @Override
     public boolean test(Person person) {
         // Returns true if EITHER name OR phone matches
-        return namePredicate.test(person) || phonePredicate.test(person);
+        return namePredicate.test(person)
+                || phonePredicate.test(person)
+                || emailPredicate.test(person);
     }
 
     @Override
@@ -40,7 +45,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         PersonContainsKeywordsPredicate otherPredicate = (PersonContainsKeywordsPredicate) other;
         return namePredicate.equals(otherPredicate.namePredicate)
-                && phonePredicate.equals(otherPredicate.phonePredicate);
+                && phonePredicate.equals(otherPredicate.phonePredicate)
+                && emailPredicate.equals(otherPredicate.emailPredicate);
     }
 
     @Override
@@ -48,6 +54,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         return new ToStringBuilder(this)
                 .add("namePredicate", namePredicate)
                 .add("phonePredicate", phonePredicate)
+                .add("emailPredicate", emailPredicate)
                 .toString();
     }
 

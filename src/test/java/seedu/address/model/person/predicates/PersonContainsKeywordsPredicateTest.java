@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicates;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -43,6 +43,53 @@ public class PersonContainsKeywordsPredicateTest {
 
         // different keywords -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_emailContainsKeywords_returnsTrue() {
+        // Keyword matching local part with @
+        PersonContainsKeywordsPredicate predicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("alice@"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@example.com").build()));
+
+        // Keyword matching domain with @
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@example.com").build()));
+
+        // Keyword matching full email
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("alice@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@example.com").build()));
+    }
+
+    @Test
+    public void test_emailDoesNotMatchWithoutAtSymbol_returnsFalse() {
+        // Keyword without @ should not match email
+        PersonContainsKeywordsPredicate predicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("alice"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Bob").withEmail("alice@example.com").build()));
+
+        // Domain without @ should not match
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("example.com"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Bob").withEmail("alice@example.com").build()));
+    }
+
+    @Test
+    public void test_namePhoneOrEmailContainsKeywords_returnsTrue() {
+        // Mix of name, phone, and email keywords
+        PersonContainsKeywordsPredicate predicate =
+                new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "94351253", "@gmail.com"));
+
+        // Matches name
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withPhone("12345678")
+                .withEmail("bob@yahoo.com").build()));
+
+        // Matches phone
+        assertTrue(predicate.test(new PersonBuilder().withName("Carol").withPhone("94351253")
+                .withEmail("carol@yahoo.com").build()));
+
+        // Matches email
+        assertTrue(predicate.test(new PersonBuilder().withName("David").withPhone("87654321")
+                .withEmail("david@gmail.com").build()));
     }
 
     @Test
@@ -106,12 +153,13 @@ public class PersonContainsKeywordsPredicateTest {
 
     @Test
     public void toStringMethod() {
-        List<String> keywords = List.of("Alice", "94351253");
+        List<String> keywords = List.of("Alice", "94351253", "@gmail.com");
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(keywords);
 
         String expected = PersonContainsKeywordsPredicate.class.getCanonicalName()
                 + "{namePredicate=" + new NameContainsKeywordsPredicate(keywords)
-                + ", phonePredicate=" + new PhoneContainsKeywordsPredicate(keywords) + "}";
+                + ", phonePredicate=" + new PhoneContainsKeywordsPredicate(keywords)
+                + ", emailPredicate=" + new EmailContainsKeywordsPredicate(keywords) + "}";
         assertEquals(expected, predicate.toString());
     }
 }
