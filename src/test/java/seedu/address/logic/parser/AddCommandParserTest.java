@@ -135,7 +135,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags, no discord handle, no linkedin profile
-        Person expectedPerson = new PersonBuilder(AMY).withPriority().withTags().withDiscordHandle("").withLinkedInProfile("").build();
+        Person expectedPerson = new PersonBuilder(AMY).withTags().withDiscordHandle("").withLinkedInProfile("").build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
                 new AddCommand(expectedPerson));
     }

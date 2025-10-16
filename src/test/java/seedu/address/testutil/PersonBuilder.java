@@ -106,6 +106,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withPriority(String priority) {
         this.priority = new Priority(priority);
+        return this;
     }
   
     /**

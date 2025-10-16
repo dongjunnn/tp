@@ -12,6 +12,12 @@ public class Priority {
 
     public final String value;
 
+    public static final Priority DEFAULT = new Priority("0");
+
+    public static Priority defaultPriority() {
+        return DEFAULT;
+    }
+
     /**
      * Constructs a {@code Priority}.
      *
