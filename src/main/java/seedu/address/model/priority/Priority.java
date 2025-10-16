@@ -54,7 +54,7 @@ public class Priority {
         }
 
         seedu.address.model.priority.Priority otherPriority = (seedu.address.model.priority.Priority) other;
-        return this.value == otherPriority.value;
+        return this.value.equals(otherPriority.value);
     }
 
     @Override
