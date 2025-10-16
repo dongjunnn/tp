@@ -149,7 +149,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidPriority_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,VALID_DISCORD,
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
                         VALID_LINKEDIN, VALID_ADDRESS, INVALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Priority.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
