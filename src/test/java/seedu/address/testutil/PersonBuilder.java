@@ -108,7 +108,7 @@ public class PersonBuilder {
         this.priority = new Priority(priority);
         return this;
     }
-  
+
     /**
      * Sets the {@code DiscordHandle} of the {@code Person} that we are building.
      */
