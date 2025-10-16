@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -25,6 +26,8 @@ public class Person {
     private final String discordHandle;
     private final String linkedInProfile;
 
+    private final Priority priority;
+
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
@@ -33,11 +36,12 @@ public class Person {
      * Every field must be present and not null.
      */
     // TODO v1.3: Edit constructor that allows setting discordHandle and linkedInProfile on creation
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Priority priority, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.priority = priority;
         this.discordHandle = null;
         this.linkedInProfile = null;
         this.address = address;
@@ -54,6 +58,10 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public String getDiscordHandle() {
@@ -109,6 +117,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && priority.equals(otherPerson.priority)
                 && tags.equals(otherPerson.tags);
     }
 
@@ -126,6 +135,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("priority", priority)
                 .add("tags", tags)
                 .toString();
     }

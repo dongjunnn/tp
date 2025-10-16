@@ -14,7 +14,7 @@ class JsonAdaptedTag {
     private final String tagName;
 
     /**
-     * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
+     * Constructs a {@code JsonAdaptedTag} with the given {@code value}.
      */
     @JsonCreator
     public JsonAdaptedTag(String tagName) {

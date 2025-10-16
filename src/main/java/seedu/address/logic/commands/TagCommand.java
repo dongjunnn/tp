@@ -69,6 +69,7 @@ public class TagCommand extends Command {
                     personToTag.getPhone(),
                     personToTag.getEmail(),
                     personToTag.getAddress(),
+                    personToTag.getPriority(),
                     updatedTags
             );
 
