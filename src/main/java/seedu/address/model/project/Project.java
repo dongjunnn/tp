@@ -1,10 +1,11 @@
 package seedu.address.model.project;
 
-import seedu.address.model.person.Person;
-
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
+
+import seedu.address.model.person.Person;
+
 
 //todo: change each field to a class
 //v1.3: we deal with members next week
@@ -14,6 +15,14 @@ public class Project {
     private LocalDate deadline;
     private Set<Person> members;
 
+    /**
+     * Constructs a {@code Project}.
+     *
+     * @param name     project name
+     * @param priority project priority
+     * @param deadline project deadline
+     * @param members  project members
+     */
     public Project(String name, Priority priority, LocalDate deadline, Set<Person> members) {
         this.name = name;
         this.priority = priority;
@@ -21,17 +30,25 @@ public class Project {
         this.members = members;
     }
 
+    /** Returns the project name. */
     public String getName() {
         return name;
     }
 
+    /** Returns the project name. */
     public Priority getPriority() {
         return priority;
     }
 
+    /** Returns the project deadline. */
     public LocalDate getDeadline() {
         return deadline;
     }
+
+    /**
+     * Returns true if both projects have the same identity (name).
+     * This defines a weaker notion of equality between two projects.
+     */
 
     public boolean isSameProject(Project otherProject) {
         if (otherProject == this) {
@@ -42,6 +59,7 @@ public class Project {
                 && otherProject.getName().equals(getName());
     }
 
+    /** Returns true if all fields are equal. */
     @Override
     public boolean equals(Object other) {
         if (other == this) {

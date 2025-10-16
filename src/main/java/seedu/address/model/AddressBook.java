@@ -99,7 +99,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// project-level operations
-
+    /**
+     * Returns true if a project with the same identity as {@code project} exists in the address book.
+     *
+     * @param project the project to check for existence
+     * @return true if a project with the same identity exists
+     */
     public boolean hasProject(Project project) {
         requireNonNull(project);
         return projects.contains(project);
@@ -135,7 +140,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Project> getProjectList() {return projects.asUnmodifiableObservableList(); }
+    public ObservableList<Project> getProjectList() { return projects.asUnmodifiableObservableList(); }
 
     @Override
     public boolean equals(Object other) {

@@ -128,7 +128,7 @@ public class ModelManager implements Model {
     @Override
     public void addProject(Project project) {
         addressBook.addProject(project);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
     }
 
     @Override

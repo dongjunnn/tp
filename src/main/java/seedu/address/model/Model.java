@@ -15,6 +15,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -106,7 +109,8 @@ public interface Model {
     /**
      * Replaces the given person {@code target} with {@code editedProject}.
      * {@code target} must exist in the address book.
-     * The project identity of {@code editedProject} must not be the same as another existing project in the address book.
+     * The project identity of {@code editedProject} must not be the same as another
+     * existing project in the address book.
      */
     void setProject(Project target, Project editedProject);
 

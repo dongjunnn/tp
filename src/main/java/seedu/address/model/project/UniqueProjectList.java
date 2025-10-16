@@ -11,9 +11,14 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-public class UniqueProjectList implements Iterable<Project>{
+/**
+ * A list of projects that enforces uniqueness by {@code Project#isSameProject(Project)}.
+ * Supports minimal list operations and provides an unmodifiable observable view of the list.
+ */
+public class UniqueProjectList implements Iterable<Project> {
     private final ObservableList<Project> internalList = FXCollections.observableArrayList();
-    private final ObservableList<Project> internalUnmodifiableList = FXCollections.unmodifiableObservableList(internalList);
+    private final ObservableList<Project> internalUnmodifiableList =
+            FXCollections.unmodifiableObservableList(internalList);
 
     /**
      * Returns true if the list contains an equivalent project as the given argument.
