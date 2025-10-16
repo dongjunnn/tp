@@ -27,11 +27,15 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withDiscordHandle("alice#1234")
+            .withLinkedInProfile("linkedin.com/in/alice")
             .withPhone("94351253").withPriority("100")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withPriority("100")
+            .withDiscordHandle("benson#1234")
+            .withLinkedInProfile("linkedin.com/in/benson")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withPriority("100").build();

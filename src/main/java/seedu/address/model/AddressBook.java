@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.project.Project;
+import seedu.address.model.project.UniqueProjectList;
 
 /**
  * Wraps all data at the address-book level
@@ -16,6 +18,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueProjectList projects;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        projects = new UniqueProjectList();
     }
 
     public AddressBook() {}
@@ -94,18 +98,50 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    //// project-level operations
+    /**
+     * Returns true if a project with the same identity as {@code project} exists in the address book.
+     *
+     * @param project the project to check for existence
+     * @return true if a project with the same identity exists
+     */
+    public boolean hasProject(Project project) {
+        requireNonNull(project);
+        return projects.contains(project);
+    }
+
+    public void addProject(Project pr) {
+        projects.add(pr);
+    }
+
+    public void removeProject(Project pr) {
+        projects.remove(pr);
+    }
+
+    public void setProject(Project target, Project editedProject) {
+        requireNonNull(editedProject);
+
+        projects.setProject(target, editedProject);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("persons", persons)
+                .add("projects", projects)
                 .toString();
     }
 
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Project> getProjectList() {
+        return projects.asUnmodifiableObservableList();
     }
 
     @Override

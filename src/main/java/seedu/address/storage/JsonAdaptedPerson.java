@@ -28,6 +28,8 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
+    private final String discordHandle;
+    private final String linkedInProfile;
     private final String address;
     private final String priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -36,12 +38,20 @@ class JsonAdaptedPerson {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("priority") String priority, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("discordHandle") String discordHandle,
+            @JsonProperty("linkedInProfile") String linkedInProfile,
+            @JsonProperty("address") String address,
+            @JsonProperty("priority") String priority,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.discordHandle = discordHandle != null ? discordHandle : "";
+        this.linkedInProfile = linkedInProfile != null ? linkedInProfile : "";
         this.address = address;
         this.priority = priority;
         if (tags != null) {
@@ -56,6 +66,8 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        discordHandle = source.getDiscordHandle();
+        linkedInProfile = source.getLinkedInProfile();
         address = source.getAddress().value;
         priority = source.getPriority().value;
         tags.addAll(source.getTags().stream()
@@ -97,7 +109,6 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
-
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -116,7 +127,7 @@ class JsonAdaptedPerson {
         final Priority modelPriority = new Priority(priority);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelPriority, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, discordHandle, linkedInProfile, modelAddress, modelPriority, modelTags);
     }
 
 }

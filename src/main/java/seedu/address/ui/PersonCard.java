@@ -39,6 +39,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label discordHandle;
+    @FXML
+    private Label linkedInProfile;
+    @FXML
     private Label priority;
     @FXML
     private FlowPane tags;
@@ -55,6 +59,25 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         priority.setText("Priority: " + person.getPriority().value);
         email.setText(person.getEmail().value);
+
+        if (person.getDiscordHandle() != null && !person.getDiscordHandle().isEmpty()) {
+            discordHandle.setText("Discord: " + person.getDiscordHandle());
+            discordHandle.setVisible(true);
+            discordHandle.setManaged(true);
+        } else {
+            discordHandle.setVisible(false);
+            discordHandle.setManaged(false);
+        }
+
+        if (person.getLinkedInProfile() != null && !person.getLinkedInProfile().isEmpty()) {
+            linkedInProfile.setText("LinkedIn: " + person.getLinkedInProfile());
+            linkedInProfile.setVisible(true);
+            linkedInProfile.setManaged(true);
+        } else {
+            linkedInProfile.setVisible(false);
+            linkedInProfile.setManaged(false);
+        }
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

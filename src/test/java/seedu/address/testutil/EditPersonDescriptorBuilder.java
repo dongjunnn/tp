@@ -36,6 +36,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
+        descriptor.setDiscordHandle(person.getDiscordHandle());
+        descriptor.setLinkedInProfile(person.getLinkedInProfile());
         descriptor.setAddress(person.getAddress());
         descriptor.setPriority(person.getPriority());
         descriptor.setTags(person.getTags());
@@ -62,6 +64,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code DiscordHandle} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDiscordHandle(String discordHandle) {
+        descriptor.setDiscordHandle(discordHandle);
+        return this;
+    }
+
+    /**
+     * Sets the {@code LinkedInProfile} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withLinkedInProfile(String linkedInProfile) {
+        descriptor.setLinkedInProfile(linkedInProfile);
         return this;
     }
 
