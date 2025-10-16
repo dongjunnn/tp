@@ -60,12 +60,12 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_DISCORD).isPresent()) {
-            String discordHandle = argMultimap.getValue(PREFIX_DISCORD).get().trim();
-            editPersonDescriptor.setDiscordHandle(discordHandle);
+            editPersonDescriptor.setDiscordHandle(
+                    ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get()));
         }
         if (argMultimap.getValue(PREFIX_LINKEDIN).isPresent()) {
-            String linkedInProfile = argMultimap.getValue(PREFIX_LINKEDIN).get().trim();
-            editPersonDescriptor.setLinkedInProfile(linkedInProfile);
+            editPersonDescriptor.setLinkedInProfile(
+                    ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));

@@ -45,8 +45,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        String discordHandle = argMultimap.getValue(PREFIX_DISCORD).orElse("").trim();
-        String linkedInProfile = argMultimap.getValue(PREFIX_LINKEDIN).orElse("").trim();
+        String discordHandle = ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).orElse(""));
+        String linkedInProfile = ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).orElse(""));
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
