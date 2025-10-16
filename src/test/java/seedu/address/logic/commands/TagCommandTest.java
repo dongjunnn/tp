@@ -42,8 +42,8 @@ public class TagCommandTest {
                 personToTag.getName(),
                 personToTag.getPhone(),
                 personToTag.getEmail(),
-                NULL,
-                NULL,
+                null,
+                null,
                 personToTag.getAddress(),
                 union(personToTag.getTags(), tagsToAdd)
         );
@@ -74,8 +74,8 @@ public class TagCommandTest {
                     personInExpectedModel.getName(),
                     personInExpectedModel.getPhone(),
                     personInExpectedModel.getEmail(),
-                    NULL,
-                    NULL,
+                    null,
+                    null,
                     personInExpectedModel.getAddress(),
                     union(personInExpectedModel.getTags(), tagsToAdd)
             );
@@ -111,8 +111,8 @@ public class TagCommandTest {
                 personToTag.getName(),
                 personToTag.getPhone(),
                 personToTag.getEmail(),
-                NULL,
-                NULL,
+                null,
+                null,
                 personToTag.getAddress(),
                 union(personToTag.getTags(), tagsToAdd)
         );
