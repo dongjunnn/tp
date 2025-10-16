@@ -32,7 +32,6 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    // TODO v1.3: Edit constructor that allows setting discordHandle and linkedInProfile on creation
     public Person(Name name, Phone phone, Email email, String discordHandle,
                   String linkedInProfile, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -123,7 +122,6 @@ public class Person {
 
     @Override
     public String toString() {
-        // TODO v1.3: Consider formatting socials differently for UI display
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("phone", phone)
@@ -134,10 +132,4 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
-    // TODO v1.3: Add validation for Discord and LinkedIn inputs
-    // e.g., Discord must start with '@', LinkedIn should be a valid profile URL
-    // TODO v1.3: Update AddCommand and EditCommand to accept Discord and LinkedIn parameters
-    // TODO v1.3: Update storage (JsonAdaptedPerson) to save and load the new fields
-    // TODO v1.3: Update PersonCard UI to display Discord and LinkedIn if present
 }
