@@ -96,6 +96,37 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String discordHandle} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code discordHandle} is invalid.
+     */
+    public static String parseDiscordHandle(String discordHandle) throws ParseException {
+        requireNonNull(discordHandle);
+        String trimmedDiscordHandle = discordHandle.trim();
+        if (!trimmedDiscordHandle.isEmpty() && !trimmedDiscordHandle.matches("^[A-Za-z0-9_]+#\\d{4}$")) {
+            throw new ParseException("Invalid Discord handle! Format: username#1234");
+        }
+        return trimmedDiscordHandle;
+    }
+
+    /**
+     * Parses a {@code String linkedInProfile} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code linkedInProfile} is invalid.
+     */
+    public static String parseLinkedInProfile(String linkedInProfile) throws ParseException {
+        requireNonNull(linkedInProfile);
+        String trimmedLinkedInProfile = linkedInProfile.trim();
+        if (!trimmedLinkedInProfile.isEmpty() && !trimmedLinkedInProfile.matches(
+                "^(https?://)?(www\\.)?linkedin\\.com/in/[A-Za-z0-9_-]+/?$")) {
+            throw new ParseException("Invalid LinkedIn profile URL! Format: linkedin.com/in/username");
+        }
+        return trimmedLinkedInProfile;
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
