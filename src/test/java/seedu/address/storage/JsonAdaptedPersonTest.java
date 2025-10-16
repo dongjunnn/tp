@@ -92,6 +92,41 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_nullDiscordHandle_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
+                VALID_LINKEDIN, VALID_ADDRESS, VALID_TAGS);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
+    public void toModelType_nullLinkedInProfile_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                null, VALID_ADDRESS, VALID_TAGS);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
+    public void toModelType_emptyDiscordHandle_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, "",
+                VALID_LINKEDIN, VALID_ADDRESS, VALID_TAGS);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
+    public void toModelType_emptyLinkedInProfile_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                "", VALID_ADDRESS, VALID_TAGS);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
+    public void toModelType_emptyDiscordAndLinkedInProfile_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, "",
+                "", VALID_ADDRESS, VALID_TAGS);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
