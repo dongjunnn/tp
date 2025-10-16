@@ -9,6 +9,10 @@ import seedu.address.model.person.Person;
 
 //todo: change each field to a class
 //v1.3: we deal with members next week
+/**
+ * Represents a project in the address book.
+ * Guarantees: details are non-null and validated where applicable; immutable where possible.
+ */
 public class Project {
     private String name;
     private Priority priority;
