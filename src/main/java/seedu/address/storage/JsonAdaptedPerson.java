@@ -119,7 +119,8 @@ class JsonAdaptedPerson {
 
 
         if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
         }
         if (!Priority.isValidPriority(priority)) {
             throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
@@ -127,7 +128,8 @@ class JsonAdaptedPerson {
         final Priority modelPriority = new Priority(priority);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, discordHandle, linkedInProfile, modelAddress, modelPriority, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, discordHandle, linkedInProfile,
+                modelAddress, modelPriority, modelTags);
     }
 
 }

@@ -10,14 +10,9 @@ public class Priority {
 
     public static final String MESSAGE_CONSTRAINTS = "Priority should be a non-negative integer.";
 
-    public final String value;
-
     public static final Priority DEFAULT = new Priority("0");
 
-    public static Priority defaultPriority() {
-        return DEFAULT;
-    }
-
+    public final String value;
     /**
      * Constructs a {@code Priority}.
      *
@@ -26,6 +21,10 @@ public class Priority {
     public Priority(String value) {
         checkArgument(isValidPriority(value), MESSAGE_CONSTRAINTS);
         this.value = value;
+    }
+
+    public static Priority defaultPriority() {
+        return DEFAULT;
     }
 
     /**
