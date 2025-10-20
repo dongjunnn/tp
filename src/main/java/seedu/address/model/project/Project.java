@@ -86,6 +86,11 @@ public class Project {
         return Objects.hash(name, priority, deadline, members);
     }
 
+    /** Returns members of the project. */
+    public Set<Person> getMembers() {
+        return java.util.Collections.unmodifiableSet(members);
+    }
+
     @Override
     public String toString() {
         return "Project: " + getName() + " (Priority: " + getPriority() + ", Deadline: " + getDeadline() + ")";
