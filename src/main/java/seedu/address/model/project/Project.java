@@ -91,6 +91,17 @@ public class Project {
         return java.util.Collections.unmodifiableSet(members);
     }
 
+    /**
+     * Removes a member from this project.
+     *
+     * @param person the person to remove
+     * @return true if the member was present and removed; false otherwise
+     */
+    public boolean deleteMember(Person person) {
+        Objects.requireNonNull(person);
+        return members.remove(person);
+    }
+
     @Override
     public String toString() {
         return "Project: " + getName() + " (Priority: " + getPriority() + ", Deadline: " + getDeadline() + ")";
