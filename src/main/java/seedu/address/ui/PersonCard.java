@@ -57,8 +57,9 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
 
-        if (person.getDiscordHandle() != null && !person.getDiscordHandle().isEmpty()) {
-            discordHandle.setText("Discord: " + person.getDiscordHandle());
+        if (person.getSocials().getDiscord() != null
+                && !person.getSocials().getDiscord().value.isEmpty()) {
+            discordHandle.setText("Discord: " + person.getSocials().getDiscord().value);
             discordHandle.setVisible(true);
             discordHandle.setManaged(true);
         } else {
@@ -66,8 +67,29 @@ public class PersonCard extends UiPart<Region> {
             discordHandle.setManaged(false);
         }
 
-        if (person.getLinkedInProfile() != null && !person.getLinkedInProfile().isEmpty()) {
-            linkedInProfile.setText("LinkedIn: " + person.getLinkedInProfile());
+        if (person.getSocials().getLinkedIn() != null
+                && !person.getSocials().getLinkedIn().value.isEmpty()) {
+            linkedInProfile.setText("LinkedIn: " + person.getSocials().getLinkedIn().value);
+            linkedInProfile.setVisible(true);
+            linkedInProfile.setManaged(true);
+        } else {
+            linkedInProfile.setVisible(false);
+            linkedInProfile.setManaged(false);
+        }
+
+        if (person.getSocials().getInstagram() != null
+                && !person.getSocials().getInstagram().value.isEmpty()) {
+            linkedInProfile.setText("Instagram: " + person.getSocials().getInstagram().value);
+            linkedInProfile.setVisible(true);
+            linkedInProfile.setManaged(true);
+        } else {
+            linkedInProfile.setVisible(false);
+            linkedInProfile.setManaged(false);
+        }
+
+        if (person.getSocials().getYouTube() != null
+                && !person.getSocials().getYouTube().value.isEmpty()) {
+            linkedInProfile.setText("YouTube: " + person.getSocials().getYouTube().value);
             linkedInProfile.setVisible(true);
             linkedInProfile.setManaged(true);
         } else {
