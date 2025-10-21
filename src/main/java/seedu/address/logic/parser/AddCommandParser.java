@@ -4,10 +4,12 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -15,10 +17,15 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Discord;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
+import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Socials;
+import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,23 +41,41 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_ADDRESS, PREFIX_TAG);
+                        PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE,
+                        PREFIX_ADDRESS, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_DISCORD,
+                PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        String discordHandle = ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).orElse(""));
-        String linkedInProfile = ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).orElse(""));
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, discordHandle, linkedInProfile, address, tagList);
+        Discord discordHandle = null;
+        if (argMultimap.getValue(PREFIX_DISCORD).isPresent()) {
+            discordHandle = ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get());
+        }
+        LinkedIn linkedInProfile = null;
+        if (argMultimap.getValue(PREFIX_LINKEDIN).isPresent()) {
+            linkedInProfile = ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get());
+        }
+        Instagram instagramHandle = null;
+        if (argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
+            instagramHandle = ParserUtil.parseInstagramHandle(argMultimap.getValue(PREFIX_INSTAGRAM).get());
+        }
+        YouTube youtubeChannel = null;
+        if (argMultimap.getValue(PREFIX_YOUTUBE).isPresent()) {
+            youtubeChannel = ParserUtil.parseYouTubeChannel(argMultimap.getValue(PREFIX_YOUTUBE).get());
+        }
+        Socials socials = new Socials(discordHandle, linkedInProfile, instagramHandle, youtubeChannel);
+
+        Person person = new Person(name, phone, email, socials, address, tagList);
 
         return new AddCommand(person);
     }

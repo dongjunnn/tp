@@ -11,6 +11,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_DISCORD = new Prefix("dc/");
     public static final Prefix PREFIX_LINKEDIN = new Prefix("li/");
+    public static final Prefix PREFIX_INSTAGRAM = new Prefix("ig/");
+    public static final Prefix PREFIX_YOUTUBE = new Prefix("yt/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_PRIORITY = new Prefix("p/");

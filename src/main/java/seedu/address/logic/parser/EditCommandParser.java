@@ -5,10 +5,12 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +37,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_ADDRESS, PREFIX_TAG);
+                        PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE,
+                        PREFIX_ADDRESS, PREFIX_TAG);
 
         Index index;
 
@@ -46,7 +49,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_ADDRESS);
+                PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -60,18 +63,44 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_DISCORD).isPresent()) {
-            editPersonDescriptor.setDiscordHandle(
-                    ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get()));
+            String discordValue = argMultimap.getValue(PREFIX_DISCORD).get(); // may be ""
+            if (discordValue.isEmpty()) {
+                // user provided the prefix with no value -> clear field (set to empty string)
+                editPersonDescriptor.setDiscordHandle("");
+            } else {
+                editPersonDescriptor.setDiscordHandle(ParserUtil.parseDiscordHandle(discordValue));
+            }
         }
         if (argMultimap.getValue(PREFIX_LINKEDIN).isPresent()) {
-            editPersonDescriptor.setLinkedInProfile(
-                    ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get()));
+            String linkedInValue = argMultimap.getValue(PREFIX_LINKEDIN).get(); // may be ""
+            if (linkedInValue.isEmpty()) {
+                editPersonDescriptor.setLinkedInProfile("");
+            } else {
+                editPersonDescriptor.setLinkedInProfile(ParserUtil.parseLinkedInProfile(linkedInValue));
+            }
+        }
+        if (argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
+            String instagramHandle = argMultimap.getValue(PREFIX_INSTAGRAM).get(); // may be ""
+            if (instagramHandle.isEmpty()) {
+                // user provided the prefix with no value -> clear field (set to empty string)
+                editPersonDescriptor.setInstagramHandle("");
+            } else {
+                editPersonDescriptor.setInstagramHandle(ParserUtil.parseInstagramHandle(instagramHandle));
+            }
+        }
+        if (argMultimap.getValue(PREFIX_YOUTUBE).isPresent()) {
+            String youtubeURL = argMultimap.getValue(PREFIX_YOUTUBE).get(); // may be ""
+            if (youtubeURL.isEmpty()) {
+                // user provided the prefix with no value -> clear field (set to empty string)
+                editPersonDescriptor.setYouTubeChannel("");
+            } else {
+                editPersonDescriptor.setYouTubeChannel(ParserUtil.parseYouTubeChannel(youtubeURL));
+            }
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
