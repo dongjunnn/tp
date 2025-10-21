@@ -20,6 +20,10 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+
+    // TODO v1.3: Consider making a Socials class to encapsulate all social/contact fields
+//    private final String discordHandle;
+//    private final String linkedInProfile;
     private final Socials socials;
 
     // Data fields
@@ -29,12 +33,14 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Socials socials, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, String discordHandle,
+                  String linkedInProfile, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.socials = (socials == null) ? new Socials(null, null, null, null) : socials;
+        this.discordHandle = discordHandle;
+        this.linkedInProfile = linkedInProfile;
         this.address = address;
         this.tags.addAll(tags);
     }
@@ -51,8 +57,12 @@ public class Person {
         return email;
     }
 
-    public Socials getSocials() {
-        return socials;
+    public String getDiscordHandle() {
+        return discordHandle;
+    }
+
+    public String getLinkedInProfile() {
+        return linkedInProfile;
     }
 
     public Address getAddress() {
@@ -80,6 +90,7 @@ public class Person {
                 && otherPerson.getName().equals(getName());
     }
 
+    // Do not modify this method yet for discord and LinkedIn, as it is used by PersonCardTest
     /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -96,19 +107,18 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return Objects.equals(name, otherPerson.name)
-                && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(email, otherPerson.email)
-                && Objects.equals(address, otherPerson.address)
-                && Objects.equals(tags, otherPerson.tags)
-                && Objects.equals(socials, otherPerson.socials);
+        return name.equals(otherPerson.name)
+                && phone.equals(otherPerson.phone)
+                && email.equals(otherPerson.email)
+                && address.equals(otherPerson.address)
+                && tags.equals(otherPerson.tags);
     }
 
     // Do not modify this method yet for discord and LinkedIn, as it is used by PersonCardTest
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, socials, address, tags);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
@@ -117,7 +127,8 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("socials", socials)
+                .add("discordHandle", discordHandle)
+                .add("linkedInProfile", linkedInProfile)
                 .add("address", address)
                 .add("tags", tags)
                 .toString();
