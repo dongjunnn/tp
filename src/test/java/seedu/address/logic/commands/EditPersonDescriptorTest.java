@@ -65,7 +65,9 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
                 + editPersonDescriptor.getEmail().orElse(null) + ", discordHandle="
                 + editPersonDescriptor.getDiscordHandle().orElse(null) + ", linkedInProfile="
-                + editPersonDescriptor.getLinkedInProfile().orElse(null) + ", address="
+                + editPersonDescriptor.getLinkedInProfile().orElse(null) + ", instagramHandle="
+                + editPersonDescriptor.getInstagramHandle().orElse(null) + ", youTubeChannel="
+                + editPersonDescriptor.getYouTubeChannel().orElse(null) + ", address="
                 + editPersonDescriptor.getAddress().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());

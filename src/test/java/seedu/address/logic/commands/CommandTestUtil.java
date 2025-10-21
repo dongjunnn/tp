@@ -5,10 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -38,6 +40,10 @@ public class CommandTestUtil {
     public static final String VALID_DISCORD_BOB = "bob#5678";
     public static final String VALID_LINKEDIN_AMY = "linkedin.com/in/amy";
     public static final String VALID_LINKEDIN_BOB = "linkedin.com/in/bob";
+    public static final String VALID_INSTAGRAM_AMY = "@amy_bstyle";
+    public static final String VALID_INSTAGRAM_BOB = "@bob_the_builder";
+    public static final String VALID_YOUTUBE_AMY = "youtube.com/@amybee";
+    public static final String VALID_YOUTUBE_BOB = "youtube.com/@bobchannel";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -53,6 +59,10 @@ public class CommandTestUtil {
     public static final String DISCORD_DESC_BOB = " " + PREFIX_DISCORD + VALID_DISCORD_BOB;
     public static final String LINKEDIN_DESC_AMY = " " + PREFIX_LINKEDIN + VALID_LINKEDIN_AMY;
     public static final String LINKEDIN_DESC_BOB = " " + PREFIX_LINKEDIN + VALID_LINKEDIN_BOB;
+    public static final String INSTAGRAM_DESC_AMY = " " + PREFIX_INSTAGRAM + VALID_INSTAGRAM_AMY;
+    public static final String INSTAGRAM_DESC_BOB = " " + PREFIX_INSTAGRAM + VALID_INSTAGRAM_BOB;
+    public static final String YOUTUBE_DESC_AMY = " " + PREFIX_YOUTUBE + VALID_YOUTUBE_AMY;
+    public static final String YOUTUBE_DESC_BOB = " " + PREFIX_YOUTUBE + VALID_YOUTUBE_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
@@ -72,12 +82,16 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withDiscordHandle(VALID_DISCORD_AMY)
-                .withLinkedInProfile(VALID_LINKEDIN_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withSocials(VALID_DISCORD_AMY, VALID_LINKEDIN_AMY,
+                        VALID_INSTAGRAM_AMY, VALID_YOUTUBE_AMY)
+                .withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withDiscordHandle(VALID_DISCORD_BOB)
-                .withLinkedInProfile(VALID_LINKEDIN_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withSocials(VALID_DISCORD_BOB, VALID_LINKEDIN_BOB,
+                        VALID_INSTAGRAM_BOB, VALID_YOUTUBE_BOB)
+                .withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

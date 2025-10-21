@@ -25,15 +25,19 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withDiscordHandle("alice#1234")
-            .withLinkedInProfile("linkedin.com/in/alice")
             .withPhone("94351253")
+            .withSocials("alice#1234",
+                    "linkedin.com/in/alice",
+                    "@alic3",
+                    "youtube.com/@alicechannel")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withDiscordHandle("benson#1234")
-            .withLinkedInProfile("linkedin.com/in/benson")
+            .withSocials("benson#1234",
+                    "linkedin.com/in/bensonmeier",
+                    "@bensonmeier",
+                    "youtube.com/@bensonmeier")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
