@@ -8,7 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.priority.Priority;
+import seedu.address.model.person.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -23,7 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_DISCORD = "amy#1234";
     public static final String DEFAULT_LINKEDIN = "linkedin.com/in/amy";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_PRIORITY = "100";
+    public static final String DEFAULT_PRIORITY = "MEDIUM";
 
     private Name name;
     private Phone phone;
