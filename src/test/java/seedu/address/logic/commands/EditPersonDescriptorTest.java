@@ -25,6 +25,7 @@ import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
 import seedu.address.model.person.Socials;
 import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
@@ -42,6 +43,7 @@ public class EditPersonDescriptorTest {
                 new Socials(new Discord("aliceD#1234"), new LinkedIn("linkedin.com/in/alice"),
                         new Instagram("@alic3"), new YouTube("youtube.com/@alicechannel")),
                 new Address("123 Wonderland"),
+                new Priority("LOW"),
                 Set.of(new Tag("friend")));
     }
 
