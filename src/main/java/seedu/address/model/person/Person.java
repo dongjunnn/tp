@@ -34,7 +34,8 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.socials = (socials == null) ? new Socials(null, null, null, null) : socials;
+        //for safety, usually socials will not be null but just in case
+        this.socials = socials != null ? socials : new Socials(null, null, null, null);
         this.address = address;
         this.tags.addAll(tags);
     }
@@ -117,7 +118,8 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("socials", socials)
+                //only show if socials is not empty
+                .add("socials", socials.toString().isEmpty() ? "" : socials)
                 .add("address", address)
                 .add("tags", tags)
                 .toString();

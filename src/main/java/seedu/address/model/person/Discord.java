@@ -41,12 +41,12 @@ public class Discord {
      * @return true if valid, false otherwise
      */
     public static boolean isValidDiscord(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return value == null ? "" : value;
+        return value;
     }
 
     @Override
@@ -61,11 +61,11 @@ public class Discord {
         }
 
         Discord otherDiscord = (Discord) other;
-        return (value == null ? otherDiscord.value == null : value.equals(otherDiscord.value));
+        return value.equals(otherDiscord.value);
     }
 
     @Override
     public int hashCode() {
-        return value == null ? 0 : value.hashCode();
+        return value.hashCode();
     }
 }

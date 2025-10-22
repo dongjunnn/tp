@@ -41,12 +41,12 @@ public class YouTube {
      * @return true if valid, false otherwise
      */
     public static boolean isValidYouTube(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return value == null ? "" : value;
+        return value;
     }
 
     @Override
@@ -61,11 +61,11 @@ public class YouTube {
         }
 
         YouTube otherYouTube = (YouTube) other;
-        return (value == null ? otherYouTube.value == null : value.equals(otherYouTube.value));
+        return value.equals(otherYouTube.value);
     }
 
     @Override
     public int hashCode() {
-        return value == null ? 0 : value.hashCode();
+        return value.hashCode();
     }
 }

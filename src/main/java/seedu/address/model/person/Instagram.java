@@ -40,12 +40,12 @@ public class Instagram {
      * @return true if valid, false otherwise
      */
     public static boolean isValidInstagram(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return value == null ? "" : value;
+        return value;
     }
 
     @Override
@@ -60,11 +60,11 @@ public class Instagram {
         }
 
         Instagram otherInstagram = (Instagram) other;
-        return (value == null ? otherInstagram.value == null : value.equals(otherInstagram.value));
+        return value.equals(otherInstagram.value);
     }
 
     @Override
     public int hashCode() {
-        return value == null ? 0 : value.hashCode();
+        return value.hashCode();
     }
 }
