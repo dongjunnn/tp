@@ -47,24 +47,19 @@ class JsonAdaptedPerson {
             @JsonProperty("name") String name,
             @JsonProperty("phone") String phone,
             @JsonProperty("email") String email,
-            @JsonProperty("socials") JsonAdaptedSocials socials, // <- nested object
+            @JsonProperty("discordHandle") String discordHandle,
+            @JsonProperty("linkedInProfile") String linkedInProfile,
+            @JsonProperty("instagramHandle") String instagramHandle,
+            @JsonProperty("youTubeChannel") String youTubeChannel,
             @JsonProperty("address") String address,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.discordHandle = (socials != null && socials.getDiscordHandle() != null)
-                ? socials.getDiscordHandle()
-                : "";
-        this.linkedInProfile = (socials != null && socials.getLinkedInProfile() != null)
-                ? socials.getLinkedInProfile()
-                : "";
-        this.instagramHandle = (socials != null && socials.getInstagramHandle() != null)
-                ? socials.getInstagramHandle()
-                : "";
-        this.youTubeChannel = (socials != null && socials.getYouTubeChannel() != null)
-                ? socials.getYouTubeChannel()
-                : "";
+        this.discordHandle = discordHandle != null ? discordHandle : "";
+        this.linkedInProfile = linkedInProfile != null ? linkedInProfile : "";
+        this.instagramHandle = instagramHandle != null ? instagramHandle : "";
+        this.youTubeChannel = youTubeChannel != null ? youTubeChannel : "";
         this.address = address;
         if (tags != null) {
             this.tags.addAll(tags);
@@ -123,6 +118,7 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
+
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -131,55 +127,41 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final Discord modelDiscord;
-        if (discordHandle == null || discordHandle.isEmpty()) {
-            modelDiscord = null; // no Discord provided
-        } else {
-            if (!Discord.isValidDiscord(discordHandle)) {
-                throw new IllegalValueException(Discord.MESSAGE_CONSTRAINTS);
-            }
-            modelDiscord = new Discord(discordHandle);
+        if (discordHandle == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Discord.class.getSimpleName()));
         }
+        if (!Discord.isValidDiscord(discordHandle)) {
+            throw new IllegalValueException(Discord.MESSAGE_CONSTRAINTS);
+        }
+        final Discord modelDiscord = new Discord(discordHandle);
 
-        final LinkedIn modelLinkedIn;
-        if (linkedInProfile == null || linkedInProfile.isEmpty()) {
-            modelLinkedIn = null; // no LinkedIn provided
-        } else {
-            if (!LinkedIn.isValidLinkedIn(linkedInProfile)) {
-                throw new IllegalValueException(LinkedIn.MESSAGE_CONSTRAINTS);
-            }
-            modelLinkedIn = new LinkedIn(linkedInProfile);
+        if (linkedInProfile == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LinkedIn.class.getSimpleName()));
         }
+        if (!LinkedIn.isValidLinkedIn(linkedInProfile)) {
+            throw new IllegalValueException(LinkedIn.MESSAGE_CONSTRAINTS);
+        }
+        final LinkedIn modelLinkedIn = new LinkedIn(linkedInProfile);
 
-        final Instagram modelInstagram;
-        if (instagramHandle == null || instagramHandle.isEmpty()) {
-            modelInstagram = null; // no Instagram provided
-        } else {
-            if (!Instagram.isValidInstagram(instagramHandle)) {
-                throw new IllegalValueException(Instagram.MESSAGE_CONSTRAINTS);
-            }
-            modelInstagram = new Instagram(instagramHandle);
+        if (instagramHandle == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Instagram.class.getSimpleName()));
         }
+        if (!Instagram.isValidInstagram(instagramHandle)) {
+            throw new IllegalValueException(Instagram.MESSAGE_CONSTRAINTS);
+        }
+        final Instagram modelInstagram = new Instagram(instagramHandle);
 
-        final YouTube modelYouTube;
-        if (youTubeChannel == null || youTubeChannel.isEmpty()) {
-            modelYouTube = null; // no YouTube provided
-        } else {
-            if (!YouTube.isValidYouTube(youTubeChannel)) {
-                throw new IllegalValueException(YouTube.MESSAGE_CONSTRAINTS);
-            }
-            modelYouTube = new YouTube(youTubeChannel);
+        if (youTubeChannel == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, YouTube.class.getSimpleName()));
         }
+        if (!YouTube.isValidYouTube(youTubeChannel)) {
+            throw new IllegalValueException(YouTube.MESSAGE_CONSTRAINTS);
+        }
+        final YouTube modelYouTube = new YouTube(youTubeChannel);
 
-        final Socials modelSocials;
-        if ((discordHandle == null || discordHandle.isEmpty())
-                && (linkedInProfile == null || linkedInProfile.isEmpty())
-                && (instagramHandle == null || instagramHandle.isEmpty())
-                && (youTubeChannel == null || youTubeChannel.isEmpty())) {
-            modelSocials = new Socials(null, null, null, null);
-        } else {
-            modelSocials = new Socials(modelDiscord, modelLinkedIn, modelInstagram, modelYouTube);
-        }
+        final Socials modelSocials = new Socials(modelDiscord, modelLinkedIn, modelInstagram, modelYouTube);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelSocials, modelAddress, modelTags);
