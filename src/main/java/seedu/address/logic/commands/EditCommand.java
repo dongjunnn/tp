@@ -108,29 +108,23 @@ public class EditCommand extends Command {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
+        // Update fields if new values are provided; if null, keep existing values
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Discord updatedDiscordHandle = editPersonDescriptor.getDiscordHandle()
-                .orElse(personToEdit.getSocials().getDiscord());
-        LinkedIn updatedLinkedInProfile = editPersonDescriptor.getLinkedInProfile()
-                .orElse(personToEdit.getSocials().getLinkedIn());
-        Instagram updatedInstagramHandle = editPersonDescriptor.getInstagramHandle()
-                .orElse(personToEdit.getSocials().getInstagram());
-        YouTube updatedYouTubeChannel = editPersonDescriptor.getYouTubeChannel()
-                .orElse(personToEdit.getSocials().getYouTube());
-        Socials updatedSocials = new Socials(updatedDiscordHandle, updatedLinkedInProfile,
-                updatedInstagramHandle, updatedYouTubeChannel);
+        Discord updatedDiscord = editPersonDescriptor.getDiscordHandle().orElse(personToEdit.getSocials().getDiscord());
+        LinkedIn updatedLinkedIn = editPersonDescriptor.getLinkedInProfile().orElse(personToEdit.getSocials()
+                .getLinkedIn());
+        Instagram updatedInstagram = editPersonDescriptor.getInstagramHandle().orElse(personToEdit.getSocials()
+                .getInstagram());
+        YouTube updatedYouTube = editPersonDescriptor.getYouTubeChannel().orElse(personToEdit.getSocials()
+                .getYouTube());
+        Socials updatedSocials = new Socials(updatedDiscord, updatedLinkedIn,
+                updatedInstagram, updatedYouTube);
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(
-                updatedName,
-                updatedPhone,
-                updatedEmail,
-                updatedSocials,
-                updatedAddress,
-                updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedSocials, updatedAddress, updatedTags);
     }
 
     @Override
@@ -169,7 +163,6 @@ public class EditCommand extends Command {
         private LinkedIn linkedInProfile;
         private Instagram instagramHandle;
         private YouTube youtubeChannel;
-        private Socials socials;
         private Address address;
         private Set<Tag> tags;
 
@@ -227,21 +220,12 @@ public class EditCommand extends Command {
             this.discordHandle = discordHandle;
         }
 
-        public void setDiscordHandle(String discordHandle) {
-            this.discordHandle = (discordHandle == null || discordHandle.isEmpty()) ? null : new Discord(discordHandle);
-        }
-
         public Optional<Discord> getDiscordHandle() {
             return Optional.ofNullable(discordHandle);
         }
 
         public void setLinkedInProfile(LinkedIn linkedInProfile) {
             this.linkedInProfile = linkedInProfile;
-        }
-
-        public void setLinkedInProfile(String linkedInProfile) {
-            this.linkedInProfile = (linkedInProfile == null || linkedInProfile.isEmpty()) ? null
-                    : new LinkedIn(linkedInProfile);
         }
 
         public Optional<LinkedIn> getLinkedInProfile() {
@@ -252,11 +236,6 @@ public class EditCommand extends Command {
             this.instagramHandle = instagramHandle;
         }
 
-        public void setInstagramHandle(String instagramHandle) {
-            this.instagramHandle = (instagramHandle == null || instagramHandle.isEmpty()) ? null
-                    : new Instagram(instagramHandle);
-        }
-
         public Optional<Instagram> getInstagramHandle() {
             return Optional.ofNullable(instagramHandle);
         }
@@ -265,26 +244,8 @@ public class EditCommand extends Command {
             this.youtubeChannel = youtubeChannel;
         }
 
-        public void setYouTubeChannel(String youtubeChannel) {
-            this.youtubeChannel = (youtubeChannel == null || youtubeChannel.isEmpty()) ? null
-                    : new YouTube(youtubeChannel);
-        }
         public Optional<YouTube> getYouTubeChannel() {
             return Optional.ofNullable(youtubeChannel);
-        }
-
-        public void setSocials(Socials socials) {
-            if (socials != null) {
-                this.socials = socials;
-                this.discordHandle = socials.getDiscord();
-                this.linkedInProfile = socials.getLinkedIn();
-                this.instagramHandle = socials.getInstagram();
-                this.youtubeChannel = socials.getYouTube();
-            }
-        }
-
-        public Optional<Socials> getSocials() {
-            return Optional.ofNullable(socials);
         }
 
         public void setAddress(Address address) {
