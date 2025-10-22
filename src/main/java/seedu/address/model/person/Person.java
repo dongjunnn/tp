@@ -25,6 +25,8 @@ public class Person {
     private final String discordHandle;
     private final String linkedInProfile;
 
+    private final Priority priority;
+
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
@@ -33,7 +35,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, String discordHandle,
-                  String linkedInProfile, Address address, Set<Tag> tags) {
+                  String linkedInProfile, Address address, Priority priority, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -41,6 +43,7 @@ public class Person {
         this.discordHandle = discordHandle;
         this.linkedInProfile = linkedInProfile;
         this.address = address;
+        this.priority = priority;
         this.tags.addAll(tags);
     }
 
@@ -54,6 +57,10 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public String getDiscordHandle() {
@@ -110,6 +117,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && priority.equals(otherPerson.priority)
                 && tags.equals(otherPerson.tags);
     }
 
@@ -129,6 +137,7 @@ public class Person {
                 .add("discordHandle", discordHandle)
                 .add("linkedInProfile", linkedInProfile)
                 .add("address", address)
+                .add("priority", priority)
                 .add("tags", tags)
                 .toString();
     }

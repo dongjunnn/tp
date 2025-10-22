@@ -71,6 +71,7 @@ public class TagCommand extends Command {
                     personToTag.getDiscordHandle(),
                     personToTag.getLinkedInProfile(),
                     personToTag.getAddress(),
+                    personToTag.getPriority(),
                     updatedTags
             );
 
