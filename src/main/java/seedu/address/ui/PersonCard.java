@@ -77,26 +77,6 @@ public class PersonCard extends UiPart<Region> {
             linkedInProfile.setManaged(false);
         }
 
-        if (person.getSocials().getInstagram() != null
-                && !person.getSocials().getInstagram().value.isEmpty()) {
-            linkedInProfile.setText("Instagram: " + person.getSocials().getInstagram().value);
-            linkedInProfile.setVisible(true);
-            linkedInProfile.setManaged(true);
-        } else {
-            linkedInProfile.setVisible(false);
-            linkedInProfile.setManaged(false);
-        }
-
-        if (person.getSocials().getYouTube() != null
-                && !person.getSocials().getYouTube().value.isEmpty()) {
-            linkedInProfile.setText("YouTube: " + person.getSocials().getYouTube().value);
-            linkedInProfile.setVisible(true);
-            linkedInProfile.setManaged(true);
-        } else {
-            linkedInProfile.setVisible(false);
-            linkedInProfile.setManaged(false);
-        }
-
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
