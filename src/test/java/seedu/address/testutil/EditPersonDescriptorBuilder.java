@@ -13,7 +13,6 @@ import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Socials;
 import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
 
@@ -40,7 +39,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
-        descriptor.setSocials(person.getSocials());
+        descriptor.setDiscordHandle(person.getSocials().getDiscord());
+        descriptor.setLinkedInProfile(person.getSocials().getLinkedIn());
+        descriptor.setInstagramHandle(person.getSocials().getInstagram());
+        descriptor.setYouTubeChannel(person.getSocials().getYouTube());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
     }
@@ -70,17 +72,34 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Socials} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Discord} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withSocials(String discordHandle, String linkedInProfile,
-            String instagramHandle, String youTubeChannel) {
-        Socials socials = new Socials(
-                discordHandle == null ? null : new Discord(discordHandle),
-                linkedInProfile == null ? null : new LinkedIn(linkedInProfile),
-                instagramHandle == null ? null : new Instagram(instagramHandle),
-                youTubeChannel == null ? null : new YouTube(youTubeChannel)
-        );
-        descriptor.setSocials(socials);
+    public EditPersonDescriptorBuilder withDiscord(String discord) {
+        descriptor.setDiscordHandle(new Discord(discord));
+        return this;
+    }
+
+    /**
+     * Sets the {@code LinkedIn} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withLinkedIn(String linkedIn) {
+        descriptor.setLinkedInProfile(new LinkedIn(linkedIn));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Instagram} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInstagram(String instagram) {
+        descriptor.setInstagramHandle(new Instagram(instagram));
+        return this;
+    }
+
+    /**
+     * Sets the {@code YouTube} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withYouTube(String youTube) {
+        descriptor.setYouTubeChannel(new YouTube(youTube));
         return this;
     }
 

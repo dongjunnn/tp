@@ -38,6 +38,9 @@ public class PersonTest {
         assertEquals("linkedin.com/in/amy", person.getSocials().getLinkedIn().value);
         assertEquals("@amy_bstyle", person.getSocials().getInstagram().value);
         assertEquals("youtube.com/@amybee", person.getSocials().getYouTube().value);
+        assertEquals("Discord: amy#1234, LinkedIn: linkedin.com/in/amy, "
+                        + "Instagram: @amy_bstyle, YouTube: youtube.com/@amybee",
+                person.getSocials().toString());
         assertEquals(new Address("123, Jurong West Ave 6, #08-111"), person.getAddress());
         assertEquals(person.getTags().size(), 0);
     }

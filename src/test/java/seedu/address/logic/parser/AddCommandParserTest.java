@@ -53,6 +53,17 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
+    public void parse_discordOnly_success() {
+        Person expectedPerson = new PersonBuilder(BOB)
+                .withSocials("bob#5678", "", "", "")
+                .withTags(VALID_TAG_FRIEND).build();
+
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DISCORD_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND,
+                new AddCommand(expectedPerson));
+    }
+
+    @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder(BOB)
                 .withSocials("bob#5678", "linkedin.com/in/bob",

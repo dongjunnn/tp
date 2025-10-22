@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+// Static imports
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,12 +12,39 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Discord;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
+import seedu.address.model.person.LinkedIn;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Socials;
+import seedu.address.model.person.YouTube;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditPersonDescriptorTest {
+
+    @Test
+    void editPersonDescriptorBuilder_createsDescriptor_correctly() {
+        // Original person
+        Person original = new Person(
+                new Name("Alice"),
+                new Phone("12345678"),
+                new Email("alice@example.com"),
+                new Socials(new Discord("aliceD#1234"), new LinkedIn("linkedin.com/in/alice"),
+                        new Instagram("@alic3"), new YouTube("youtube.com/@alicechannel")),
+                new Address("123 Wonderland"),
+                Set.of(new Tag("friend"))
+        );
+    }
 
     @Test
     public void equals() {
