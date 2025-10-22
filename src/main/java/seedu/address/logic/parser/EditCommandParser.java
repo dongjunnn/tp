@@ -48,11 +48,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
+        // Check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
+        // Parse individual fields
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
@@ -62,41 +64,31 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
+
         if (argMultimap.getValue(PREFIX_DISCORD).isPresent()) {
-            String discordValue = argMultimap.getValue(PREFIX_DISCORD).get(); // may be ""
-            if (discordValue.isEmpty()) {
-                // user provided the prefix with no value -> clear field (set to empty string)
-                editPersonDescriptor.setDiscordHandle("");
-            } else {
-                editPersonDescriptor.setDiscordHandle(ParserUtil.parseDiscordHandle(discordValue));
-            }
+            editPersonDescriptor.setDiscordHandle(
+                    ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get())
+            );
         }
+
         if (argMultimap.getValue(PREFIX_LINKEDIN).isPresent()) {
-            String linkedInValue = argMultimap.getValue(PREFIX_LINKEDIN).get(); // may be ""
-            if (linkedInValue.isEmpty()) {
-                editPersonDescriptor.setLinkedInProfile("");
-            } else {
-                editPersonDescriptor.setLinkedInProfile(ParserUtil.parseLinkedInProfile(linkedInValue));
-            }
+            editPersonDescriptor.setLinkedInProfile(
+                    ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get())
+            );
         }
+
         if (argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
-            String instagramHandle = argMultimap.getValue(PREFIX_INSTAGRAM).get(); // may be ""
-            if (instagramHandle.isEmpty()) {
-                // user provided the prefix with no value -> clear field (set to empty string)
-                editPersonDescriptor.setInstagramHandle("");
-            } else {
-                editPersonDescriptor.setInstagramHandle(ParserUtil.parseInstagramHandle(instagramHandle));
-            }
+            editPersonDescriptor.setInstagramHandle(
+                    ParserUtil.parseInstagramHandle(argMultimap.getValue(PREFIX_INSTAGRAM).get())
+            );
         }
+
         if (argMultimap.getValue(PREFIX_YOUTUBE).isPresent()) {
-            String youtubeURL = argMultimap.getValue(PREFIX_YOUTUBE).get(); // may be ""
-            if (youtubeURL.isEmpty()) {
-                // user provided the prefix with no value -> clear field (set to empty string)
-                editPersonDescriptor.setYouTubeChannel("");
-            } else {
-                editPersonDescriptor.setYouTubeChannel(ParserUtil.parseYouTubeChannel(youtubeURL));
-            }
+            editPersonDescriptor.setYouTubeChannel(
+                    ParserUtil.parseYouTubeChannel(argMultimap.getValue(PREFIX_YOUTUBE).get())
+            );
         }
+
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
