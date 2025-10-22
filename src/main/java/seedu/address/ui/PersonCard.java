@@ -145,7 +145,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Displays projects that this person is a member of as clickable hyperlinks.
+     * Displays projects that the selected person is a member of as clickable hyperlinks.
      * Filters the project list to find projects containing this person,
      * then creates a hyperlink for each project that triggers the callback when clicked.
      *
