@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="project-list-panel" spacing="5">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <!-- Placeholder shown when no person selected -->
+    <VBox fx:id="placeholderContainer" alignment="CENTER" VBox.vgrow="ALWAYS">
+        <Label text="Select a person to view their projects" styleClass="placeholder-text" />
+    </VBox>
+
+    <!-- Content shown when person selected - SpACING from 10 to 5 -->
+    <VBox fx:id="contentContainer" spacing="5" VBox.vgrow="ALWAYS">
+        <!-- Person name header -->
+        <Label fx:id="personNameLabel" styleClass="person-header"
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+        <Separator />
+
+        <!-- Projects section -->
+        <Label text="Projects:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
+
+        <!-- Shows "None" when no projects -->
+        <Label fx:id="projectsStatusLabel" text="None"
+               style="-fx-text-fill: white; -fx-font-size: 13px;"
+               visible="false" managed="false" />
+
+        <!-- Project list (hidden when no projects) -->
+        <ListView fx:id="projectListView" VBox.vgrow="SOMETIMES" prefHeight="120" styleClass="project-list-view" />
+
+        <!-- Project details - Spacing from 10 to 3 -->
+        <VBox fx:id="projectDetailsContainer" spacing="3" VBox.vgrow="ALWAYS">
+            <Label text="Project Details" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+            <Label fx:id="projectName" styleClass="project-name"
+                   style="-fx-font-size: 18px; -fx-text-fill: white;" />
+
+            <HBox spacing="10">
+                <Label text="Priority:" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 13px;" />
+                <Label fx:id="priority" style="-fx-text-fill: white; -fx-font-size: 13px;" />
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Deadline:" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 13px;" />
+                <Label fx:id="deadline" style="-fx-text-fill: white; -fx-font-size: 13px;" />
+            </HBox>
+
+            <Label text="Members:" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 13px;" />
+            <!-- Members displayed as labels, not in ListView -->
+            <VBox fx:id="membersContainer" spacing="2" />
+        </VBox>
+    </VBox>
+</VBox>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="project-panel" spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <!-- Placeholder shown when no project selected -->
+    <VBox fx:id="placeholderContainer" alignment="CENTER" VBox.vgrow="ALWAYS">
+        <Label text="Select a project to view details" styleClass="placeholder-text" />
+    </VBox>
+
+    <!-- Project details shown when project clicked -->
+    <VBox fx:id="detailsContainer" spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Project Details" styleClass="section-header"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+        <Label fx:id="projectName" styleClass="project-name"
+               style="-fx-font-size: 20px; -fx-text-fill: white;" />
+
+        <HBox spacing="10">
+            <Label text="Priority:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
+            <Label fx:id="priority" style="-fx-text-fill: white;" />
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Deadline:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
+            <Label fx:id="deadline" style="-fx-text-fill: white;" />
+        </HBox>
+
+        <Label text="Members:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
+        <ListView fx:id="membersList" VBox.vgrow="ALWAYS" />
+    </VBox>
+</VBox>
