@@ -43,6 +43,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label linkedInProfile;
     @FXML
+    private Label instagramHandle;
+    @FXML
+    private Label youTubeChannel;
+    @FXML
     private Label priority;
     @FXML
     private FlowPane tags;
@@ -78,6 +82,26 @@ public class PersonCard extends UiPart<Region> {
         } else {
             linkedInProfile.setVisible(false);
             linkedInProfile.setManaged(false);
+        }
+
+        if (person.getSocials().getInstagram() != null
+                && !person.getSocials().getInstagram().value.isEmpty()) {
+            instagramHandle.setText("Instagram: " + person.getSocials().getInstagram().value);
+            instagramHandle.setVisible(true);
+            instagramHandle.setManaged(true);
+        } else {
+            instagramHandle.setVisible(false);
+            instagramHandle.setManaged(false);
+        }
+
+        if (person.getSocials().getYouTube() != null
+                && !person.getSocials().getYouTube().value.isEmpty()) {
+            youTubeChannel.setText("YouTube: " + person.getSocials().getYouTube().value);
+            youTubeChannel.setVisible(true);
+            youTubeChannel.setManaged(true);
+        } else {
+            youTubeChannel.setVisible(false);
+            youTubeChannel.setManaged(false);
         }
 
         person.getTags().stream()

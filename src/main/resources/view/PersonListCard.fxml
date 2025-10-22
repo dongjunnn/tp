@@ -34,6 +34,8 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="discordHandle" styleClass="cell_small_label" text="\$discordHandle" />
       <Label fx:id="linkedInProfile" styleClass="cell_small_label" text="\$linkedInProfile" />
+      <Label fx:id="instagramHandle" styleClass="cell_small_label" text="\$instagramHandle" />
+      <Label fx:id="youTubeChannel" styleClass="cell_small_label" text="\$youTubeChannel" />
     </VBox>
   </GridPane>
 </HBox>
