@@ -10,6 +10,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,7 +36,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
+        descriptor.setDiscordHandle(person.getDiscordHandle());
+        descriptor.setLinkedInProfile(person.getLinkedInProfile());
         descriptor.setAddress(person.getAddress());
+        descriptor.setPriority(person.getPriority());
         descriptor.setTags(person.getTags());
     }
 
@@ -64,10 +68,34 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code DiscordHandle} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDiscordHandle(String discordHandle) {
+        descriptor.setDiscordHandle(discordHandle);
+        return this;
+    }
+
+    /**
+     * Sets the {@code LinkedInProfile} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withLinkedInProfile(String linkedInProfile) {
+        descriptor.setLinkedInProfile(linkedInProfile);
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Priority} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPriority(String priority) {
+        descriptor.setPriority(new Priority(priority));
         return this;
     }
 

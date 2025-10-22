@@ -25,6 +25,8 @@ public class Person {
     private final String discordHandle;
     private final String linkedInProfile;
 
+    private final Priority priority;
+
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
@@ -32,15 +34,16 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    // TODO v1.3: Edit constructor that allows setting discordHandle and linkedInProfile on creation
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, String discordHandle,
+                  String linkedInProfile, Address address, Priority priority, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.discordHandle = null;
-        this.linkedInProfile = null;
+        this.discordHandle = discordHandle;
+        this.linkedInProfile = linkedInProfile;
         this.address = address;
+        this.priority = priority;
         this.tags.addAll(tags);
     }
 
@@ -54,6 +57,10 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public String getDiscordHandle() {
@@ -89,6 +96,7 @@ public class Person {
                 && otherPerson.getName().equals(getName());
     }
 
+    // Do not modify this method yet for discord and LinkedIn, as it is used by PersonCardTest
     /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -109,30 +117,28 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && priority.equals(otherPerson.priority)
                 && tags.equals(otherPerson.tags);
     }
 
+    // Do not modify this method yet for discord and LinkedIn, as it is used by PersonCardTest
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, discordHandle, linkedInProfile, address, tags);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
     public String toString() {
-        // TODO v1.3: Consider formatting socials differently for UI display
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
+                .add("discordHandle", discordHandle)
+                .add("linkedInProfile", linkedInProfile)
                 .add("address", address)
+                .add("priority", priority)
                 .add("tags", tags)
                 .toString();
     }
-
-    // TODO v1.3: Add validation for Discord and LinkedIn inputs
-    // e.g., Discord must start with '@', LinkedIn should be a valid profile URL
-    // TODO v1.3: Update AddCommand and EditCommand to accept Discord and LinkedIn parameters
-    // TODO v1.3: Update storage (JsonAdaptedPerson) to save and load the new fields
-    // TODO v1.3: Update PersonCard UI to display Discord and LinkedIn if present
 }

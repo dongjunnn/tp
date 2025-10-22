@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Project;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -23,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Project> filteredProjects;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -35,6 +37,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredProjects = new FilteredList<>(this.addressBook.getProjectList());
     }
 
     public ModelManager() {
@@ -119,6 +122,29 @@ public class ModelManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    public boolean hasProject(Project project) {
+        requireNonNull(project);
+        return addressBook.hasProject(project);
+    }
+
+    @Override
+    public void deleteProject(Project target) {
+        addressBook.removeProject(target);
+    }
+
+    @Override
+    public void addProject(Project project) {
+        addressBook.addProject(project);
+        updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
+    }
+
+    @Override
+    public void setProject(Project target, Project editedProject) {
+        requireAllNonNull(target, editedProject);
+
+        addressBook.setProject(target, editedProject);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -134,6 +160,23 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Filtered Project List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Project} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return filteredProjects;
+    }
+
+    @Override
+    public void updateFilteredProjectList(Predicate<Project> predicate) {
+        requireNonNull(predicate);
+        filteredProjects.setPredicate(predicate);
     }
 
     @Override

@@ -1,7 +1,11 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,6 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Project;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -20,15 +25,24 @@ import seedu.address.model.person.Person;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "Projects list contains duplicate project(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedProject> projects = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableAddressBook} with the given persons and projects.
+     * (Both are nullable for backward compatibility.)
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
-        this.persons.addAll(persons);
+    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("projects") List<JsonAdaptedProject> projects) {
+        if (persons != null) {
+            this.persons.addAll(persons);
+        }
+        if (projects != null) {
+            this.projects.addAll(projects);
+        }
     }
 
     /**
@@ -37,7 +51,12 @@ class JsonSerializableAddressBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        persons.addAll(source.getPersonList().stream()
+                .map(JsonAdaptedPerson::new)
+                .collect(Collectors.toList()));
+        projects.addAll(source.getProjectList().stream()
+                .map(JsonAdaptedProject::new)
+                .toList());
     }
 
     /**
@@ -54,7 +73,39 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+
+        // Build email -> Person map for member resolution
+        Map<String, Person> emailMap = new HashMap<>();
+        for (Person p : addressBook.getPersonList()) {
+            emailMap.put(p.getEmail().value, p);
+        }
+
+        for (JsonAdaptedProject jsonAdaptedProject : projects) {
+            // Build base project without members
+            Project baseProject = jsonAdaptedProject.toModelTypeWithoutMembers();
+
+            // Resolve emails to Person objects
+            Set<Person> memberSet = new HashSet<>();
+            for (String email : jsonAdaptedProject.getMemberEmails()) {
+                Person member = emailMap.get(email);
+                if (member != null) {
+                    memberSet.add(member);
+                }
+            }
+
+            Project fullProject = new Project(
+                    baseProject.getName(),
+                    baseProject.getPriority(),
+                    baseProject.getDeadline(),
+                    memberSet
+            );
+
+            if (addressBook.hasProject(fullProject)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_PROJECT);
+            }
+            addressBook.addProject(fullProject);
+        }
+
         return addressBook;
     }
-
 }

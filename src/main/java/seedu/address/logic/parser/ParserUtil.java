@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.priority.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -96,6 +99,37 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String discordHandle} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code discordHandle} is invalid.
+     */
+    public static String parseDiscordHandle(String discordHandle) throws ParseException {
+        requireNonNull(discordHandle);
+        String trimmedDiscordHandle = discordHandle.trim();
+        if (!trimmedDiscordHandle.isEmpty() && !trimmedDiscordHandle.matches("^[A-Za-z0-9_]+#\\d{4}$")) {
+            throw new ParseException("Invalid Discord handle! Format: username#1234");
+        }
+        return trimmedDiscordHandle;
+    }
+
+    /**
+     * Parses a {@code String linkedInProfile} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code linkedInProfile} is invalid.
+     */
+    public static String parseLinkedInProfile(String linkedInProfile) throws ParseException {
+        requireNonNull(linkedInProfile);
+        String trimmedLinkedInProfile = linkedInProfile.trim();
+        if (!trimmedLinkedInProfile.isEmpty() && !trimmedLinkedInProfile.matches(
+                "^(https?://)?(www\\.)?linkedin\\.com/in/[A-Za-z0-9_-]+/?$")) {
+            throw new ParseException("Invalid LinkedIn profile URL! Format: linkedin.com/in/username");
+        }
+        return trimmedLinkedInProfile;
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -120,5 +154,33 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String s} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code s} is invalid.
+     */
+    public static LocalDate parseDate(String s) throws ParseException {
+        try {
+            return LocalDate.parse(s.trim());
+        } catch (DateTimeParseException e) {
+            throw new ParseException("Deadline must be yyyy-MM-dd");
+        }
+    }
+
+    /**
+     * Parses a {@code String s} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code s} is invalid.
+     */
+    public static Priority parsePriority(String s) throws ParseException {
+        try {
+            return Priority.valueOf(s.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException("Priority must be LOW/MEDIUM/HIGH");
+        }
     }
 }
