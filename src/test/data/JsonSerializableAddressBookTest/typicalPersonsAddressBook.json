@@ -9,6 +9,7 @@
     "instagramHandle": "@alic3",
     "youTubeChannel": "youtube.com/@alicechannel",
     "address" : "123, Jurong West Ave 6, #08-111",
+    "priority" : "LOW",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
@@ -19,6 +20,7 @@
     "instagramHandle": "@bensonmeier",
     "youTubeChannel": "youtube.com/@bensonmeier",
     "address" : "311, Clementi Ave 2, #02-25",
+    "priority" : "LOW",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
@@ -29,6 +31,7 @@
     "instagramHandle": "",
     "youTubeChannel": "",
     "address" : "wall street",
+    "priority" : "LOW",
     "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
@@ -39,6 +42,7 @@
     "instagramHandle": "",
     "youTubeChannel": "",
     "address" : "10th street",
+    "priority" : "LOW",
     "tags" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
@@ -49,6 +53,7 @@
     "instagramHandle": "",
     "youTubeChannel": "",
     "address" : "michegan ave",
+    "priority" : "LOW",
     "tags" : [ ]
   }, {
     "name" : "Fiona Kunz",
@@ -59,6 +64,7 @@
     "instagramHandle": "",
     "youTubeChannel": "",
     "address" : "little tokyo",
+    "priority" : "LOW",
     "tags" : [ ]
   }, {
     "name" : "George Best",
@@ -69,6 +75,7 @@
     "instagramHandle": "",
     "youTubeChannel": "",
     "address" : "4th street",
+    "priority" : "LOW",
     "tags" : [ ]
   } ]
 }

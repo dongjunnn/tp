@@ -12,7 +12,8 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: details are present and not null, field values are validated,
+ * immutable.
  */
 public class Person {
 
@@ -22,6 +23,8 @@ public class Person {
     private final Email email;
     private final Socials socials;
 
+    private final Priority priority;
+
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
@@ -29,14 +32,16 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Socials socials, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Socials socials, Address address, Priority priority,
+            Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        //for safety, usually socials will not be null but just in case
+        // for safety, usually socials will not be null but just in case
         this.socials = socials != null ? socials : new Socials(null, null, null, null);
         this.address = address;
+        this.priority = priority;
         this.tags.addAll(tags);
     }
 
@@ -56,12 +61,17 @@ public class Person {
         return socials;
     }
 
+    public Priority getPriority() {
+        return priority;
+    }
+
     public Address getAddress() {
         return address;
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set, which throws
+     * {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
@@ -97,15 +107,17 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return Objects.equals(name, otherPerson.name)
-                && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(email, otherPerson.email)
-                && Objects.equals(address, otherPerson.address)
-                && Objects.equals(tags, otherPerson.tags)
-                && Objects.equals(socials, otherPerson.socials);
+        return name.equals(otherPerson.name)
+                && phone.equals(otherPerson.phone)
+                && email.equals(otherPerson.email)
+                && socials.equals(otherPerson.socials)
+                && address.equals(otherPerson.address)
+                && priority.equals(otherPerson.priority)
+                && tags.equals(otherPerson.tags);
     }
 
-    // Do not modify this method yet for discord and LinkedIn, as it is used by PersonCardTest
+    // Do not modify this method yet for discord and LinkedIn, as it is used by
+    // PersonCardTest
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
@@ -118,9 +130,10 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                //only show if socials is not empty
+                // only show if socials is not empty
                 .add("socials", socials.toString().isEmpty() ? "" : socials)
                 .add("address", address)
+                .add("priority", priority)
                 .add("tags", tags)
                 .toString();
     }

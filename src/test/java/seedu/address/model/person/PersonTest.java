@@ -120,6 +120,7 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail()
                 + ", socials=" + ALICE.getSocials().toString()
                 + ", address=" + ALICE.getAddress()
+                + ", priority=" + ALICE.getPriority()
                 + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }

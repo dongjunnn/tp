@@ -44,6 +44,7 @@ public class TagCommandTest {
                 personToTag.getEmail(),
                 personToTag.getSocials(),
                 personToTag.getAddress(),
+                personToTag.getPriority(),
                 union(personToTag.getTags(), tagsToAdd)
         );
 
@@ -75,6 +76,7 @@ public class TagCommandTest {
                     personInExpectedModel.getEmail(),
                     personInExpectedModel.getSocials(),
                     personInExpectedModel.getAddress(),
+                    personInExpectedModel.getPriority(),
                     union(personInExpectedModel.getTags(), tagsToAdd)
             );
             expectedModel.setPerson(personInExpectedModel, updatedPerson);
@@ -111,6 +113,7 @@ public class TagCommandTest {
                 personToTag.getEmail(),
                 personToTag.getSocials(),
                 personToTag.getAddress(),
+                personToTag.getPriority(),
                 union(personToTag.getTags(), tagsToAdd)
         );
 

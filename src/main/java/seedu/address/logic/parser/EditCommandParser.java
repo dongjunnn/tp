@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
@@ -21,6 +22,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Priority;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,16 +31,17 @@ import seedu.address.model.tag.Tag;
 public class EditCommandParser implements Parser<EditCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the EditCommand
+     * Parses the given {@code String} of arguments in the context of the
+     * EditCommand
      * and returns an EditCommand object for execution.
+     * 
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE,
-                        PREFIX_ADDRESS, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE,
+                PREFIX_ADDRESS, PREFIX_PRIORITY, PREFIX_TAG);
 
         Index index;
 
@@ -67,30 +70,30 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (argMultimap.getValue(PREFIX_DISCORD).isPresent()) {
             editPersonDescriptor.setDiscordHandle(
-                    ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get())
-            );
+                    ParserUtil.parseDiscordHandle(argMultimap.getValue(PREFIX_DISCORD).get()));
         }
 
         if (argMultimap.getValue(PREFIX_LINKEDIN).isPresent()) {
             editPersonDescriptor.setLinkedInProfile(
-                    ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get())
-            );
+                    ParserUtil.parseLinkedInProfile(argMultimap.getValue(PREFIX_LINKEDIN).get()));
         }
 
         if (argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()) {
             editPersonDescriptor.setInstagramHandle(
-                    ParserUtil.parseInstagramHandle(argMultimap.getValue(PREFIX_INSTAGRAM).get())
-            );
+                    ParserUtil.parseInstagramHandle(argMultimap.getValue(PREFIX_INSTAGRAM).get()));
         }
 
         if (argMultimap.getValue(PREFIX_YOUTUBE).isPresent()) {
             editPersonDescriptor.setYouTubeChannel(
-                    ParserUtil.parseYouTubeChannel(argMultimap.getValue(PREFIX_YOUTUBE).get())
-            );
+                    ParserUtil.parseYouTubeChannel(argMultimap.getValue(PREFIX_YOUTUBE).get()));
         }
 
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
+            editPersonDescriptor.setPriority(
+                    new Priority(ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get())));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         if (!editPersonDescriptor.isAnyFieldEdited()) {
@@ -101,8 +104,10 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if
+     * {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be
+     * parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {

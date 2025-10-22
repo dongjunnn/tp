@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
@@ -34,6 +35,7 @@ public class AddCommand extends Command {
             + PREFIX_INSTAGRAM + "INSTAGRAM_HANDLE "
             + PREFIX_YOUTUBE + "YOUTUBE_CHANNEL) "
             + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -44,6 +46,7 @@ public class AddCommand extends Command {
             + PREFIX_INSTAGRAM + "@john_doe "
             + PREFIX_YOUTUBE + "youtube.com/@johndoe "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_PRIORITY + "100 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

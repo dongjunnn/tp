@@ -18,6 +18,7 @@ import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
 import seedu.address.model.person.Socials;
 import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
@@ -37,6 +38,7 @@ class JsonAdaptedPerson {
     private final String instagramHandle;
     private final String youTubeChannel;
     private final String address;
+    private final String priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -52,6 +54,7 @@ class JsonAdaptedPerson {
             @JsonProperty("instagramHandle") String instagramHandle,
             @JsonProperty("youTubeChannel") String youTubeChannel,
             @JsonProperty("address") String address,
+            @JsonProperty("priority") String priority,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -61,6 +64,7 @@ class JsonAdaptedPerson {
         this.instagramHandle = instagramHandle != null ? instagramHandle : "";
         this.youTubeChannel = youTubeChannel != null ? youTubeChannel : "";
         this.address = address;
+        this.priority = priority;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -79,15 +83,18 @@ class JsonAdaptedPerson {
         instagramHandle = socials.getInstagram() != null ? socials.getInstagram().value : "";
         youTubeChannel = socials.getYouTube() != null ? socials.getYouTube().value : "";
         address = source.getAddress().value;
+        priority = source.getPriority().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted person object into the model's
+     * {@code Person} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in
+     *                               the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
@@ -163,8 +170,17 @@ class JsonAdaptedPerson {
 
         final Socials modelSocials = new Socials(modelDiscord, modelLinkedIn, modelInstagram, modelYouTube);
 
+        if (priority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
+        }
+        if (!Priority.isValidPriority(priority)) {
+            throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
+        }
+        final Priority modelPriority = new Priority(priority);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelSocials, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelSocials, modelAddress, modelPriority, modelTags);
     }
 
 }

@@ -42,8 +42,7 @@ public class EditPersonDescriptorTest {
                 new Socials(new Discord("aliceD#1234"), new LinkedIn("linkedin.com/in/alice"),
                         new Instagram("@alic3"), new YouTube("youtube.com/@alicechannel")),
                 new Address("123 Wonderland"),
-                Set.of(new Tag("friend"))
-        );
+                Set.of(new Tag("friend")));
     }
 
     @Test
@@ -96,7 +95,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getLinkedInProfile().orElse(null) + ", instagramHandle="
                 + editPersonDescriptor.getInstagramHandle().orElse(null) + ", youTubeChannel="
                 + editPersonDescriptor.getYouTubeChannel().orElse(null) + ", address="
-                + editPersonDescriptor.getAddress().orElse(null) + ", tags="
+                + editPersonDescriptor.getAddress().orElse(null) + ", priority="
+                + editPersonDescriptor.getPriority().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }

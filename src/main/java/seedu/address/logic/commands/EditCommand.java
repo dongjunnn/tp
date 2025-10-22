@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -33,6 +34,7 @@ import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
 import seedu.address.model.person.Socials;
 import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
@@ -51,6 +53,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_DISCORD + "DISCORD_HANDLE] "
             + "[" + PREFIX_LINKEDIN + "LINKEDIN_PROFILE] "
             + "[" + PREFIX_INSTAGRAM + "INSTAGRAM_HANDLE] "
@@ -69,7 +72,7 @@ public class EditCommand extends Command {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -122,9 +125,11 @@ public class EditCommand extends Command {
         Socials updatedSocials = new Socials(updatedDiscord, updatedLinkedIn,
                 updatedInstagram, updatedYouTube);
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedSocials, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedSocials, updatedAddress, updatedPriority,
+                updatedTags);
     }
 
     @Override
@@ -152,7 +157,8 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
+     * Stores the details to edit the person with. Each non-empty field value will
+     * replace the
      * corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
@@ -164,9 +170,11 @@ public class EditCommand extends Command {
         private Instagram instagramHandle;
         private YouTube youtubeChannel;
         private Address address;
+        private Priority priority;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -181,6 +189,7 @@ public class EditCommand extends Command {
             setInstagramHandle(toCopy.instagramHandle);
             setYouTubeChannel(toCopy.youtubeChannel);
             setAddress(toCopy.address);
+            setPriority(toCopy.priority);
             setTags(toCopy.tags);
         }
 
@@ -189,7 +198,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, discordHandle, linkedInProfile,
-                    instagramHandle, youtubeChannel, address, tags);
+                    instagramHandle, youtubeChannel, address, priority, tags);
         }
 
         public void setName(Name name) {
@@ -256,6 +265,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setPriority(Priority priority) {
+            this.priority = priority;
+        }
+
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -265,7 +282,8 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable tag set, which throws
+         * {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
@@ -293,6 +311,7 @@ public class EditCommand extends Command {
                     && Objects.equals(instagramHandle, otherEditPersonDescriptor.instagramHandle)
                     && Objects.equals(youtubeChannel, otherEditPersonDescriptor.youtubeChannel)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(priority, otherEditPersonDescriptor.priority)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -307,6 +326,7 @@ public class EditCommand extends Command {
                     .add("instagramHandle", instagramHandle)
                     .add("youTubeChannel", youtubeChannel)
                     .add("address", address)
+                    .add("priority", priority)
                     .add("tags", tags)
                     .toString();
         }

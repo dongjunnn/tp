@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.priority.Priority;
 
 
 //todo: change each field to a class
