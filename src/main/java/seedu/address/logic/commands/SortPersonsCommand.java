@@ -61,7 +61,6 @@ public class SortPersonsCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    @SuppressWarnings("checkstyle:Indentation")
     private static int priorityRank(String s) {
         if (s == null) {
             return -1;
