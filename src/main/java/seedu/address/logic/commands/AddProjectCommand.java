@@ -1,6 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -26,15 +30,16 @@ public class AddProjectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the address book. "
             + "Parameters: "
-            + "n/NAME "
-            + "d/DEADLINE(yyyy-MM-dd) "
-            + "p/PRIORITY "
-            + "[m/MEMBER_INDEX]...\n"
+            + PREFIX_NAME + "NAME "
+            + PREFIX_DEADLINE + "DEADLINE (yyyy-MM-dd) "
+            + PREFIX_PRIORITY + "PRIORITY (LOW|MEDIUM|HIGH) "
+            + "[" + PREFIX_MEMBER + "MEMBER_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + "n/IndiDex v1.3 "
-            + "d/2025-12-31 "
-            + "p/HIGH "
-            + "m/1 m/3";
+            + PREFIX_NAME + "IndiDex v1.3 "
+            + PREFIX_DEADLINE + "2025-12-31 "
+            + PREFIX_PRIORITY + "HIGH "
+            + PREFIX_MEMBER + "1 "
+            + PREFIX_MEMBER + "3";
 
     public static final String MESSAGE_SUCCESS = "New project added: %1$s";
     public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the address book";
