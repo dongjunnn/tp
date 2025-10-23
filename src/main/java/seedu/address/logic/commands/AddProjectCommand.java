@@ -13,7 +13,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddProjectCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.project.Priority;
@@ -27,7 +26,7 @@ public class AddProjectCommand extends Command {
     public static final String COMMAND_WORD = "padd";
 
     private static final Logger logger =
-            Logger.getLogger(AddProjectCommandParser.class.getName());
+            Logger.getLogger(AddProjectCommand.class.getName());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the address book. "
             + "Parameters: "
