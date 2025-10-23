@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.priority.Priority;
 
 
 //todo: change each field to a class
@@ -89,6 +90,17 @@ public class Project {
     /** Returns members of the project. */
     public Set<Person> getMembers() {
         return java.util.Collections.unmodifiableSet(members);
+    }
+
+    /**
+     * Removes a member from this project.
+     *
+     * @param person the person to remove
+     * @return true if the member was present and removed; false otherwise
+     */
+    public boolean deleteMember(Person person) {
+        Objects.requireNonNull(person);
+        return members.remove(person);
     }
 
     @Override

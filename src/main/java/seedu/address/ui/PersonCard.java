@@ -43,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label linkedInProfile;
     @FXML
+    private Label priority;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -55,6 +57,7 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
+        priority.setText("Priority: " + person.getPriority().value);
         email.setText(person.getEmail().value);
 
         if (person.getDiscordHandle() != null && !person.getDiscordHandle().isEmpty()) {

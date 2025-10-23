@@ -135,6 +135,7 @@ public class PersonTest {
                 + ", discordHandle=" + ALICE.getDiscordHandle()
                 + ", linkedInProfile=" + ALICE.getLinkedInProfile()
                 + ", address=" + ALICE.getAddress()
+                + ", priority=" + ALICE.getPriority()
                 + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
