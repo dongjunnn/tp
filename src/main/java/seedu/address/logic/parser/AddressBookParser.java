@@ -89,7 +89,7 @@ public class AddressBookParser {
 
         case JoinProjectCommand.COMMAND_WORD:
             return new JoinProjectCommandParser().parse(arguments);
-                
+
         case DeleteProjectCommand.COMMAND_WORD:
             return new DeleteProjectCommandParser().parse(arguments);
 
