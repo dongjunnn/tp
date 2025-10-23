@@ -1,9 +1,18 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Comparator;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -19,17 +28,17 @@ public class SortPersonsCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts the displayed persons by exactly one attribute.\n"
             + "Parameters:\n"
-            + "  n/   - Name (case-insensitive)\n"
-            + "  e/   - Email\n"
-            + "  p/   - Phone\n"
-            + "  pr/  - Priority\n"
-            + "  a/   - Address\n"
+            + "  " + PREFIX_NAME + "   - Name (case-insensitive)\n"
+            + "  " + PREFIX_EMAIL + "   - Email\n"
+            + "  " + PREFIX_PHONE + "   - Phone\n"
+            + "  " + PREFIX_PRIORITY + "  - Priority\n"
+            + "  " + PREFIX_ADDRESS + "   - Address\n"
             + "Direction (optional): asc | desc (default: asc)\n"
             + "Format: " + COMMAND_WORD + " <attribute-prefix>[asc|desc]\n"
             + "Examples:\n"
-            + "  " + COMMAND_WORD + " n/asc\n"
-            + "  " + COMMAND_WORD + " p/desc\n"
-            + "  " + COMMAND_WORD + " e/\n";
+            + "  " + COMMAND_WORD + " " + PREFIX_NAME + "asc\n"
+            + "  " + COMMAND_WORD + " " + PREFIX_PRIORITY + "desc\n"
+            + "  " + COMMAND_WORD + " " + PREFIX_ADDRESS + "\n";
 
     private final Prefix attribute;
     private final boolean ascending;
@@ -42,16 +51,23 @@ public class SortPersonsCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Comparator<Person> cmp = switch (attribute.toString()) {
-        case "n/" -> Comparator.comparing(p -> p.getName().fullName, String.CASE_INSENSITIVE_ORDER);
-        case "e/" -> Comparator.comparing(p -> p.getEmail().value);
-        case "p/" -> Comparator.comparing(p -> p.getPhone().value);
-        case "a/" -> Comparator.comparing(p -> p.getAddress().value);
-        case "pr/" -> Comparator.comparing(p -> priorityRank(p.getPriority().value));
-        default -> throw new IllegalArgumentException("Unsupported attribute: " + attribute);
-        };
+        String test = PREFIX_ADDRESS.getPrefix();
+        Comparator<Person> cmp;
+        if (attribute.equals(PREFIX_NAME)) {
+            cmp = Comparator.comparing(p -> p.getName().toString(), String.CASE_INSENSITIVE_ORDER);
+        } else if (attribute.equals(PREFIX_EMAIL)) {
+            cmp = Comparator.comparing(p -> p.getEmail().toString(), String.CASE_INSENSITIVE_ORDER);
+        } else if (attribute.equals(PREFIX_PHONE)) {
+            cmp = Comparator.comparing(p -> p.getPhone().toString(), String.CASE_INSENSITIVE_ORDER);
+        } else if (attribute.equals(PREFIX_ADDRESS)) {
+            cmp = Comparator.comparing(p -> p.getAddress().toString(), String.CASE_INSENSITIVE_ORDER);
+        } else if (attribute.equals(PREFIX_PRIORITY)) {
+            cmp = Comparator.comparing(p -> priorityRank(p.getPriority().toString()));
+        } else {
+            throw new CommandException("Unknown sort prefix: " + attribute);
+        }
         if (!ascending) {
             cmp = cmp.reversed();
         }
@@ -82,7 +98,7 @@ public class SortPersonsCommand extends Command {
             return false;
         }
         SortPersonsCommand o = (SortPersonsCommand) other;
-        return attribute == o.attribute && ascending == o.ascending;
+        return attribute.equals(o.attribute) && ascending == o.ascending;
     }
 
     @Override

@@ -23,18 +23,18 @@ public class SortPersonsCommandParser implements Parser<SortPersonsCommand> {
 
     @Override
     public SortPersonsCommand parse(String args) throws ParseException {
-        List<Prefix> Attributes = List.of(
+        List<Prefix> attributes = List.of(
                 PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_PRIORITY, PREFIX_ADDRESS);
-        Prefix[] attrArray = Attributes.toArray(new Prefix[0]);
+        Prefix[] attrArray = attributes.toArray(new Prefix[0]);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, attrArray);
         argMultimap.verifyNoDuplicatePrefixesFor(attrArray);
-        List<Prefix> present = Attributes.stream()
+        List<Prefix> present = attributes.stream()
                 .filter(p -> hasPrefix(argMultimap, p))
                 .toList();
         if (present.size() != 1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortPersonsCommand.MESSAGE_USAGE));
         }
-        String dirToken = Attributes.stream()
+        String dirToken = attributes.stream()
                 .map(argMultimap::getValue)
                 .flatMap(java.util.Optional::stream)
                 .findFirst()
