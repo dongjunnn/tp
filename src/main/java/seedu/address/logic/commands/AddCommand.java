@@ -46,7 +46,7 @@ public class AddCommand extends Command {
             + PREFIX_INSTAGRAM + "@john_doe "
             + PREFIX_YOUTUBE + "youtube.com/@johndoe "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_PRIORITY + "100 "
+            + PREFIX_PRIORITY + "MEDIUM "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
