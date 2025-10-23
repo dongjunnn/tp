@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Socials;
 import seedu.address.model.project.Project;
 
 /**
@@ -42,8 +43,24 @@ public class Messages {
                 .append("; Phone: ")
                 .append(person.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
-                .append("; Address: ")
+                .append(person.getEmail());
+
+        // Append socials right after email if they are not empty
+        Socials socials = person.getSocials();
+        if (!socials.getDiscord().value.isEmpty()) {
+            builder.append("; Discord: ").append(socials.getDiscord());
+        }
+        if (!socials.getLinkedIn().value.isEmpty()) {
+            builder.append("; LinkedIn: ").append(socials.getLinkedIn());
+        }
+        if (!socials.getInstagram().value.isEmpty()) {
+            builder.append("; Instagram: ").append(socials.getInstagram());
+        }
+        if (!socials.getYouTube().value.isEmpty()) {
+            builder.append("; YouTube: ").append(socials.getYouTube());
+        }
+
+        builder.append("; Address: ")
                 .append(person.getAddress())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
