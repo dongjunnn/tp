@@ -11,11 +11,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Discord;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
+import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.Socials;
+import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,6 +35,8 @@ class JsonAdaptedPerson {
     private final String email;
     private final String discordHandle;
     private final String linkedInProfile;
+    private final String instagramHandle;
+    private final String youTubeChannel;
     private final String address;
     private final String priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -44,6 +51,8 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email,
             @JsonProperty("discordHandle") String discordHandle,
             @JsonProperty("linkedInProfile") String linkedInProfile,
+            @JsonProperty("instagramHandle") String instagramHandle,
+            @JsonProperty("youTubeChannel") String youTubeChannel,
             @JsonProperty("address") String address,
             @JsonProperty("priority") String priority,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
@@ -52,6 +61,8 @@ class JsonAdaptedPerson {
         this.email = email;
         this.discordHandle = discordHandle != null ? discordHandle : "";
         this.linkedInProfile = linkedInProfile != null ? linkedInProfile : "";
+        this.instagramHandle = instagramHandle != null ? instagramHandle : "";
+        this.youTubeChannel = youTubeChannel != null ? youTubeChannel : "";
         this.address = address;
         this.priority = priority;
         if (tags != null) {
@@ -66,8 +77,11 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        discordHandle = source.getDiscordHandle();
-        linkedInProfile = source.getLinkedInProfile();
+        Socials socials = source.getSocials();
+        discordHandle = socials.getDiscord() != null ? socials.getDiscord().value : "";
+        linkedInProfile = socials.getLinkedIn() != null ? socials.getLinkedIn().value : "";
+        instagramHandle = socials.getInstagram() != null ? socials.getInstagram().value : "";
+        youTubeChannel = socials.getYouTube() != null ? socials.getYouTube().value : "";
         address = source.getAddress().value;
         priority = source.getPriority().value;
         tags.addAll(source.getTags().stream()
@@ -76,9 +90,11 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted person object into the model's
+     * {@code Person} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in
+     *                               the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
@@ -109,6 +125,7 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
+
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -117,6 +134,41 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (discordHandle == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Discord.class.getSimpleName()));
+        }
+        if (!Discord.isValidDiscord(discordHandle)) {
+            throw new IllegalValueException(Discord.MESSAGE_CONSTRAINTS);
+        }
+        final Discord modelDiscord = new Discord(discordHandle);
+
+        if (linkedInProfile == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LinkedIn.class.getSimpleName()));
+        }
+        if (!LinkedIn.isValidLinkedIn(linkedInProfile)) {
+            throw new IllegalValueException(LinkedIn.MESSAGE_CONSTRAINTS);
+        }
+        final LinkedIn modelLinkedIn = new LinkedIn(linkedInProfile);
+
+        if (instagramHandle == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Instagram.class.getSimpleName()));
+        }
+        if (!Instagram.isValidInstagram(instagramHandle)) {
+            throw new IllegalValueException(Instagram.MESSAGE_CONSTRAINTS);
+        }
+        final Instagram modelInstagram = new Instagram(instagramHandle);
+
+        if (youTubeChannel == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, YouTube.class.getSimpleName()));
+        }
+        if (!YouTube.isValidYouTube(youTubeChannel)) {
+            throw new IllegalValueException(YouTube.MESSAGE_CONSTRAINTS);
+        }
+        final YouTube modelYouTube = new YouTube(youTubeChannel);
+
+        final Socials modelSocials = new Socials(modelDiscord, modelLinkedIn, modelInstagram, modelYouTube);
 
         if (priority == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -128,8 +180,7 @@ class JsonAdaptedPerson {
         final Priority modelPriority = new Priority(priority);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, discordHandle, linkedInProfile,
-                modelAddress, modelPriority, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelSocials, modelAddress, modelPriority, modelTags);
     }
 
 }

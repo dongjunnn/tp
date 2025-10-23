@@ -4,11 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -27,9 +29,11 @@ public class AddCommand extends Command {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_EMAIL + "EMAIL ("
             + PREFIX_DISCORD + "DISCORD_HANDLE "
             + PREFIX_LINKEDIN + "LINKEDIN_PROFILE "
+            + PREFIX_INSTAGRAM + "INSTAGRAM_HANDLE "
+            + PREFIX_YOUTUBE + "YOUTUBE_CHANNEL) "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -39,6 +43,8 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_DISCORD + "johnnyD#1234 "
             + PREFIX_LINKEDIN + "linkedin.com/in/johndoe "
+            + PREFIX_INSTAGRAM + "@john_doe "
+            + PREFIX_YOUTUBE + "youtube.com/@johndoe "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_PRIORITY + "MEDIUM "
             + PREFIX_TAG + "friends "

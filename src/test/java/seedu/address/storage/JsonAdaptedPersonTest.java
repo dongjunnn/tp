@@ -29,8 +29,10 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final String VALID_DISCORD = BENSON.getDiscordHandle();
-    private static final String VALID_LINKEDIN = BENSON.getLinkedInProfile();
+    private static final String VALID_DISCORD = BENSON.getSocials().getDiscord().toString();
+    private static final String VALID_LINKEDIN = BENSON.getSocials().getLinkedIn().toString();
+    private static final String VALID_INSTAGRAM = BENSON.getSocials().getInstagram().toString();
+    private static final String VALID_YOUTUBE = BENSON.getSocials().getYouTube().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
     private static final String VALID_PRIORITY = BENSON.getPriority().toString();
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
@@ -45,9 +47,8 @@ public class JsonAdaptedPersonTest {
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -55,16 +56,15 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(null, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -72,16 +72,15 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, null, VALID_EMAIL, VALID_DISCORD,
-                VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -89,51 +88,15 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullEmail_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_DISCORD,
-                VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
-    public void toModelType_nullDiscordHandle_returnsPerson() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
-                VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
-        assertEquals(BENSON, person.toModelType());
-    }
-
-    @Test
-    public void toModelType_nullLinkedInProfile_returnsPerson() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                null, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
-        assertEquals(BENSON, person.toModelType());
-    }
-
-    @Test
-    public void toModelType_emptyDiscordHandle_returnsPerson() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, "",
-                VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
-        assertEquals(BENSON, person.toModelType());
-    }
-
-    @Test
-    public void toModelType_emptyLinkedInProfile_returnsPerson() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                "", VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
-        assertEquals(BENSON, person.toModelType());
-    }
-
-    @Test
-    public void toModelType_emptyDiscordAndLinkedInProfile_returnsPerson() throws Exception {
-        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, "",
-                "", VALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
-        assertEquals(BENSON, person.toModelType());
-    }
-
-    @Test
     public void toModelType_invalidAddress_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, INVALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, INVALID_ADDRESS, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -141,16 +104,15 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                VALID_LINKEDIN, null, VALID_PRIORITY, VALID_TAGS);
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, null, VALID_PRIORITY, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_invalidPriority_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, VALID_ADDRESS, INVALID_PRIORITY, VALID_TAGS);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, INVALID_PRIORITY, VALID_TAGS);
         String expectedMessage = Priority.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -159,9 +121,8 @@ public class JsonAdaptedPersonTest {
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
-                        VALID_LINKEDIN, VALID_ADDRESS, VALID_PRIORITY, invalidTags);
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_DISCORD,
+                VALID_LINKEDIN, VALID_INSTAGRAM, VALID_YOUTUBE, VALID_ADDRESS, VALID_PRIORITY, invalidTags);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 

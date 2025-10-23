@@ -3,11 +3,13 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINKEDIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_YOUTUBE;
 
 import java.util.Set;
 
@@ -36,11 +38,21 @@ public class PersonUtil {
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        if (!person.getDiscordHandle().isBlank()) {
-            sb.append(PREFIX_DISCORD + person.getDiscordHandle() + " ");
+        if (person.getSocials().getDiscord() != null
+                && !person.getSocials().getDiscord().toString().isBlank()) {
+            sb.append(PREFIX_DISCORD + person.getSocials().getDiscord().toString() + " ");
         }
-        if (!person.getLinkedInProfile().isBlank()) {
-            sb.append(PREFIX_LINKEDIN + person.getLinkedInProfile() + " ");
+        if (person.getSocials().getLinkedIn() != null
+                && !person.getSocials().getLinkedIn().toString().isBlank()) {
+            sb.append(PREFIX_LINKEDIN + person.getSocials().getLinkedIn().toString() + " ");
+        }
+        if (person.getSocials().getInstagram() != null
+                && !person.getSocials().getInstagram().toString().isBlank()) {
+            sb.append(PREFIX_INSTAGRAM + person.getSocials().getInstagram().toString() + " ");
+        }
+        if (person.getSocials().getYouTube() != null
+                && !person.getSocials().getYouTube().toString().isBlank()) {
+            sb.append(PREFIX_YOUTUBE + person.getSocials().getYouTube().toString() + " ");
         }
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_PRIORITY + person.getPriority().value + " ");
@@ -59,13 +71,23 @@ public class PersonUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getDiscordHandle().ifPresent(discord -> {
-            if (!discord.isBlank()) {
-                sb.append(PREFIX_DISCORD).append(discord).append(" ");
+            if (!discord.value.isBlank()) {
+                sb.append(PREFIX_DISCORD).append(discord.value).append(" ");
             }
         });
         descriptor.getLinkedInProfile().ifPresent(linkedIn -> {
-            if (!linkedIn.isBlank()) {
-                sb.append(PREFIX_LINKEDIN).append(linkedIn).append(" ");
+            if (!linkedIn.value.isBlank()) {
+                sb.append(PREFIX_LINKEDIN).append(linkedIn.value).append(" ");
+            }
+        });
+        descriptor.getInstagramHandle().ifPresent(instagram -> {
+            if (!instagram.value.isBlank()) {
+                sb.append(PREFIX_INSTAGRAM).append(instagram.value).append(" ");
+            }
+        });
+        descriptor.getYouTubeChannel().ifPresent(youTube -> {
+            if (!youTube.value.isBlank()) {
+                sb.append(PREFIX_YOUTUBE).append(youTube.value).append(" ");
             }
         });
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));

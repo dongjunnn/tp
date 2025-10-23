@@ -6,10 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DISCORD_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSTAGRAM_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LINKEDIN_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_YOUTUBE_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -32,31 +34,15 @@ public class PersonTest {
         assertEquals(new Name("Amy Bee"), person.getName());
         assertEquals(new Phone("85355255"), person.getPhone());
         assertEquals(new Email("amy@gmail.com"), person.getEmail());
-        assertEquals("amy#1234", person.getDiscordHandle());
-        assertEquals("linkedin.com/in/amy", person.getLinkedInProfile());
+        assertEquals("amy#1234", person.getSocials().getDiscord().value);
+        assertEquals("linkedin.com/in/amy", person.getSocials().getLinkedIn().value);
+        assertEquals("@amy_bstyle", person.getSocials().getInstagram().value);
+        assertEquals("youtube.com/@amybee", person.getSocials().getYouTube().value);
+        assertEquals("Discord: amy#1234, LinkedIn: linkedin.com/in/amy, "
+                        + "Instagram: @amy_bstyle, YouTube: youtube.com/@amybee",
+                person.getSocials().toString());
         assertEquals(new Address("123, Jurong West Ave 6, #08-111"), person.getAddress());
         assertEquals(person.getTags().size(), 0);
-    }
-
-    @Test
-    public void constructor_onlyDiscordPresent_success() {
-        Person person = new PersonBuilder().withLinkedInProfile("").withTags().build();
-        assertEquals("amy#1234", person.getDiscordHandle());
-        assertEquals("", person.getLinkedInProfile());
-    }
-
-    @Test
-    public void constructor_onlyLinkedInPresent_success() {
-        Person person = new PersonBuilder().withDiscordHandle("").withTags().build();
-        assertEquals("", person.getDiscordHandle());
-        assertEquals("linkedin.com/in/amy", person.getLinkedInProfile());
-    }
-
-    @Test
-    public void constructor_noDiscordNoLinkedIn_success() {
-        Person person = new PersonBuilder().withDiscordHandle("").withLinkedInProfile("").withTags().build();
-        assertEquals("", person.getDiscordHandle());
-        assertEquals("", person.getLinkedInProfile());
     }
 
     @Test
@@ -69,7 +55,7 @@ public class PersonTest {
 
         // same name, all other attributes different -> returns true
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withDiscordHandle(VALID_DISCORD_BOB).withLinkedInProfile(VALID_LINKEDIN_BOB)
+                .withSocials(VALID_DISCORD_BOB, VALID_LINKEDIN_BOB, VALID_INSTAGRAM_BOB, VALID_YOUTUBE_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
@@ -132,8 +118,7 @@ public class PersonTest {
                 + "{name=" + ALICE.getName()
                 + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail()
-                + ", discordHandle=" + ALICE.getDiscordHandle()
-                + ", linkedInProfile=" + ALICE.getLinkedInProfile()
+                + ", socials=" + ALICE.getSocials().toString()
                 + ", address=" + ALICE.getAddress()
                 + ", priority=" + ALICE.getPriority()
                 + ", tags=" + ALICE.getTags() + "}";
