@@ -128,9 +128,4 @@ public interface Model {
      * @throws NullPointerException if {@code project} is null.
      */
     void updateFilteredProjectList(Predicate<Project> predicate);
-
-    /**
-     * Looks for the project in the list of projects.
-     */
-    Project getProjectByName(String projectName);
 }
