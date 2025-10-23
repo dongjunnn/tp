@@ -115,7 +115,7 @@ public class PersonCard extends UiPart<Region> {
         // Handle optional Instagram handle
         handleOptionalField(instagramHandle, person.getSocials().getInstagram().value, "Instagram: ");
 
-        // Handle optional Instagram handle
+        // Handle optional YouTube Channel
         handleOptionalField(youTubeChannel, person.getSocials().getYouTube().value, "Youtube: ");
 
         // Display tags sorted alphabetically

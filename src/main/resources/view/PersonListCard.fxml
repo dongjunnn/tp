@@ -32,10 +32,10 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="discordHandle" styleClass="cell_small_label" text="\$discordHandle" style="-fx-padding: 5 0 0 0;"/>
-      <Label fx:id="linkedInProfile" styleClass="cell_small_label" text="\$linkedInProfile" />
-      <Label fx:id="instagramHandle" styleClass="cell_small_label" text="\$instagramHandle" />
-      <Label fx:id="youTubeChannel" styleClass="cell_small_label" text="\$youTubeChannel" />
+      <Label fx:id="discordHandle" styleClass="label-discord" text="\$discordHandle" style="-fx-padding: 5 0 0 0;"/>
+      <Label fx:id="linkedInProfile" styleClass="label-linkedin" text="\$linkedInProfile" />
+      <Label fx:id="instagramHandle" styleClass="label-instagram" text="\$instagramHandle" />
+      <Label fx:id="youTubeChannel" styleClass="label-youtube" text="\$youTubeChannel" />
     </VBox>
   </GridPane>
 </HBox>
