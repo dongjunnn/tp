@@ -120,6 +120,11 @@ public class ParserUtil {
         }
 
         String trimmedDiscordHandle = discordHandle.trim();
+        // Clear Discord handle if user inputs "-"
+        if (trimmedDiscordHandle.equals("-")) {
+            return new Discord("");
+        }
+
         if (!Discord.isValidDiscord(trimmedDiscordHandle)) {
             throw new ParseException(Discord.MESSAGE_CONSTRAINTS);
         }
@@ -140,6 +145,11 @@ public class ParserUtil {
         }
 
         String trimmedLinkedInProfile = linkedInProfile.trim();
+        // Clear LinkedIn profile if user inputs "-"
+        if (trimmedLinkedInProfile.equals("-")) {
+            return new LinkedIn("");
+        }
+
         if (!LinkedIn.isValidLinkedIn(trimmedLinkedInProfile)) {
             throw new ParseException(LinkedIn.MESSAGE_CONSTRAINTS);
         }
@@ -160,6 +170,11 @@ public class ParserUtil {
         }
 
         String trimmedInstagramHandle = instagramHandle.trim();
+        // Clear Instagram handle if user inputs "-"
+        if (trimmedInstagramHandle.equals("-")) {
+            return new Instagram("");
+        }
+
         if (!Instagram.isValidInstagram(trimmedInstagramHandle)) {
             throw new ParseException(Instagram.MESSAGE_CONSTRAINTS);
         }
@@ -181,6 +196,11 @@ public class ParserUtil {
         }
 
         String trimmedYouTubeChannel = youTubeChannel.trim();
+        // Clear YouTube Channel if user inputs "-"
+        if (trimmedYouTubeChannel.equals("-")) {
+            return new YouTube("");
+        }
+
         if (!YouTube.isValidYouTube(trimmedYouTubeChannel)) {
             throw new ParseException(YouTube.MESSAGE_CONSTRAINTS);
         }
