@@ -125,7 +125,7 @@ public class EditCommand extends Command {
                 .getYouTube());
         Socials updatedSocials = new Socials(updatedDiscord, updatedLinkedIn,
                 updatedInstagram, updatedYouTube);
-        assert updatedSocials != null : "updatedSocials should not be null";
+        assert updatedSocials != null;
 
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
