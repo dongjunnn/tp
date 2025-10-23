@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
@@ -28,6 +29,9 @@ public class AddProjectCommand extends Command {
 
     public static final String COMMAND_WORD = "padd";
 
+    private static final Logger logger =
+            Logger.getLogger(AddProjectCommand.class.getName());
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
@@ -41,8 +45,8 @@ public class AddProjectCommand extends Command {
             + PREFIX_MEMBER + "1 "
             + PREFIX_MEMBER + "3";
 
-    public static final String MESSAGE_SUCCESS = "New project added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the address book";
+    private static final String MESSAGE_SUCCESS = "New project added: %1$s";
+    private static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the address book";
 
     private final String name;
     private final LocalDate deadline;
@@ -71,6 +75,8 @@ public class AddProjectCommand extends Command {
         for (Index idx : memberIndexes) {
             int z = idx.getZeroBased();
             if (z < 0 || z >= persons.size()) {
+                logger.log(java.util.logging.Level.WARNING,
+                        "Invalid member index provided: " + idx);
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
             members.add(persons.get(z));
@@ -79,10 +85,14 @@ public class AddProjectCommand extends Command {
         Project toAdd = new Project(name, priority, deadline, members);
 
         if (model.hasProject(toAdd)) {
+            logger.log(java.util.logging.Level.WARNING,
+                    "Attempted to add duplicate project: " + toAdd);
             throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
         }
 
         model.addProject(toAdd);
+        logger.log(java.util.logging.Level.INFO,
+                "Project added successfully: " + toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 

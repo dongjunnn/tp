@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -21,6 +22,9 @@ import seedu.address.model.priority.Priority;
  * Parses input arguments and creates a new AddProjectCommand object
  */
 public class AddProjectCommandParser implements Parser<AddProjectCommand> {
+
+    private static final Logger logger =
+            Logger.getLogger(AddProjectCommandParser.class.getName());
 
     @Override
     public AddProjectCommand parse(String args) throws ParseException {
@@ -41,6 +45,8 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
 
         List<Index> memberIndexes = new ArrayList<>();
         for (String raw : argMultimap.getAllValues(PREFIX_MEMBER)) {
+            logger.log(java.util.logging.Level.INFO,
+                    "Parsing member indexes from raw input: " + raw);
             for (String token : raw.split("[,\\s]+")) {
                 if (token.isBlank()) {
                     continue;
