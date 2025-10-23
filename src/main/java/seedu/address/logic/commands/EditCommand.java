@@ -96,7 +96,6 @@ public class EditCommand extends Command {
         assert personToEdit != null : "Person to edit should not be null";
 
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        assert editedPerson != null : "Edited person should not be null";
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
