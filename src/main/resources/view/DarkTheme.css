@@ -389,3 +389,8 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+/* Project list styling */
+.project-list-view .list-cell {
+    -fx-text-fill: white !important;
+}
