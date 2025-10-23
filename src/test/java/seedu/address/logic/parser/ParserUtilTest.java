@@ -15,9 +15,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Discord;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
+import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -192,5 +196,40 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseDiscord_clearField_returnEmptyString() throws Exception {
+        // '-' clears field -> returns object with empty value
+        assertEquals(new Discord(""), ParserUtil.parseDiscordHandle("-"));
+        // whitespace trimmed
+        assertEquals(new Discord(""), ParserUtil.parseDiscordHandle(" - "));
+        // null and empty input -> treated as not provided -> returns null
+        assertTrue(ParserUtil.parseDiscordHandle(null) == null);
+        assertTrue(ParserUtil.parseDiscordHandle("") == null);
+    }
+
+    @Test
+    public void parseLinkedIn_clearField_returnEmptyString() throws Exception {
+        assertEquals(new LinkedIn(""), ParserUtil.parseLinkedInProfile("-"));
+        assertEquals(new LinkedIn(""), ParserUtil.parseLinkedInProfile(" - "));
+        assertTrue(ParserUtil.parseLinkedInProfile(null) == null);
+        assertTrue(ParserUtil.parseLinkedInProfile("") == null);
+    }
+
+    @Test
+    public void parseInstagram_clearField_returnEmptyString() throws Exception {
+        assertEquals(new Instagram(""), ParserUtil.parseInstagramHandle("-"));
+        assertEquals(new Instagram(""), ParserUtil.parseInstagramHandle(" - "));
+        assertTrue(ParserUtil.parseInstagramHandle(null) == null);
+        assertTrue(ParserUtil.parseInstagramHandle("") == null);
+    }
+
+    @Test
+    public void parseYouTube_clearField_returnEmptyString() throws Exception {
+        assertEquals(new YouTube(""), ParserUtil.parseYouTubeChannel("-"));
+        assertEquals(new YouTube(""), ParserUtil.parseYouTubeChannel(" - "));
+        assertTrue(ParserUtil.parseYouTubeChannel(null) == null);
+        assertTrue(ParserUtil.parseYouTubeChannel("") == null);
     }
 }

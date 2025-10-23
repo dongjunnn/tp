@@ -40,7 +40,7 @@ public class Instagram {
      * @return true if valid, false otherwise
      */
     public static boolean isValidInstagram(String test) {
-        return test.isEmpty() || test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.equals("-") || test.matches(VALIDATION_REGEX);
     }
 
     @Override
