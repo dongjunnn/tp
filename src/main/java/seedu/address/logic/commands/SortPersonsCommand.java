@@ -72,4 +72,21 @@ public class SortPersonsCommand extends Command {
         default -> -1;
         };
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof SortPersonsCommand)) {
+            return false;
+        }
+        SortPersonsCommand o = (SortPersonsCommand) other;
+        return attribute == o.attribute && ascending == o.ascending;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(attribute, ascending);
+    }
 }
