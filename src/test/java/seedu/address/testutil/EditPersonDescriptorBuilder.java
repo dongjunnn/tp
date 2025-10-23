@@ -6,11 +6,15 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Discord;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
+import seedu.address.model.person.LinkedIn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
+import seedu.address.model.person.YouTube;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,22 +33,26 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
+     * Returns an {@code EditPersonDescriptor} with fields containing
+     * {@code person}'s details
      */
     public EditPersonDescriptorBuilder(Person person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
-        descriptor.setDiscordHandle(person.getDiscordHandle());
-        descriptor.setLinkedInProfile(person.getLinkedInProfile());
+        descriptor.setDiscordHandle(person.getSocials().getDiscord());
+        descriptor.setLinkedInProfile(person.getSocials().getLinkedIn());
+        descriptor.setInstagramHandle(person.getSocials().getInstagram());
+        descriptor.setYouTubeChannel(person.getSocials().getYouTube());
         descriptor.setAddress(person.getAddress());
         descriptor.setPriority(person.getPriority());
         descriptor.setTags(person.getTags());
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
     public EditPersonDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
@@ -52,7 +60,8 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
     public EditPersonDescriptorBuilder withPhone(String phone) {
         descriptor.setPhone(new Phone(phone));
@@ -60,7 +69,8 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
@@ -68,23 +78,44 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code DiscordHandle} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Discord} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
-    public EditPersonDescriptorBuilder withDiscordHandle(String discordHandle) {
-        descriptor.setDiscordHandle(discordHandle);
+    public EditPersonDescriptorBuilder withDiscord(String discord) {
+        descriptor.setDiscordHandle(new Discord(discord));
         return this;
     }
 
     /**
-     * Sets the {@code LinkedInProfile} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code LinkedIn} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
-    public EditPersonDescriptorBuilder withLinkedInProfile(String linkedInProfile) {
-        descriptor.setLinkedInProfile(linkedInProfile);
+    public EditPersonDescriptorBuilder withLinkedIn(String linkedIn) {
+        descriptor.setLinkedInProfile(new LinkedIn(linkedIn));
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Instagram} of the {@code EditPersonDescriptor} that we are
+     * building.
+     */
+    public EditPersonDescriptorBuilder withInstagram(String instagram) {
+        descriptor.setInstagramHandle(new Instagram(instagram));
+        return this;
+    }
+
+    /**
+     * Sets the {@code YouTube} of the {@code EditPersonDescriptor} that we are
+     * building.
+     */
+    public EditPersonDescriptorBuilder withYouTube(String youTube) {
+        descriptor.setYouTubeChannel(new YouTube(youTube));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
@@ -92,7 +123,8 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Priority} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Priority} of the {@code EditPersonDescriptor} that we are
+     * building.
      */
     public EditPersonDescriptorBuilder withPriority(String priority) {
         descriptor.setPriority(new Priority(priority));
@@ -100,7 +132,8 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the
+     * {@code EditPersonDescriptor}
      * that we are building.
      */
     public EditPersonDescriptorBuilder withTags(String... tags) {
