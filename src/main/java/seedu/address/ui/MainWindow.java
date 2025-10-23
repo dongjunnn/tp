@@ -34,6 +34,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ProjectListPanel projectListPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane projectPanelPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -108,9 +112,19 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Fills up all the placeholders of this window.
+     * Creates and initializes all UI components.
+     * Person selection triggers project display in the right panel.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        // Create ProjectListPanel first
+        ProjectListPanel projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
+        projectPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
+
+        // Create PersonListPanel with selection callback
+        personListPanel = new PersonListPanel(
+                logic.getFilteredPersonList(),
+                projectListPanel::showProjectsForPerson
+        );
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
