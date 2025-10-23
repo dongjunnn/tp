@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
@@ -29,6 +30,9 @@ public class DeleteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 3 5";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
+
+    private static final Logger logger =
+            Logger.getLogger(DeleteCommand.class.getName());
 
     private final List<Index> targetIndexes;
 
@@ -71,6 +75,8 @@ public class DeleteCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndexes.isEmpty()) {
+            logger.log(java.util.logging.Level.WARNING,
+                    "No indexes provided for deletion.");
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -85,6 +91,8 @@ public class DeleteCommand extends Command {
                 .filter(i -> i < 0 || i >= lastShownList.size())
                 .collect(Collectors.toList());
         if (!invalid.isEmpty()) {
+            logger.log(java.util.logging.Level.WARNING,
+                    "Invalid indexes provided for deletion: " + invalid);
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
