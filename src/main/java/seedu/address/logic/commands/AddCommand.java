@@ -31,7 +31,7 @@ public class AddCommand extends Command {
             + PREFIX_DISCORD + "DISCORD_HANDLE "
             + PREFIX_LINKEDIN + "LINKEDIN_PROFILE "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_PRIORITY + "PRIORITY] "
+            + PREFIX_PRIORITY + "PRIORITY "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -40,7 +40,7 @@ public class AddCommand extends Command {
             + PREFIX_DISCORD + "johnnyD#1234 "
             + PREFIX_LINKEDIN + "linkedin.com/in/johndoe "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_PRIORITY + "100 "
+            + PREFIX_PRIORITY + "MEDIUM "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
