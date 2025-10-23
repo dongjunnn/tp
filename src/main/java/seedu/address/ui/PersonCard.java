@@ -107,10 +107,16 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
 
         // Handle optional Discord handle
-        handleOptionalField(discordHandle, person.getDiscordHandle(), "Discord: ");
+        handleOptionalField(discordHandle, person.getSocials().getDiscord().value, "Discord: ");
 
         // Handle optional LinkedIn profile
-        handleOptionalField(linkedInProfile, person.getLinkedInProfile(), "LinkedIn: ");
+        handleOptionalField(linkedInProfile, person.getSocials().getLinkedIn().value, "LinkedIn: ");
+
+        // Handle optional Instagram handle
+        handleOptionalField(instagramHandle, person.getSocials().getInstagram().value, "Instagram: ");
+
+        // Handle optional Instagram handle
+        handleOptionalField(youTubeChannel, person.getSocials().getYouTube().value, "Youtube: ");
 
         // Display tags sorted alphabetically
         displayTags();
