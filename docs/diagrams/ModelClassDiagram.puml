@@ -26,6 +26,9 @@ Class LinkedIn
 Class Instagram
 Class YouTube
 
+Class UniqueProjectList
+Class Project
+
 Class I #FFFFFF
 }
 
@@ -48,6 +51,9 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+
+AddressBook *--> "1" UniqueProjectList
+UniqueProjectList --> "~* all" Project
 
 Person *--> "1" Socials
 Socials *--> Discord
