@@ -20,6 +20,12 @@ Class Name
 Class Phone
 Class Tag
 
+Class Socials
+Class Discord
+Class LinkedIn
+Class Instagram
+Class YouTube
+
 Class I #FFFFFF
 }
 
@@ -42,6 +48,12 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+
+Person *--> "1" Socials
+Socials *--> Discord
+Socials *--> LinkedIn
+Socials *--> Instagram
+Socials *--> YouTube
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I

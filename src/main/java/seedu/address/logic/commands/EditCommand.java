@@ -93,6 +93,7 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -124,6 +125,8 @@ public class EditCommand extends Command {
                 .getYouTube());
         Socials updatedSocials = new Socials(updatedDiscord, updatedLinkedIn,
                 updatedInstagram, updatedYouTube);
+        assert updatedSocials != null;
+
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
