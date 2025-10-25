@@ -31,8 +31,8 @@ public class LeaveProjectCommandParser implements Parser<LeaveProjectCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MEMBER)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT
-                                                   , LeaveProjectCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                                                   LeaveProjectCommand.MESSAGE_USAGE));
         }
 
         String projectName = argMultimap.getValue(PREFIX_NAME).get().trim();
