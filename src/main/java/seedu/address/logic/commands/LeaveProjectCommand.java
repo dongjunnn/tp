@@ -101,6 +101,7 @@ public class LeaveProjectCommand extends Command {
                 + "\nRemoved: %2$s", project.getName(), removedNames));
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
