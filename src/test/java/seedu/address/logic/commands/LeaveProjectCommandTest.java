@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
@@ -50,7 +52,8 @@ public class LeaveProjectCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setProject(project, expectedProject);
 
-        String expectedMessage = String.format(LeaveProjectCommand.MESSAGE_LEAVE_SUCCESS + "\nRemoved: %2$s", PROJECT_NAME, ALICE.getName());
+        String expectedMessage = String.format(LeaveProjectCommand.MESSAGE_LEAVE_SUCCESS
+                + "\nRemoved: %2$s", PROJECT_NAME, ALICE.getName());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -84,7 +87,7 @@ public class LeaveProjectCommandTest {
 
         LeaveProjectCommand command = new LeaveProjectCommand(PROJECT_NAME, List.of(INDEX_SECOND_PERSON));
 
-        String expectedMessage = String.format(LeaveProjectCommand.MESSAGE_MEMBER_NOT_IN_PROJECT, BOB.getName());
+        String expectedMessage = String.format(LeaveProjectCommand.MESSAGE_MEMBER_NOT_IN_PROJECT, BENSON.getName());
         assertCommandFailure(command, model, expectedMessage);
     }
 }
