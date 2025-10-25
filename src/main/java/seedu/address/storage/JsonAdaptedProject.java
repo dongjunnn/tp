@@ -13,7 +13,7 @@ import seedu.address.model.project.Project;
 
 /**
  * Jackson-friendly version of {@link Project}.
- * v2: persist name, priority, deadline, and member emails.
+ * v2: persist name, priority, deadline, and member names.
  */
 class JsonAdaptedProject {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Project's %s field is missing!";
@@ -21,7 +21,7 @@ class JsonAdaptedProject {
     private final String name;
     private final String priority;
     private final String deadline;
-    /** Member identities stored as emails for stable cross-reference. */
+    /** Member identities stored as names for stable cross-reference. */
     private final List<String> members;
 
     @JsonCreator
@@ -40,14 +40,14 @@ class JsonAdaptedProject {
         this.name = source.getName();
         this.priority = source.getPriority().name();
         this.deadline = source.getDeadline().toString();
-        // Assumes Project#getMembers() and Person#getEmail().value exist
+
         this.members = source.getMembers().stream()
-                .map(p -> p.getEmail().value)
-                .toList();
+                .map(p -> p.getName().fullName)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**
-     * Builds a Project WITHOUT members; member emails can be obtained via {@link #getMemberEmails()}
+     * Builds a Project WITHOUT members; member names can be obtained via {@link #getMemberNames()}
      * and resolved in JsonSerializableAddressBook after persons are loaded.
      */
     public Project toModelTypeWithoutMembers() throws IllegalValueException {
@@ -79,8 +79,8 @@ class JsonAdaptedProject {
         return new Project(name, pr, dl, java.util.Collections.emptySet());
     }
 
-    /** Expose raw member emails so the loader can resolve them to Person objects. */
-    public List<String> getMemberEmails() {
+    /** Expose member names so the loader can resolve them to Person objects. */
+    public List<String> getMemberNames() {
         return members;
     }
 }
