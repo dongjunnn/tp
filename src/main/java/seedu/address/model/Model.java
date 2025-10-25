@@ -124,6 +124,11 @@ public interface Model {
     ObservableList<Project> getFilteredProjectList();
 
     /**
+     * Looks for the project in the list of projects.
+     */
+    Project getProjectByName(String projectName);
+
+    /**
      * Updates the filter of the filtered project list to filter by the given {@code project}.
      * @throws NullPointerException if {@code project} is null.
      */
