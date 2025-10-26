@@ -143,6 +143,11 @@ public class UniqueProjectList implements Iterable<Project> {
         return true;
     }
 
+    /**
+     * Removes the given member from all projects in the list.
+     *
+     * @param member The member to be removed.
+     */
     public void removeMemberFromAll(Person member) {
         requireNonNull(member);
 
