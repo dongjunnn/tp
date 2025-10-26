@@ -176,6 +176,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.equals(otherAddressBook.persons);
     }
 
+    public void removeMemberFromAllProjects(Person member) {
+        requireNonNull(member);
+        projects.removeMemberFromAll(member);
+    }
+
     @Override
     public int hashCode() {
         return persons.hashCode();
