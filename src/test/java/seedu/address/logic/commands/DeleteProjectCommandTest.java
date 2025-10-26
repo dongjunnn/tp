@@ -191,6 +191,10 @@ public class DeleteProjectCommandTest {
             throw new AssertionError();
         }
 
+        @Override
+        public void sortPersons(java.util.Comparator<Person> comparator) {
+            throw new AssertionError();
+        }
     }
 
     private static class ModelStubWithProjects extends ModelStub {

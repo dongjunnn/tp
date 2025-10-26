@@ -245,6 +245,10 @@ public class AddProjectCommandTest {
             throw new AssertionError();
         }
 
+        @Override
+        public void sortPersons(java.util.Comparator<Person> comparator) {
+            throw new AssertionError();
+        }
 
     }
 
