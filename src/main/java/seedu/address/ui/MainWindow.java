@@ -1,9 +1,8 @@
 package seedu.address.ui;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
