@@ -83,6 +83,7 @@ public class CommandResult {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
+                .add("showDeadline", showDeadline)
                 .add("exit", exit)
                 .toString();
     }
