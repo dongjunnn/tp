@@ -212,6 +212,12 @@ public class MainWindow extends UiPart<Stage> {
                 projectListPanel.showSingleProjectDetails(commandResult.getProjectToShow());
             }
 
+            // Handle show all projects for pshow all command
+            if (commandResult.isShowAllProjects()) {
+                personListPanel.clearSelection();
+                projectListPanel.showAllProjects();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);

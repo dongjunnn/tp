@@ -27,6 +27,11 @@ public class ShowProjectCommandParser implements Parser<ShowProjectCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowProjectCommand.MESSAGE_USAGE));
         }
 
+        // Check if user wants to show all projects
+        if (trimmed.equalsIgnoreCase("all")) {
+            return new ShowProjectCommand();
+        }
+
         try {
             Index index = ParserUtil.parseIndex(trimmed);
             return new ShowProjectCommand(index);

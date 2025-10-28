@@ -19,13 +19,24 @@ public class ShowProjectCommand extends Command {
     public static final String COMMAND_WORD = "pshow";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows projects for the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Shows projects for the person identified by index, or shows all projects.\n"
+            + "Parameters: INDEX (must be a positive integer) or 'all'\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "Example: " + COMMAND_WORD + " all";
 
     public static final String MESSAGE_SHOW_PERSON_SUCCESS = "Showing projects for: %1$s";
+    public static final String MESSAGE_SHOW_ALL_PROJECTS_SUCCESS = "Showing all projects";
 
     private final Index targetIndex;
+    private final boolean showAll;
+
+    /**
+     * Creates a ShowProjectCommand to show all projects.
+     */
+    public ShowProjectCommand() {
+        this.targetIndex = null;
+        this.showAll = true;
+    }
 
     /**
      * Creates a ShowProjectCommand to show projects for the person at the specified {@code Index}.
@@ -33,11 +44,17 @@ public class ShowProjectCommand extends Command {
     public ShowProjectCommand(Index targetIndex) {
         requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
+        this.showAll = false;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (showAll) {
+            return new CommandResult(MESSAGE_SHOW_ALL_PROJECTS_SUCCESS, true);
+        }
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -67,17 +84,31 @@ public class ShowProjectCommand extends Command {
         }
 
         ShowProjectCommand otherCommand = (ShowProjectCommand) other;
+        if (showAll != otherCommand.showAll) {
+            return false;
+        }
+
+        // If both are showAll, they're equal
+        if (showAll) {
+            return true;
+        }
+
+        // Otherwise compare indices
         return targetIndex.equals(otherCommand.targetIndex);
     }
 
     @Override
     public int hashCode() {
+        if (showAll) {
+            return Boolean.hashCode(true);
+        }
         return targetIndex.hashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .add("showAll", showAll)
                 .add("targetIndex", targetIndex)
                 .toString();
     }

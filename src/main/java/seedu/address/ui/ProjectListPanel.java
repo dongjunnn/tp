@@ -292,6 +292,67 @@ public class ProjectListPanel extends UiPart<Region> {
     }
 
     /**
+     * Shows all projects in the system without selecting a person.
+     * Used for pshow all command.
+     */
+    public void showAllProjects() {
+        // Hide placeholder, show content
+        if (placeholderContainer != null) {
+            placeholderContainer.setVisible(false);
+            placeholderContainer.setManaged(false);
+        }
+
+        if (contentContainer != null) {
+            contentContainer.setVisible(true);
+            contentContainer.setManaged(true);
+        }
+
+        // Update header
+        if (personNameLabel != null) {
+            personNameLabel.setText("All Projects");
+            personNameLabel.setVisible(true);
+            personNameLabel.setManaged(true);
+        }
+
+        // Show "Projects:" label if it exists (might be null if FXML was reverted)
+        if (projectsSectionLabel != null) {
+            projectsSectionLabel.setVisible(true);
+            projectsSectionLabel.setManaged(true);
+        }
+
+        // Check if there are any projects
+        if (allProjects.isEmpty()) {
+            if (projectsStatusLabel != null) {
+                projectsStatusLabel.setText("None");
+                projectsStatusLabel.setVisible(true);
+                projectsStatusLabel.setManaged(true);
+            }
+            if (projectListView != null) {
+                projectListView.setVisible(false);
+                projectListView.setManaged(false);
+            }
+            hideProjectDetails();
+        } else {
+            // Hide status label
+            if (projectsStatusLabel != null) {
+                projectsStatusLabel.setVisible(false);
+                projectsStatusLabel.setManaged(false);
+            }
+
+            // Show all projects in the list
+            if (projectListView != null) {
+                projectListView.setVisible(true);
+                projectListView.setManaged(true);
+                projectListView.setItems(allProjects);
+            }
+
+            // Clear selection and hide details initially
+            projectListView.getSelectionModel().clearSelection();
+            hideProjectDetails();
+        }
+    }
+
+    /**
      * Custom cell for displaying project in the list.
      */
     class ProjectListViewCell extends ListCell<Project> {
