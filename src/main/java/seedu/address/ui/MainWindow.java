@@ -184,6 +184,19 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Opens the deadline window or focuses on it if it's already opened.
+     */
+
+    @FXML
+    public void handleDeadline() {
+        if (!dueSoonWindow.isShowing()) {
+            dueSoonWindow.show();
+        } else {
+            dueSoonWindow.focus();
+        }
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -217,6 +230,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
+            }
+
+            if (commandResult.isShowDeadline()) {
+                handleDeadline();
             }
 
             if (commandResult.isExit()) {

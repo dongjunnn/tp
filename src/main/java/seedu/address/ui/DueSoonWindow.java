@@ -72,6 +72,14 @@ public class DueSoonWindow extends UiPart<Stage> {
         getRoot().requestFocus();
     }
 
+    public boolean isShowing() {
+        return getRoot().isShowing();
+    }
+
+    public void focus() {
+        getRoot().requestFocus();
+    }
+
     /**
      * Static helper to build the "due within 7 days" subset.
      */
