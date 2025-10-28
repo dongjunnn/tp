@@ -12,9 +12,12 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ShowProjectCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -117,7 +120,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         // Create ProjectListPanel first
-        ProjectListPanel projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
+        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
         projectPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
 
         // Create PersonListPanel with selection callback
@@ -153,6 +156,7 @@ public class MainWindow extends UiPart<Stage> {
      * Opens the help window or focuses on it if it's already opened.
      */
     @FXML
+
     public void handleHelp() {
         if (!helpWindow.isShowing()) {
             helpWindow.show();
@@ -200,11 +204,35 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            // Handle pshow command - if command succeeded, trigger person selection
+            handlePshowCommand(commandText);
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        }
+    }
+
+    /**
+     * Handles pshow command by programmatically selecting the person in the person list.
+     * This method is called after successful command execution.
+     *
+     * @param commandText The full command text entered by the user
+     */
+    private void handlePshowCommand(String commandText) {
+        String trimmed = commandText.trim();
+        if (trimmed.startsWith(ShowProjectCommand.COMMAND_WORD + " ")) {
+            // Extract and parse the index argument
+            String args = trimmed.substring(ShowProjectCommand.COMMAND_WORD.length()).trim();
+            try {
+                Index index = ParserUtil.parseIndex(args);
+                personListPanel.selectPerson(index);
+            } catch (ParseException e) {
+                // Should not happen since command already succeeded, but log if it does
+                logger.warning("Could not parse index for person selection: " + args);
+            }
         }
     }
 }

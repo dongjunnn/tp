@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Person;
 
 /**
@@ -55,6 +56,24 @@ public class PersonListPanel extends UiPart<Region> {
                             onPersonSelected.accept(newValue);
                         }
                     });
+        }
+    }
+
+    /**
+     * Programmatically selects the person at the specified index in the list.
+     *
+     * @param index The index of the person to select (zero-based)
+     */
+    public void selectPerson(Index index) {
+        requireNonNull(index);
+        int zeroBasedIndex = index.getZeroBased();
+
+        if (zeroBasedIndex >= 0 && zeroBasedIndex < personListView.getItems().size()) {
+            personListView.getSelectionModel().select(zeroBasedIndex);
+            personListView.scrollTo(zeroBasedIndex);
+            logger.info("Programmatically selected person at index: " + (zeroBasedIndex + 1));
+        } else {
+            logger.warning("Attempted to select invalid index: " + (zeroBasedIndex + 1));
         }
     }
 
