@@ -52,7 +52,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         // Check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
+                PREFIX_DISCORD, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS, PREFIX_PRIORITY);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 

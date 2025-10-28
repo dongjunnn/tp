@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -76,7 +77,7 @@ public class AddProjectCommandTest {
                 "Proj",
                 LocalDate.of(2025, 10, 1),
                 Priority.MEDIUM,
-                List.of(Index.fromOneBased(1))
+                List.of(INDEX_FIRST_PERSON)
         );
 
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
