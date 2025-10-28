@@ -210,19 +210,7 @@ public class MainWindow extends UiPart<Stage> {
 
             // Handle project details display for pdetails command
             if (commandResult.hasProjectToShow()) {
-                Project project = commandResult.getProjectToShow();
-                Person selectedPerson = personListPanel.getSelectedPerson();
-                boolean showingAllProjects = projectListPanel.isShowingAllProjects();
-
-                // If showing all projects OR (person is selected and project belongs to them)
-                if (showingAllProjects || (selectedPerson != null && project.getMembers().contains(selectedPerson))) {
-                    // Replicate clicking behavior: select project in current list
-                    projectListPanel.selectProjectByName(project.getName());
-                } else {
-                    // Otherwise, clear selection and show single project details
-                    personListPanel.clearSelection();
-                    projectListPanel.showSingleProjectDetails(project);
-                }
+                handleProjectDetailsDisplay(commandResult.getProjectToShow());
             }
 
             // Handle show all projects for pshow all command
@@ -237,5 +225,55 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Handles project details display for pdetails command.
+     * Shows project in context if user is viewing projects, otherwise shows standalone.
+     */
+    private void handleProjectDetailsDisplay(Project project) {
+        if (shouldShowProjectInCurrentContext(project)) {
+            selectProjectInCurrentList(project);
+        } else {
+            showStandaloneProjectDetails(project);
+        }
+    }
+
+    /**
+     * Determines if the project should be shown in the current context
+     * (either in "all projects" view or in selected person's project list).
+     */
+    private boolean shouldShowProjectInCurrentContext(Project project) {
+        return projectListPanel.isShowingAllProjects()
+                || currentPersonHasProject(project);
+    }
+
+    /**
+     * Checks if the currently selected person is a member of the given project.
+     */
+    private boolean currentPersonHasProject(Project project) {
+        Person selectedPerson = personListPanel.getSelectedPerson();
+        return selectedPerson != null && project.getMembers().contains(selectedPerson);
+    }
+
+    /**
+     * Selects the project in the current list view.
+     * Falls back to standalone view if project is not found in list.
+     */
+    private void selectProjectInCurrentList(Project project) {
+        boolean found = projectListPanel.selectProjectByName(project.getName());
+        if (!found) {
+            logger.warning("Project not found in current list, showing standalone: "
+                    + project.getName());
+            showStandaloneProjectDetails(project);
+        }
+    }
+
+    /**
+     * Shows a single project without any person/list context.
+     */
+    private void showStandaloneProjectDetails(Project project) {
+        personListPanel.clearSelection();
+        projectListPanel.showSingleProjectDetails(project);
     }
 }

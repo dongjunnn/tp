@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -68,8 +69,11 @@ public class ShowProjectCommand extends Command {
                 targetIndex);
     }
 
-    public Index getTargetIndex() {
-        return targetIndex;
+    /**
+     * Returns the target index if in index mode, empty Optional if in showAll mode.
+     */
+    public Optional<Index> getTargetIndex() {
+        return Optional.ofNullable(targetIndex);
     }
 
     @Override

@@ -36,6 +36,30 @@ public class CommandResult {
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
                          Index personIndexToSelect, Project projectToShow, boolean showAllProjects) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
+
+        // Validate that only one action is specified (mutually exclusive)
+        int actionCount = 0;
+        if (showHelp) {
+            actionCount++;
+        }
+        if (exit) {
+            actionCount++;
+        }
+        if (personIndexToSelect != null) {
+            actionCount++;
+        }
+        if (projectToShow != null) {
+            actionCount++;
+        }
+        if (showAllProjects) {
+            actionCount++;
+        }
+
+        if (actionCount > 1) {
+            throw new IllegalArgumentException(
+                "CommandResult should only specify one UI action at a time");
+        }
+
         this.showHelp = showHelp;
         this.exit = exit;
         this.personIndexToSelect = personIndexToSelect;
