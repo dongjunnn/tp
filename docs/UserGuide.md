@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-IndiDex is a **desktop contact and project management application designed for indie content creators**, optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IndiDex can help you manage your content creator network and projects faster than traditional GUI apps.
+IndiDex is a **desktop contact and project management application designed for indie content creators**, optimised for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IndiDex can help you manage your content creator network and projects faster than traditional GUI apps. Designed for creators managing 20+ collaborators, IndiDex lets you store all contact details (including social media profiles like Discord, Instagram, YouTube, and LinkedIn), create projects with deadlines, and assign team members—all in seconds rather than minutes.
 
 * Table of Contents
   {:toc}
@@ -15,15 +15,15 @@ IndiDex is a **desktop contact and project management application designed for i
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for IndiDex.
+3. Copy the file to the folder you want to use as the _home folder_ for IndiDex.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data (the screenshot contains added projects which won't appear on launch).<br>
    ![image](https://hackmd.io/_uploads/HyrkrTP0gx.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `list` : Lists all contacts.
@@ -38,7 +38,7 @@ IndiDex is a **desktop contact and project management application designed for i
 
     * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/D
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all the contact's tags by typing `t/` without specifying any tags after it.
-* You can remove social media profiles by providing empty values (e.g., `dc/` to remove Discord handle).
+* You can remove social media profiles by providing a '-' as input (e.g., `dc/-` to remove Discord handle).
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 Editing a contact to have the same details as another existing contact will be rejected to prevent duplicates.
@@ -420,5 +420,6 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 * **Priority**: A classification of importance (LOW, MEDIUM, or HIGH) for contacts or projects
 * **Project**: A collection of information about a collaborative effort, including deadline, priority, and team members
 * **JSON**: A file format used to store IndiDex data
+* **Indie Content Creator**: A self-employed person who creates digital content like videos, podcasts, music, or animations and shares it online. "Indie" (short for independent) means they work for themselves rather than for a company, and they often collaborate with other freelancers to produce their content. Examples include independent YouTubers, podcasters, Twitch streamers, and digital artists.
 
 --------------------------------------------------------------------------------------------------------------------
