@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.project.Project;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private ProjectListPanel projectListPanel;
+    private DueSoonWindow dueSoonWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,6 +140,25 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Checks all projects and, if any are due within the next 7 days,
+     * shows a popup listing them.
+     */
+    public void showDueSoonPopupIfNeeded() {
+        List<Project> allProjects = logic.getFilteredProjectList()
+                .stream()
+                .collect(Collectors.toList());
+
+        List<Project> dueSoonProjects = DueSoonWindow.findProjectsDueSoon(allProjects);
+
+        if (dueSoonProjects.isEmpty()) {
+            return;
+        }
+
+        dueSoonWindow = new DueSoonWindow(dueSoonProjects);
+        dueSoonWindow.show();
     }
 
     /**

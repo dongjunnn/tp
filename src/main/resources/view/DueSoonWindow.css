@@ -1,0 +1,51 @@
+/* Overall background and default text */
+#rootVBox {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #3a3a3a;
+    -fx-border-width: 1;
+    -fx-padding: 12;
+    -fx-font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #e0e0e0;
+}
+
+/* Header label at the top */
+#header-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+}
+
+/* ListView container */
+#list-view {
+    -fx-background-color: #2a2a2a;
+    -fx-control-inner-background: #2a2a2a;
+    -fx-cell-hover-color: #3a3a3a;
+
+    -fx-text-fill: #e0e0e0;
+
+    -fx-background-insets: 0;
+    -fx-padding: 0.5em;
+
+    -fx-border-color: #3a3a3a;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+/* Individual rows (cells) in the ListView */
+#list-cell {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: #e0e0e0;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 11pt;
+}
+
+/* Hover / selection states */
+#list-cell:filled:hover,
+#list-cell:filled:selected {
+    -fx-background-color: #3d3d3d;
+    -fx-text-fill: #ffffff;
+}
