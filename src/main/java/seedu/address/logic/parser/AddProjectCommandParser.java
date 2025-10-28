@@ -54,6 +54,10 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
                 memberIndexes.add(ParserUtil.parseIndex(token));
             }
         }
+        if (memberIndexes.isEmpty()) {
+            throw new ParseException("A project must have at least one member. "
+                    + "Add at least one \"" + PREFIX_MEMBER + "\" (e.g. m/1).");
+        }
 
         return new AddProjectCommand(name, deadline, priority, memberIndexes);
     }
