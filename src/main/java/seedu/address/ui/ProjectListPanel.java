@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
@@ -13,6 +14,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Person;
 import seedu.address.model.project.Project;
 
@@ -23,6 +26,7 @@ import seedu.address.model.project.Project;
 public class ProjectListPanel extends UiPart<Region> {
 
     private static final String FXML = "ProjectListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ProjectListPanel.class);
 
     private final ObservableList<Project> allProjects;
 
@@ -37,6 +41,9 @@ public class ProjectListPanel extends UiPart<Region> {
 
     @FXML
     private ListView<Project> projectListView;
+
+    @FXML
+    private Label projectsSectionLabel;
 
     @FXML
     private Label projectsStatusLabel;
@@ -208,6 +215,80 @@ public class ProjectListPanel extends UiPart<Region> {
             projectDetailsContainer.setVisible(false);
             projectDetailsContainer.setManaged(false);
         }
+    }
+
+    /**
+     * Programmatically selects the project at the specified index in the currently displayed project list.
+     * This will trigger the selection listener which automatically displays the project details.
+     *
+     * @param index The index of the project to select (zero-based via Index.getZeroBased())
+     */
+    public void selectProject(Index index) {
+        requireNonNull(index);
+        int zeroBasedIndex = index.getZeroBased();
+
+        if (projectListView == null || projectListView.getItems() == null) {
+            logger.warning("Cannot select project: project list view not initialized");
+            return;
+        }
+
+        if (zeroBasedIndex >= 0 && zeroBasedIndex < projectListView.getItems().size()) {
+            projectListView.getSelectionModel().select(zeroBasedIndex);
+            projectListView.scrollTo(zeroBasedIndex);
+            logger.info("Selected project at index: " + (zeroBasedIndex + 1));
+        } else {
+            logger.warning("Attempted to select invalid project index: " + (zeroBasedIndex + 1)
+                    + " (total projects: " + projectListView.getItems().size() + ")");
+        }
+    }
+
+    /**
+     * Shows details for a single project without selecting a person.
+     * Used for pdetails command to display only the requested project.
+     * Hides the project list view and directly shows the details section.
+     *
+     * @param project The project to display. Must not be null.
+     */
+    public void showSingleProjectDetails(Project project) {
+        requireNonNull(project, "Project cannot be null");
+
+        // Hide placeholder, show content
+        if (placeholderContainer != null) {
+            placeholderContainer.setVisible(false);
+            placeholderContainer.setManaged(false);
+        }
+
+        if (contentContainer != null) {
+            contentContainer.setVisible(true);
+            contentContainer.setManaged(true);
+        }
+
+        // Hide the person name header label - we don't need it for pdetails
+        if (personNameLabel != null) {
+            personNameLabel.setVisible(false);
+            personNameLabel.setManaged(false);
+        }
+
+        // Hide the "Projects:" section label
+        if (projectsSectionLabel != null) {
+            projectsSectionLabel.setVisible(false);
+            projectsSectionLabel.setManaged(false);
+        }
+
+        // Hide the status label
+        if (projectsStatusLabel != null) {
+            projectsStatusLabel.setVisible(false);
+            projectsStatusLabel.setManaged(false);
+        }
+
+        // Hide the project list view - we don't need it for pdetails
+        if (projectListView != null) {
+            projectListView.setVisible(false);
+            projectListView.setManaged(false);
+        }
+
+        // Directly show the project details
+        showProjectDetails(project);
     }
 
     /**

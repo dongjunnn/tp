@@ -78,6 +78,15 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
+     * Clears the person selection.
+     * Used when showing project details without a person context.
+     */
+    public void clearSelection() {
+        personListView.getSelectionModel().clearSelection();
+        logger.info("Cleared person selection");
+    }
+
+    /**
      * Custom {@code ListCell} that displays a {@code Person} using a {@code PersonCard}.
      */
     class PersonListViewCell extends ListCell<Person> {

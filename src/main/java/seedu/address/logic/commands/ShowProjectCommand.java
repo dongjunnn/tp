@@ -45,7 +45,10 @@ public class ShowProjectCommand extends Command {
         }
 
         Person personToShow = lastShownList.get(targetIndex.getZeroBased());
-        return new CommandResult(String.format(MESSAGE_SHOW_PERSON_SUCCESS, personToShow.getName().fullName));
+        // Return CommandResult with person index for UI to select
+        return new CommandResult(
+                String.format(MESSAGE_SHOW_PERSON_SUCCESS, personToShow.getName().fullName),
+                targetIndex);
     }
 
     public Index getTargetIndex() {
