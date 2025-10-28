@@ -19,7 +19,7 @@ class AddProjectCommandParserTest {
 
     @Test
     void parseAllFieldsPresentMembersSpaceSeparated_success() throws Exception {
-        String input = " n/IndiDex v1.3 d/2025-12-31 pr/HIGH m/1 m/3 r/kickoff next week";
+        String input = " n/IndiDex v1.3 d/2025-12-31 pr/HIGH m/1 m/3";
         AddProjectCommand expected = new AddProjectCommand(
                 "IndiDex v1.3",
                 LocalDate.of(2025, 12, 31),
@@ -124,9 +124,4 @@ class AddProjectCommandParserTest {
         assertThrows(ParseException.class, () -> parser.parse(input));
     }
 
-    @Test
-    void parseDuplicateRemarksPrefix_failure() {
-        String input = " n/Proj d/2025-12-31 pr/HIGH r/first r/second";
-        assertThrows(ParseException.class, () -> parser.parse(input));
-    }
 }
