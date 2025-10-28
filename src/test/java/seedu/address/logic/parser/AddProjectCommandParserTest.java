@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,12 +48,12 @@ class AddProjectCommandParserTest {
 
     @Test
     void parseNameTrimmed_success() throws Exception {
-        String input = " n/   MyProj   d/2025-10-01 pr/LOW";
+        String input = " n/   MyProj   m/1 d/2025-10-01 pr/LOW";
         AddProjectCommand expected = new AddProjectCommand(
                 "MyProj",
                 LocalDate.of(2025, 10, 1),
                 Priority.LOW,
-                List.of() // no members provided
+                List.of(INDEX_FIRST_PERSON)
         );
 
         AddProjectCommand actual = parser.parse(input);
