@@ -62,6 +62,8 @@ public class Messages {
 
         builder.append("; Address: ")
                 .append(person.getAddress())
+                .append("; Priority: ")
+                .append(person.getPriority())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();
