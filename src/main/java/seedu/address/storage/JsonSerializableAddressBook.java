@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -53,7 +52,7 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream()
                 .map(JsonAdaptedPerson::new)
-                .collect(Collectors.toList()));
+                .toList());
         projects.addAll(source.getProjectList().stream()
                 .map(JsonAdaptedProject::new)
                 .toList());
@@ -74,23 +73,23 @@ class JsonSerializableAddressBook {
             addressBook.addPerson(person);
         }
 
-        // Build email -> Person map for member resolution
-        Map<String, Person> emailMap = new HashMap<>();
+        // Build name -> Person map for member resolution
+        Map<String, Person> nameMap = new HashMap<>();
         for (Person p : addressBook.getPersonList()) {
-            emailMap.put(p.getEmail().value, p);
+            nameMap.put(p.getName().fullName, p);
         }
 
         for (JsonAdaptedProject jsonAdaptedProject : projects) {
             // Build base project without members
             Project baseProject = jsonAdaptedProject.toModelTypeWithoutMembers();
 
-            // Resolve emails to Person objects
             Set<Person> memberSet = new HashSet<>();
-            for (String email : jsonAdaptedProject.getMemberEmails()) {
-                Person member = emailMap.get(email);
-                if (member != null) {
-                    memberSet.add(member);
+            for (String memberName : jsonAdaptedProject.getMemberNames()) {
+                Person member = nameMap.get(memberName);
+                if (member == null) {
+                    throw new IllegalValueException("Member not found by name: " + memberName);
                 }
+                memberSet.add(member);
             }
 
             Project fullProject = new Project(
