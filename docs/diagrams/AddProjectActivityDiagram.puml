@@ -1,0 +1,34 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes padd command;
+
+:Parse command arguments;
+
+if () then ([valid format])
+else ([invalid])
+    stop
+endif
+
+repeat
+    :Validate member index;
+    if () then ([valid])
+        :Resolve to Person;
+    else ([invalid])
+        stop
+    endif
+repeat while (more members?) is (yes)
+->no;
+
+:Create Project object;
+
+if () then ([project exists])
+    stop
+else ([unique])
+    :Add project to Model;
+endif
+
+stop
+@enduml
