@@ -29,6 +29,7 @@ public class ProjectListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ProjectListPanel.class);
 
     private final ObservableList<Project> allProjects;
+    private boolean isShowingAllProjects = false;
 
     @FXML
     private VBox placeholderContainer;
@@ -113,6 +114,9 @@ public class ProjectListPanel extends UiPart<Region> {
      */
     public void showProjectsForPerson(Person person) {
         requireNonNull(person, "Person cannot be null");
+
+        // Mark that we're NOT showing all projects
+        this.isShowingAllProjects = false;
 
         // Hide placeholder, show content
         if (placeholderContainer != null) {
@@ -243,6 +247,33 @@ public class ProjectListPanel extends UiPart<Region> {
     }
 
     /**
+     * Selects a project by its name in the currently displayed project list.
+     * Used when pdetails is called while a person is selected.
+     *
+     * @param projectName The name of the project to select
+     * @return true if project was found and selected, false otherwise
+     */
+    public boolean selectProjectByName(String projectName) {
+        if (projectListView == null || projectListView.getItems() == null) {
+            logger.warning("Cannot select project: project list view not initialized");
+            return false;
+        }
+
+        ObservableList<Project> items = projectListView.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(projectName)) {
+                projectListView.getSelectionModel().select(i);
+                projectListView.scrollTo(i);
+                logger.info("Selected project by name: " + projectName);
+                return true;
+            }
+        }
+
+        logger.warning("Project not found in current list: " + projectName);
+        return false;
+    }
+
+    /**
      * Shows details for a single project without selecting a person.
      * Used for pdetails command to display only the requested project.
      * Hides the project list view and directly shows the details section.
@@ -251,6 +282,9 @@ public class ProjectListPanel extends UiPart<Region> {
      */
     public void showSingleProjectDetails(Project project) {
         requireNonNull(project, "Project cannot be null");
+
+        // Mark that we're NOT showing all projects
+        this.isShowingAllProjects = false;
 
         // Hide placeholder, show content
         if (placeholderContainer != null) {
@@ -350,6 +384,16 @@ public class ProjectListPanel extends UiPart<Region> {
             projectListView.getSelectionModel().clearSelection();
             hideProjectDetails();
         }
+
+        // Mark that we're showing all projects
+        this.isShowingAllProjects = true;
+    }
+
+    /**
+     * Returns whether the panel is currently showing all projects.
+     */
+    public boolean isShowingAllProjects() {
+        return isShowingAllProjects;
     }
 
     /**

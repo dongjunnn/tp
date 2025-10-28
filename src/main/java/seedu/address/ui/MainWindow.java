@@ -16,6 +16,8 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Person;
+import seedu.address.model.project.Project;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -208,8 +210,19 @@ public class MainWindow extends UiPart<Stage> {
 
             // Handle project details display for pdetails command
             if (commandResult.hasProjectToShow()) {
-                personListPanel.clearSelection();
-                projectListPanel.showSingleProjectDetails(commandResult.getProjectToShow());
+                Project project = commandResult.getProjectToShow();
+                Person selectedPerson = personListPanel.getSelectedPerson();
+                boolean showingAllProjects = projectListPanel.isShowingAllProjects();
+
+                // If showing all projects OR (person is selected and project belongs to them)
+                if (showingAllProjects || (selectedPerson != null && project.getMembers().contains(selectedPerson))) {
+                    // Replicate clicking behavior: select project in current list
+                    projectListPanel.selectProjectByName(project.getName());
+                } else {
+                    // Otherwise, clear selection and show single project details
+                    personListPanel.clearSelection();
+                    projectListPanel.showSingleProjectDetails(project);
+                }
             }
 
             // Handle show all projects for pshow all command
