@@ -47,12 +47,12 @@ class AddProjectCommandParserTest {
 
     @Test
     void parseNameTrimmed_success() throws Exception {
-        String input = " n/   MyProj   d/2025-10-01 pr/LOW";
+        String input = " n/   MyProj   m/1 d/2025-10-01 pr/LOW";
         AddProjectCommand expected = new AddProjectCommand(
                 "MyProj",
                 LocalDate.of(2025, 10, 1),
                 Priority.LOW,
-                List.of() // no members provided
+                List.of(Index.fromOneBased(1)) // no members provided
         );
 
         AddProjectCommand actual = parser.parse(input);
