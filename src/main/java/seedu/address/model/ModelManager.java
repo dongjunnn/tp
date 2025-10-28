@@ -127,6 +127,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Project getProjectByName(String projectName) {
+        requireNonNull(projectName);
+        return addressBook.getProjectList().stream()
+                .filter(p -> p.getName().equalsIgnoreCase(projectName))
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public boolean hasProject(Project project) {
         requireNonNull(project);
         return addressBook.hasProject(project);
