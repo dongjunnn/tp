@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -32,12 +31,13 @@ public class JoinProjectCommand extends Command {
             + PREFIX_MEMBER + "MEMBER_INDEX "
             + "[" + PREFIX_MEMBER + "MEMBER_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "IndiDex v1.3"
+            + PREFIX_NAME + "IndiDex v1.3 "
             + PREFIX_MEMBER + "1"
             + PREFIX_MEMBER + "3";
 
     public static final String MESSAGE_JOIN_SUCCESS = "Added new members to `%1$s`: ";
     public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
+    public static final String MESSAGE_NO_NEW_MEMBERS = "All specified members already in `%1$s`";
 
     private final String name;
     private final List<Index> memberIndexes;
@@ -66,11 +66,23 @@ public class JoinProjectCommand extends Command {
         List<Person> personList = model.getFilteredPersonList();
         Set<Person> updatedMembers = new HashSet<>(project.getMembers());
 
+        StringBuilder addedNamesBuilder = new StringBuilder();
+
         for (Index index : memberIndexes) {
             if (index.getZeroBased() >= personList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            updatedMembers.add(personList.get(index.getZeroBased()));
+
+            Person personToAdd = personList.get(index.getZeroBased());
+
+            if (!updatedMembers.contains(personToAdd)) {
+                updatedMembers.add(personToAdd);
+
+                if (addedNamesBuilder.length() > 0) {
+                    addedNamesBuilder.append(", ");
+                }
+                addedNamesBuilder.append(personToAdd.getName());
+            }
         }
 
         Project updatedProject = new Project(
@@ -81,9 +93,10 @@ public class JoinProjectCommand extends Command {
         );
 
         model.setProject(project, updatedProject);
-        String addedNames = memberIndexes.stream()
-                .map(i -> personList.get(i.getZeroBased()).getName().toString())
-                .collect(Collectors.joining(", "));
+        String addedNames = addedNamesBuilder.toString();
+        if (addedNames.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_NO_NEW_MEMBERS, project.getName()));
+        }
 
         return new CommandResult(String.format(MESSAGE_JOIN_SUCCESS + "%2$s", project.getName(), addedNames));
     }

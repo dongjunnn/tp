@@ -32,6 +32,8 @@ public class JoinProjectCommandParser implements Parser<JoinProjectCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, JoinProjectCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
+
         String projectName = argMultimap.getValue(PREFIX_NAME).get().trim();
         if (projectName.isEmpty()) {
             throw new ParseException("Missing project name.\n" + JoinProjectCommand.MESSAGE_USAGE);
