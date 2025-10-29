@@ -231,11 +231,6 @@ public class AddProjectCommandTest {
         }
 
         @Override
-        public Project getProjectByName(String projectName) {
-            throw new AssertionError();
-        }
-
-        @Override
         public void setProject(Project target, Project editedProject) {
             throw new AssertionError();
         }
