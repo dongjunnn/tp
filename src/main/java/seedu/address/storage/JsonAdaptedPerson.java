@@ -163,8 +163,9 @@ class JsonAdaptedPerson {
         if (youTubeChannel == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, YouTube.class.getSimpleName()));
         }
-        if (!YouTube.isValidYouTube(youTubeChannel)) {
-            throw new IllegalValueException(YouTube.MESSAGE_CONSTRAINTS);
+        String validationError = YouTube.getValidationError(youTubeChannel);
+        if (validationError != null) {
+            throw new IllegalValueException(validationError);
         }
         final YouTube modelYouTube = new YouTube(youTubeChannel);
 
