@@ -217,7 +217,7 @@ Format: `sort (n/|p/|a/|pr/|e/)[asc/desc]`
 
 Examples:
 * `sort n/asc` sorts contacts by name in alphabetical order
-* `sort pr/` sorts contacts by ascending priority (from HIGH to LOW)
+* `sort pr/` sorts contacts by ascending priority (from LOW to HIGH)
 * `sort p/desc` sorts contacts by phone numbers in descending numerical order
 
 
