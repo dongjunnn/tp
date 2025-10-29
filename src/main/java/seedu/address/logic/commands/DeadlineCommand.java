@@ -1,6 +1,11 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.Model;
+import seedu.address.model.project.Project;
+
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Shows deadlines that are due 7 days from now.

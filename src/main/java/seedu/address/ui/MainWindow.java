@@ -145,14 +145,14 @@ public class MainWindow extends UiPart<Stage> {
      * Checks all projects and, if any are due within the next 7 days,
      * shows a popup listing them.
      */
-    public void showDueSoonPopupIfNeeded() {
+    public void showDueSoonPopupIfNeeded(boolean firstShow) {
         List<Project> allProjects = logic.getFilteredProjectList()
                 .stream()
                 .collect(Collectors.toList());
 
         List<Project> dueSoonProjects = DueSoonWindow.findProjectsDueSoon(allProjects);
 
-        if (dueSoonProjects.isEmpty()) {
+        if (dueSoonProjects.isEmpty() && firstShow) {
             return;
         }
 
@@ -185,16 +185,12 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Opens the deadline window or focuses on it if it's already opened.
+     * Opens the deadline window.
      */
 
     @FXML
     public void handleDeadline() {
-        if (!dueSoonWindow.isShowing()) {
-            dueSoonWindow.show();
-        } else {
-            dueSoonWindow.focus();
-        }
+        showDueSoonPopupIfNeeded(false);
     }
 
     void show() {
