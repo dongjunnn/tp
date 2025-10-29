@@ -79,7 +79,7 @@ public class EditProjectCommandTest {
         model.addProject(testProject);
 
         EditProjectCommand.EditProjectDescriptor editProjectDescriptor = new EditProjectCommand.EditProjectDescriptor();
-        editProjectDescriptor.setDeadline(LocalDate.of(2025, 10, 10));
+        editProjectDescriptor.setDeadline(LocalDate.of(2025, 12, 31));
         EditProjectCommand command = new EditProjectCommand("Test Project", editProjectDescriptor);
 
         CommandResult result = command.execute(model);
@@ -88,7 +88,7 @@ public class EditProjectCommandTest {
         assertNotNull(updatedProject);
         assertEquals(testProject.getName(), updatedProject.getName());
         assertEquals(testProject.getPriority(), updatedProject.getPriority());
-        assertEquals(LocalDate.of(2025, 10, 10), updatedProject.getDeadline());
+        assertEquals(LocalDate.of(2025, 12, 31), updatedProject.getDeadline());
         assertEquals(testProject.getMembers(), updatedProject.getMembers());
     }
 }
