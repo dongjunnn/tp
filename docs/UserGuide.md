@@ -71,11 +71,13 @@ IndiDex is a **desktop contact and project management application designed for i
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page. 
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+* Additional text after `help` is ignored.
 
 ## Contacts
 
@@ -267,6 +269,16 @@ This operation cannot be undone. The project name must match exactly (case-sensi
 Examples:
 * `pdelete n/Web Series Pilot` - Deletes the project named "Web Series Pilot"
 * `pdelete n/Animation Collab` - Deletes the project named "Animation Collab"
+
+### Showing deadlines: `deadline`
+
+Shows projects that have deadlines less than 7 days from now.
+
+![deadlines](images/deadlines.png)
+
+Format: `deadline`
+
+* Additional text after `deadline` is ignored.
 
 ## Others
 
