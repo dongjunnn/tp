@@ -37,6 +37,7 @@ public class AddProjectCommand extends Command {
             + PREFIX_NAME + "NAME "
             + PREFIX_DEADLINE + "DEADLINE (yyyy-MM-dd) "
             + PREFIX_PRIORITY + "PRIORITY (LOW|MEDIUM|HIGH) "
+            + PREFIX_MEMBER + "MEMBER_INDEX "
             + "[" + PREFIX_MEMBER + "MEMBER_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "IndiDex v1.3 "
@@ -86,6 +87,9 @@ public class AddProjectCommand extends Command {
             throw new CommandException("Invalid parameter: deadline cannot be in the past.");
         }
 
+        if (memberIndexes.isEmpty()) {
+            throw new CommandException("Project must have at least one member.");
+        }
         ObservableList<Person> persons = model.getFilteredPersonList();
         Set<Person> members = new HashSet<>();
         for (Index idx : memberIndexes) {

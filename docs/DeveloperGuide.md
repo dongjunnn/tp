@@ -386,6 +386,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6.  IndiDex should maintain data persistence so that user data remains consistent and recoverable across restarts.
 7.  IndiDex should provide clear feedback messages for all invalid commands or inputs, without crashing.
 8.  Input commands' results and help messages should follow structurally consistent text formatting across all commands.
+9.  Error messages should be written in plain, user-friendly language appropriate for non-technical content creators.
+10. The GUI should remain readable and functional on screens with minimum resolution of 1024x768 pixels.
+11. Should support at least 50 projects with up to 20 members each without performance degradation.
+12. The data file should be human-readable (JSON format) to allow advanced users to manually edit or backup their data.
+13. Should work offline without requiring internet connectivity.
 
 *{More to be added}*
 

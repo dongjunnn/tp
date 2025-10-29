@@ -1,0 +1,70 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":ShowProjectCommandParser" as ShowProjectCommandParser LOGIC_COLOR
+participant "s:ShowProjectCommand" as ShowProjectCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("pshow 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("pshow 1")
+activate AddressBookParser
+
+create ShowProjectCommandParser
+AddressBookParser -> ShowProjectCommandParser
+activate ShowProjectCommandParser
+
+ShowProjectCommandParser --> AddressBookParser
+deactivate ShowProjectCommandParser
+
+AddressBookParser -> ShowProjectCommandParser : parse("1")
+activate ShowProjectCommandParser
+
+create ShowProjectCommand
+ShowProjectCommandParser -> ShowProjectCommand
+activate ShowProjectCommand
+
+ShowProjectCommand --> ShowProjectCommandParser :
+deactivate ShowProjectCommand
+
+ShowProjectCommandParser --> AddressBookParser : s
+deactivate ShowProjectCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ShowProjectCommandParser -[hidden]-> AddressBookParser
+destroy ShowProjectCommandParser
+
+AddressBookParser --> LogicManager : s
+deactivate AddressBookParser
+
+LogicManager -> ShowProjectCommand : execute(m)
+activate ShowProjectCommand
+
+ShowProjectCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model --> ShowProjectCommand : personList
+deactivate Model
+
+create CommandResult
+ShowProjectCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ShowProjectCommand
+deactivate CommandResult
+
+ShowProjectCommand --> LogicManager : r
+deactivate ShowProjectCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
