@@ -92,7 +92,7 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LIN
     * `a/ADDRESS` - Physical or mailing address
 
 * **Optional fields:**
-    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
+    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`, defaults to `LOW`
     * `dc/DISCORD` - Discord handle/username
     * `li/LINKEDIN` - LinkedIn profile URL
     * `ig/INSTAGRAM` - Instagram handle
@@ -217,7 +217,7 @@ Format: `sort (n/|p/|a/|pr/|e/)[asc/desc]`
 
 Examples:
 * `sort n/asc` sorts contacts by name in alphabetical order
-* `sort pr/` sorts contacts by ascending priority (from LOW to HIGH)
+* `sort pr/` sorts contacts by ascending priority (from HIGH to LOW)
 * `sort p/desc` sorts contacts by phone numbers in descending numerical order
 
 
