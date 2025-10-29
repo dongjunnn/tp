@@ -92,7 +92,7 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LIN
     * `a/ADDRESS` - Physical or mailing address
 
 * **Optional fields:**
-    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
+    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`, defaults to `LOW`
     * `dc/DISCORD` - Discord handle/username
     * `li/LINKEDIN` - LinkedIn profile URL
     * `ig/INSTAGRAM` - Instagram handle
