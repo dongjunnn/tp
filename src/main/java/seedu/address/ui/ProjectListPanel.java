@@ -30,6 +30,7 @@ public class ProjectListPanel extends UiPart<Region> {
 
     private final ObservableList<Project> allProjects;
     private boolean isShowingAllProjects = false;
+    private String currentlyDisplayedProjectName = null; // Track project being displayed for auto-refresh
 
     @FXML
     private VBox placeholderContainer;
@@ -88,6 +89,11 @@ public class ProjectListPanel extends UiPart<Region> {
                     }
                 });
 
+        // Listen to changes in the projects list to auto-refresh displayed project
+        allProjects.addListener((javafx.collections.ListChangeListener<Project>) change -> {
+            refreshDisplayedProjectIfNeeded();
+        });
+
         showPlaceholder();
     }
 
@@ -95,6 +101,8 @@ public class ProjectListPanel extends UiPart<Region> {
      * Shows the placeholder when no person is selected.
      */
     private void showPlaceholder() {
+        this.currentlyDisplayedProjectName = null; // Clear tracked project
+
         if (placeholderContainer != null) {
             placeholderContainer.setVisible(true);
             placeholderContainer.setManaged(true);
@@ -117,6 +125,9 @@ public class ProjectListPanel extends UiPart<Region> {
 
         // Mark that we're NOT showing all projects
         this.isShowingAllProjects = false;
+
+        // Clear tracked project (we're showing a list, not a single project)
+        this.currentlyDisplayedProjectName = null;
 
         // Hide placeholder, show content
         if (placeholderContainer != null) {
@@ -286,6 +297,9 @@ public class ProjectListPanel extends UiPart<Region> {
         // Mark that we're NOT showing all projects
         this.isShowingAllProjects = false;
 
+        // Track the displayed project for auto-refresh
+        this.currentlyDisplayedProjectName = project.getName();
+
         // Hide placeholder, show content
         if (placeholderContainer != null) {
             placeholderContainer.setVisible(false);
@@ -330,6 +344,9 @@ public class ProjectListPanel extends UiPart<Region> {
      * Used for pshow all command.
      */
     public void showAllProjects() {
+        // Clear tracked project (we're showing a list, not a single project)
+        this.currentlyDisplayedProjectName = null;
+
         // Hide placeholder, show content
         if (placeholderContainer != null) {
             placeholderContainer.setVisible(false);
@@ -394,6 +411,33 @@ public class ProjectListPanel extends UiPart<Region> {
      */
     public boolean isShowingAllProjects() {
         return isShowingAllProjects;
+    }
+
+    /**
+     * Refreshes the displayed project details if currently showing a single project.
+     * Called automatically when the projects list changes.
+     */
+    private void refreshDisplayedProjectIfNeeded() {
+        if (currentlyDisplayedProjectName == null) {
+            return; // Not displaying a single project, nothing to refresh
+        }
+
+        // Find the updated project by name
+        Project updatedProject = allProjects.stream()
+                .filter(p -> p.getName().equals(currentlyDisplayedProjectName))
+                .findFirst()
+                .orElse(null);
+
+        if (updatedProject == null) {
+            // Project was deleted, clear the display
+            logger.info("Displayed project no longer exists: " + currentlyDisplayedProjectName);
+            hideProjectDetails();
+            currentlyDisplayedProjectName = null;
+        } else {
+            // Project still exists, refresh the details
+            logger.info("Auto-refreshing displayed project: " + currentlyDisplayedProjectName);
+            showProjectDetails(updatedProject);
+        }
     }
 
     /**
