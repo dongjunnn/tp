@@ -42,6 +42,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
+        long distinct = indexes.stream().map(Index::getZeroBased).distinct().count();
+        if (distinct != indexes.size()) {
+            throw new ParseException("Duplicate indexes are not allowed.");
+        }
+
         return new DeleteCommand(indexes);
     }
 }

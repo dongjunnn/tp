@@ -46,7 +46,6 @@ public class DeleteCommand extends Command {
     public DeleteCommand(List<Index> targetIndexes) {
         requireNonNull(targetIndexes);
 
-        // Normalize: dedupe by zero-based index, sort ascending, and store as Index objects
         Set<Integer> zeroBasedSet = new HashSet<>();
         for (Index idx : targetIndexes) {
             zeroBasedSet.add(idx.getZeroBased());
