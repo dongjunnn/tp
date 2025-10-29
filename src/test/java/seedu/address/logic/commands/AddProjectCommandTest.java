@@ -75,7 +75,7 @@ public class AddProjectCommandTest {
         ModelStubWithPersons model = new ModelStubWithPersons(FXCollections.observableArrayList());
         AddProjectCommand cmd = new AddProjectCommand(
                 "Proj",
-                LocalDate.of(2025, 10, 1),
+                LocalDate.now(),
                 Priority.MEDIUM,
                 List.of(Index.fromOneBased(1))
         );

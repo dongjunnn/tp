@@ -80,6 +80,12 @@ public class AddProjectCommand extends Command {
             throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
         }
 
+        // local laptop/pc time
+        LocalDate today = LocalDate.now();
+        if (deadline.isBefore(today)) {
+            throw new CommandException("Invalid parameter: deadline cannot be in the past.");
+        }
+
         ObservableList<Person> persons = model.getFilteredPersonList();
         Set<Person> members = new HashSet<>();
         for (Index idx : memberIndexes) {
