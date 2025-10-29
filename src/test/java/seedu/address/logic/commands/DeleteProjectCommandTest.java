@@ -186,7 +186,6 @@ public class DeleteProjectCommandTest {
             throw new AssertionError();
         }
 
-
         @Override
         public ObservableList<Project> getFilteredProjectList() {
             throw new AssertionError();

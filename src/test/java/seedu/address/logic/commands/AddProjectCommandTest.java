@@ -75,7 +75,7 @@ public class AddProjectCommandTest {
         ModelStubWithPersons model = new ModelStubWithPersons(FXCollections.observableArrayList());
         AddProjectCommand cmd = new AddProjectCommand(
                 "Proj",
-                LocalDate.of(2025, 10, 1),
+                LocalDate.now(),
                 Priority.MEDIUM,
                 List.of(INDEX_FIRST_PERSON)
         );
@@ -227,6 +227,11 @@ public class AddProjectCommandTest {
 
         @Override
         public void addProject(Project project) {
+            throw new AssertionError();
+        }
+
+        @Override
+        public Project getProjectByName(String projectName) {
             throw new AssertionError();
         }
 

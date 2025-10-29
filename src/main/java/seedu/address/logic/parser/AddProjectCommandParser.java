@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
     @Override
     public AddProjectCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_DEADLINE, PREFIX_PRIORITY, PREFIX_MEMBER, PREFIX_REMARKS);
+                args, PREFIX_NAME, PREFIX_DEADLINE, PREFIX_PRIORITY, PREFIX_MEMBER);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DEADLINE, PREFIX_PRIORITY)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -37,7 +36,7 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
                     AddProjectCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DEADLINE, PREFIX_PRIORITY, PREFIX_REMARKS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DEADLINE, PREFIX_PRIORITY);
 
         String name = argMultimap.getValue(PREFIX_NAME).get().trim();
         LocalDate deadline = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DEADLINE).get());
