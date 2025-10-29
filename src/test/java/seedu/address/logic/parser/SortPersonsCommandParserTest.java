@@ -109,7 +109,7 @@ public class SortPersonsCommandParserTest {
         assertParseSuccess(
                 parser,
                 " " + PREFIX_PRIORITY,
-                new SortPersonsCommand(PREFIX_PRIORITY, true)
+                new SortPersonsCommand(PREFIX_PRIORITY, false)
         );
     }
 

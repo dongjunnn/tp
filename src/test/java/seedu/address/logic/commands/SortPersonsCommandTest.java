@@ -180,9 +180,9 @@ public class SortPersonsCommandTest {
 
     @Test
     public void priorityRank_valid_priorities() {
-        assertEquals(0, SortPersonsCommand.priorityRank("HIGH"));
+        assertEquals(0, SortPersonsCommand.priorityRank("LOW"));
         assertEquals(1, SortPersonsCommand.priorityRank("MEDIUM"));
-        assertEquals(2, SortPersonsCommand.priorityRank("LOW"));
+        assertEquals(2, SortPersonsCommand.priorityRank("HIGH"));
     }
 
     @Test
