@@ -101,6 +101,9 @@ public class DueSoonWindow extends UiPart<Stage> {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Refreshes the window when there are changes to projects
+     */
     public void updateProjects(List<Project> updatedProjects) {
         if (updatedProjects == null) {
             return;
@@ -129,6 +132,9 @@ public class DueSoonWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Closes the window.
+     */
     public void close() {
         if (getRoot() != null && getRoot().isShowing()) {
             getRoot().close();
