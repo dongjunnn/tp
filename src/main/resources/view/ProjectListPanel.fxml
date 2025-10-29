@@ -27,7 +27,7 @@
         <Separator />
 
         <!-- Projects section -->
-        <Label text="Projects:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
+        <Label fx:id="projectsSectionLabel" text="Projects:" style="-fx-font-weight: bold; -fx-text-fill: white;" />
 
         <!-- Shows "None" when no projects -->
         <Label fx:id="projectsStatusLabel" text="None"
