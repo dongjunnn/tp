@@ -77,6 +77,30 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Understanding the IndiDex Interface:**
+
+IndiDex uses a **two-panel layout** to help you manage both contacts and
+projects efficiently:
+
+* **Left Panel (Contacts)**: Displays your contact list with all their
+  details
+    * Shows contact information including name, phone, email, social media
+      handles, and tags
+    * Use commands like `list`, `find`, `add`, `edit`, and `delete` to manage
+      contacts here
+
+* **Right Panel (Projects)**: Displays all project related details
+    * Use commands like `padd`, `pdelete`, `pshow`, and `pdetails` to manage
+      and view projects here
+    * The panel updates automatically when you run project-related commands
+
+**Tip**: The two panels work together - when you use `pshow INDEX`, the app
+highlights that selected contact in the left panel. Subsequently, one can do  further project related commands for that index. These commands may then be reflected in the right panel.
+
+</div>
+
 ## Contacts
 
 ### Adding a contact: `add`
@@ -268,6 +292,57 @@ Examples:
 * `pdelete n/Web Series Pilot` - Deletes the project named "Web Series Pilot"
 * `pdelete n/Animation Collab` - Deletes the project named "Animation Collab"
 
+### Showing projects: `pshow`
+
+Displays projects in the project panel.
+
+Format: `pshow INDEX` or `pshow all`
+
+* **With INDEX**: Shows projects for the contact at the specified index
+    * The index refers to the index number shown in the displayed contact list
+    * The index **must be a positive integer** 1, 2, 3, …​
+    * Scrolls to and highlights the contact's associated projects in the
+      project panel
+
+* **With `all`**: Displays all projects in the project panel
+    * Resets any previous contact-specific project filtering
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use `pshow INDEX` to quickly find which projects a specific contact is
+involved in. Use `pshow all` to get an overview of all your projects.
+</div>
+
+Examples:
+* `pshow 1` - Shows all projects that the 1st contact is a member of
+* `pshow all` - Shows all projects in IndiDex
+* `find John` followed by `pshow 1` - Shows projects for the 1st person in
+  the search results
+
+### Showing project details: `pdetails`
+
+Displays detailed information for a specific project by its exact name.
+
+Format: `pdetails n/PROJECT_NAME`
+
+* **Required field:**
+    * `n/PROJECT_NAME` - The exact name of the project (case-sensitive)
+
+* Project name matching is **case-sensitive** and must be exact
+* Displays the project's deadline, priority, and team members in the project
+  panel
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+The project name must match exactly (case-sensitive). Hence, "Web Series" and "web
+series" are considered different projects.
+</div>
+
+Examples:
+* `pdetails n/Web Series Pilot` - Shows detailed information for the "Web
+  Series Pilot" project
+* `pdetails n/Animation Collab` - Shows details for the "Animation Collab"
+  project
+
+
 ## Others
 
 ### Clearing all entries : `clear`
@@ -393,21 +468,22 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 ## Command summary
 
-| Action            | Format, Examples                                                                                                                                                                                           |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Action            | Format, Examples                                                                                                                                                                                                                      |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Contact**   | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
-| **List**          | `list`                                                                                                                                                                                                    |
-| **Edit**          | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM` |
-| **Find**          | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                           |
-| **Tag**           | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                          |
-| **Delete**        | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                      |
-| **Sort**          | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/` |
-| **Add Project**   | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                              |
-| **Delete Project** | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                              |
-| **Clear**         | `clear`                                                                                                                                                                                                   |
-| **Help**          | `help`                                                                                                                                                                                                    |
-| **Exit**          | `exit`                                                                                                                                                                                                    |
-
+| **List**          | `list`                                                                                                                                                                                                                                |
+| **Edit**          | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
+| **Find**          | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
+| **Tag**           | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
+| **Delete**        | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
+| **Sort**          | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
+| **Add Project**   | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
+| **Delete Project** | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
+| **Show Projects** | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot` |
+| **Clear**         | `clear`                                                                                                                                                                                                                               |
+| **Help**          | `help`                                                                                                                                                                                                                                |
+| **Exit**          | `exit`                                                                                                                                                                                                                                |
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
