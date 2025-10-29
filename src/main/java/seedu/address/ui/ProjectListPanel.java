@@ -31,6 +31,7 @@ public class ProjectListPanel extends UiPart<Region> {
     private final ObservableList<Project> allProjects;
     private boolean isShowingAllProjects = false;
     private String currentlyDisplayedProjectName = null; // Track project being displayed for auto-refresh
+    private Person currentlySelectedPerson = null; // Track person whose projects are being shown
 
     @FXML
     private VBox placeholderContainer;
@@ -102,6 +103,7 @@ public class ProjectListPanel extends UiPart<Region> {
      */
     private void showPlaceholder() {
         this.currentlyDisplayedProjectName = null; // Clear tracked project
+        this.currentlySelectedPerson = null; // Clear tracked person
 
         if (placeholderContainer != null) {
             placeholderContainer.setVisible(true);
@@ -128,6 +130,9 @@ public class ProjectListPanel extends UiPart<Region> {
 
         // Clear tracked project (we're showing a list, not a single project)
         this.currentlyDisplayedProjectName = null;
+
+        // Track the person for auto-refresh
+        this.currentlySelectedPerson = person;
 
         // Hide placeholder, show content
         if (placeholderContainer != null) {
@@ -300,6 +305,9 @@ public class ProjectListPanel extends UiPart<Region> {
         // Track the displayed project for auto-refresh
         this.currentlyDisplayedProjectName = project.getName();
 
+        // Clear tracked person (we're showing a single project, not a person's list)
+        this.currentlySelectedPerson = null;
+
         // Hide placeholder, show content
         if (placeholderContainer != null) {
             placeholderContainer.setVisible(false);
@@ -346,6 +354,7 @@ public class ProjectListPanel extends UiPart<Region> {
     public void showAllProjects() {
         // Clear tracked project (we're showing a list, not a single project)
         this.currentlyDisplayedProjectName = null;
+        this.currentlySelectedPerson = null;
 
         // Hide placeholder, show content
         if (placeholderContainer != null) {
@@ -414,29 +423,38 @@ public class ProjectListPanel extends UiPart<Region> {
     }
 
     /**
-     * Refreshes the displayed project details if currently showing a single project.
-     * Called automatically when the projects list changes.
+     * Refreshes the displayed content when the projects list changes.
+     * Handles two cases:
+     * 1. If showing a person's project list, re-filter and update
+     * 2. If showing a single project's details, refresh the details
      */
     private void refreshDisplayedProjectIfNeeded() {
-        if (currentlyDisplayedProjectName == null) {
-            return; // Not displaying a single project, nothing to refresh
+        // Case 1: Refresh person's project list
+        if (currentlySelectedPerson != null) {
+            logger.info("Auto-refreshing project list for person: "
+                    + currentlySelectedPerson.getName().fullName);
+            showProjectsForPerson(currentlySelectedPerson);
+            return;
         }
 
-        // Find the updated project by name
-        Project updatedProject = allProjects.stream()
-                .filter(p -> p.getName().equals(currentlyDisplayedProjectName))
-                .findFirst()
-                .orElse(null);
+        // Case 2: Refresh single project details
+        if (currentlyDisplayedProjectName != null) {
+            // Find the updated project by name
+            Project updatedProject = allProjects.stream()
+                    .filter(p -> p.getName().equals(currentlyDisplayedProjectName))
+                    .findFirst()
+                    .orElse(null);
 
-        if (updatedProject == null) {
-            // Project was deleted, clear the display
-            logger.info("Displayed project no longer exists: " + currentlyDisplayedProjectName);
-            hideProjectDetails();
-            currentlyDisplayedProjectName = null;
-        } else {
-            // Project still exists, refresh the details
-            logger.info("Auto-refreshing displayed project: " + currentlyDisplayedProjectName);
-            showProjectDetails(updatedProject);
+            if (updatedProject == null) {
+                // Project was deleted, clear the display
+                logger.info("Displayed project no longer exists: " + currentlyDisplayedProjectName);
+                hideProjectDetails();
+                currentlyDisplayedProjectName = null;
+            } else {
+                // Project still exists, refresh the details
+                logger.info("Auto-refreshing displayed project: " + currentlyDisplayedProjectName);
+                showProjectDetails(updatedProject);
+            }
         }
     }
 
