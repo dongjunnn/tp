@@ -47,6 +47,12 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
 
+        // Disable mouse clicking for selection but allow scrolling
+        personListView.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_PRESSED, event -> {
+            event.consume(); // Block mouse clicks (prevents selection)
+        });
+        personListView.setFocusTraversable(false); // Disable keyboard navigation
+
         // Listen to person selection
         if (onPersonSelected != null) {
             personListView.getSelectionModel().selectedItemProperty().addListener((

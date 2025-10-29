@@ -26,6 +26,11 @@ import seedu.address.model.project.Project;
 public class ProjectListPanel extends UiPart<Region> {
 
     private static final String FXML = "ProjectListPanel.fxml";
+    private static final String PROJECTS_FOR_LABEL = "Projects for: ";
+    private static final String ALL_PROJECTS_LABEL = "All Projects";
+    private static final String NO_PROJECTS_MESSAGE = "None";
+    private static final String MEMBER_LABEL_STYLE = "-fx-text-fill: white; -fx-font-size: 13px;";
+
     private final Logger logger = LogsCenter.getLogger(ProjectListPanel.class);
 
     private final ObservableList<Project> allProjects;
@@ -80,6 +85,12 @@ public class ProjectListPanel extends UiPart<Region> {
         // Setup project list view
         projectListView.setCellFactory(listView -> new ProjectListViewCell());
 
+        // Disable mouse clicking for selection but allow scrolling
+        projectListView.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_PRESSED, event -> {
+            event.consume(); // Block mouse clicks (prevents selection)
+        });
+        projectListView.setFocusTraversable(false); // Disable keyboard navigation
+
         // Listen to project selection to show details
         projectListView.getSelectionModel().selectedItemProperty().addListener((
                 observable, oldValue, newValue) -> {
@@ -125,69 +136,20 @@ public class ProjectListPanel extends UiPart<Region> {
     public void showProjectsForPerson(Person person) {
         requireNonNull(person, "Person cannot be null");
 
-        // Mark that we're NOT showing all projects
         this.isShowingAllProjects = false;
-
-        // Clear tracked project (we're showing a list, not a single project)
         this.currentlyDisplayedProjectName = null;
-
-        // Track the person for auto-refresh
         this.currentlySelectedPerson = person;
 
-        // Hide placeholder, show content
-        if (placeholderContainer != null) {
-            placeholderContainer.setVisible(false);
-            placeholderContainer.setManaged(false);
-        }
+        showContentArea();
+        configureHeaderForPerson(person.getName().fullName);
 
-        if (contentContainer != null) {
-            contentContainer.setVisible(true);
-            contentContainer.setManaged(true);
-        }
+        List<Project> personProjects = getProjectsForPerson(person);
 
-        // Update person name label
-        if (personNameLabel != null) {
-            personNameLabel.setText("Projects for: " + person.getName().fullName);
-        }
-
-        // Find all projects where this person is a member
-        List<Project> personProjects = allProjects.stream()
-                .filter(project -> project != null)
-                .filter(project -> project.getMembers() != null)
-                .filter(project -> project.getMembers().contains(person))
-                .collect(Collectors.toList());
-
-        // Show "None" if no projects, otherwise show project list
         if (personProjects.isEmpty()) {
-            if (projectsStatusLabel != null) {
-                projectsStatusLabel.setText("None");
-                projectsStatusLabel.setVisible(true);
-                projectsStatusLabel.setManaged(true);
-            }
-            if (projectListView != null) {
-                projectListView.setVisible(false);
-                projectListView.setManaged(false);
-            }
-            hideProjectDetails();
+            showEmptyProjectList();
         } else {
-            if (projectsStatusLabel != null) {
-                projectsStatusLabel.setVisible(false);
-                projectsStatusLabel.setManaged(false);
-            }
-            if (projectListView != null) {
-                projectListView.setVisible(true);
-                projectListView.setManaged(true);
-                projectListView.setItems(FXCollections.observableArrayList(personProjects));
-            }
-
-            // Clear selection and hide details initially
-            projectListView.getSelectionModel().clearSelection();
-            hideProjectDetails();
-
-            // If only one project, auto-select it
-            if (personProjects.size() == 1) {
-                projectListView.getSelectionModel().select(0);
-            }
+            showProjectList(personProjects);
+            autoSelectSingleProject(personProjects);
         }
     }
 
@@ -199,10 +161,7 @@ public class ProjectListPanel extends UiPart<Region> {
     private void showProjectDetails(Project project) {
         requireNonNull(project, "Project cannot be null");
 
-        if (projectDetailsContainer != null) {
-            projectDetailsContainer.setVisible(true);
-            projectDetailsContainer.setManaged(true);
-        }
+        setContainerVisibility(projectDetailsContainer, true);
 
         if (projectName != null) {
             projectName.setText(project.getName());
@@ -221,7 +180,7 @@ public class ProjectListPanel extends UiPart<Region> {
             membersContainer.getChildren().clear();
             for (Person member : project.getMembers()) {
                 Label memberLabel = new Label(member.getName().fullName);
-                memberLabel.setStyle("-fx-text-fill: white; -fx-font-size: 13px;");
+                memberLabel.setStyle(MEMBER_LABEL_STYLE);
                 membersContainer.getChildren().add(memberLabel);
             }
         }
@@ -231,10 +190,7 @@ public class ProjectListPanel extends UiPart<Region> {
      * Hides the project details section.
      */
     private void hideProjectDetails() {
-        if (projectDetailsContainer != null) {
-            projectDetailsContainer.setVisible(false);
-            projectDetailsContainer.setManaged(false);
-        }
+        setContainerVisibility(projectDetailsContainer, false);
     }
 
     /**
@@ -299,51 +255,13 @@ public class ProjectListPanel extends UiPart<Region> {
     public void showSingleProjectDetails(Project project) {
         requireNonNull(project, "Project cannot be null");
 
-        // Mark that we're NOT showing all projects
         this.isShowingAllProjects = false;
-
-        // Track the displayed project for auto-refresh
         this.currentlyDisplayedProjectName = project.getName();
-
-        // Clear tracked person (we're showing a single project, not a person's list)
         this.currentlySelectedPerson = null;
 
-        // Hide placeholder, show content
-        if (placeholderContainer != null) {
-            placeholderContainer.setVisible(false);
-            placeholderContainer.setManaged(false);
-        }
-
-        if (contentContainer != null) {
-            contentContainer.setVisible(true);
-            contentContainer.setManaged(true);
-        }
-
-        // Hide the person name header label - we don't need it for pdetails
-        if (personNameLabel != null) {
-            personNameLabel.setVisible(false);
-            personNameLabel.setManaged(false);
-        }
-
-        // Hide the "Projects:" section label
-        if (projectsSectionLabel != null) {
-            projectsSectionLabel.setVisible(false);
-            projectsSectionLabel.setManaged(false);
-        }
-
-        // Hide the status label
-        if (projectsStatusLabel != null) {
-            projectsStatusLabel.setVisible(false);
-            projectsStatusLabel.setManaged(false);
-        }
-
-        // Hide the project list view - we don't need it for pdetails
-        if (projectListView != null) {
-            projectListView.setVisible(false);
-            projectListView.setManaged(false);
-        }
-
-        // Directly show the project details
+        showContentArea();
+        hideAllHeaders();
+        setListViewVisibility(false);
         showProjectDetails(project);
     }
 
@@ -352,66 +270,22 @@ public class ProjectListPanel extends UiPart<Region> {
      * Used for pshow all command.
      */
     public void showAllProjects() {
-        // Clear tracked project (we're showing a list, not a single project)
         this.currentlyDisplayedProjectName = null;
         this.currentlySelectedPerson = null;
 
-        // Hide placeholder, show content
-        if (placeholderContainer != null) {
-            placeholderContainer.setVisible(false);
-            placeholderContainer.setManaged(false);
-        }
+        showContentArea();
+        configureHeaderForAllProjects();
 
-        if (contentContainer != null) {
-            contentContainer.setVisible(true);
-            contentContainer.setManaged(true);
-        }
-
-        // Update header
-        if (personNameLabel != null) {
-            personNameLabel.setText("All Projects");
-            personNameLabel.setVisible(true);
-            personNameLabel.setManaged(true);
-        }
-
-        // Show "Projects:" label if it exists (might be null if FXML was reverted)
-        if (projectsSectionLabel != null) {
-            projectsSectionLabel.setVisible(true);
-            projectsSectionLabel.setManaged(true);
-        }
-
-        // Check if there are any projects
         if (allProjects.isEmpty()) {
-            if (projectsStatusLabel != null) {
-                projectsStatusLabel.setText("None");
-                projectsStatusLabel.setVisible(true);
-                projectsStatusLabel.setManaged(true);
-            }
-            if (projectListView != null) {
-                projectListView.setVisible(false);
-                projectListView.setManaged(false);
-            }
-            hideProjectDetails();
+            showEmptyProjectList();
         } else {
-            // Hide status label
-            if (projectsStatusLabel != null) {
-                projectsStatusLabel.setVisible(false);
-                projectsStatusLabel.setManaged(false);
-            }
-
-            // Show all projects in the list
-            if (projectListView != null) {
-                projectListView.setVisible(true);
-                projectListView.setManaged(true);
-                projectListView.setItems(allProjects);
-            }
-
-            // Clear selection and hide details initially
+            setLabelVisibility(projectsStatusLabel, false);
+            setListViewVisibility(true);
+            projectListView.setItems(allProjects);
             projectListView.getSelectionModel().clearSelection();
             hideProjectDetails();
         }
 
-        // Mark that we're showing all projects
         this.isShowingAllProjects = true;
     }
 
@@ -456,6 +330,128 @@ public class ProjectListPanel extends UiPart<Region> {
                 showProjectDetails(updatedProject);
             }
         }
+    }
+
+    // Helper Methods for visibility management
+
+    /**
+     * Shows the content area and hides the placeholder.
+     */
+    private void showContentArea() {
+        setContainerVisibility(placeholderContainer, false);
+        setContainerVisibility(contentContainer, true);
+    }
+
+    /**
+     * Sets visibility and managed state for a container.
+     */
+    private void setContainerVisibility(VBox container, boolean visible) {
+        if (container != null) {
+            container.setVisible(visible);
+            container.setManaged(visible);
+        }
+    }
+
+    /**
+     * Sets visibility and managed state for a label.
+     */
+    private void setLabelVisibility(Label label, boolean visible) {
+        if (label != null) {
+            label.setVisible(visible);
+            label.setManaged(visible);
+        }
+    }
+
+    /**
+     * Sets text, visibility and managed state for a label.
+     */
+    private void setLabelVisibility(Label label, boolean visible, String text) {
+        if (label != null) {
+            label.setText(text);
+            label.setVisible(visible);
+            label.setManaged(visible);
+        }
+    }
+
+    /**
+     * Sets visibility for the project list view.
+     */
+    private void setListViewVisibility(boolean visible) {
+        if (projectListView != null) {
+            projectListView.setVisible(visible);
+            projectListView.setManaged(visible);
+        }
+    }
+
+    // Helper Methods for list management
+
+    /**
+     * Shows empty state when no projects are available.
+     */
+    private void showEmptyProjectList() {
+        setLabelVisibility(projectsStatusLabel, true, NO_PROJECTS_MESSAGE);
+        setListViewVisibility(false);
+        hideProjectDetails();
+    }
+
+    /**
+     * Shows the project list with the given projects.
+     */
+    private void showProjectList(List<Project> projects) {
+        setLabelVisibility(projectsStatusLabel, false);
+        setListViewVisibility(true);
+        projectListView.setItems(FXCollections.observableArrayList(projects));
+        projectListView.getSelectionModel().clearSelection();
+        hideProjectDetails();
+    }
+
+    /**
+     * Auto-selects the only project if the list has exactly one project.
+     */
+    private void autoSelectSingleProject(List<Project> projects) {
+        if (projects.size() == 1) {
+            projectListView.getSelectionModel().select(0);
+        }
+    }
+
+    // Helper Methods for filtering
+
+    /**
+     * Filters all projects to return only those where the given person is a member.
+     */
+    private List<Project> getProjectsForPerson(Person person) {
+        return allProjects.stream()
+                .filter(project -> project != null)
+                .filter(project -> project.getMembers() != null)
+                .filter(project -> project.getMembers().contains(person))
+                .collect(Collectors.toList());
+    }
+
+    // Helper Methods for header config
+
+    /**
+     * Configures header labels for displaying a person's projects.
+     */
+    private void configureHeaderForPerson(String personName) {
+        setLabelVisibility(personNameLabel, true, PROJECTS_FOR_LABEL + personName);
+        setLabelVisibility(projectsSectionLabel, true);
+    }
+
+    /**
+     * Configures header labels for displaying all projects.
+     */
+    private void configureHeaderForAllProjects() {
+        setLabelVisibility(personNameLabel, true, ALL_PROJECTS_LABEL);
+        setLabelVisibility(projectsSectionLabel, true);
+    }
+
+    /**
+     * Hides all header and section labels (for single project details view).
+     */
+    private void hideAllHeaders() {
+        setLabelVisibility(personNameLabel, false);
+        setLabelVisibility(projectsSectionLabel, false);
+        setLabelVisibility(projectsStatusLabel, false);
     }
 
     /**
