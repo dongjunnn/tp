@@ -71,11 +71,13 @@ IndiDex is a **desktop contact and project management application designed for i
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page. 
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+* Additional text after `help` is ignored.
 
 <div markdown="block" class="alert alert-info">
 
@@ -371,6 +373,15 @@ Examples:
 * `pdetails n/Animation Collab` - Shows details for the "Animation Collab"
   project
 
+### Showing deadlines: `deadline`
+
+Shows projects that have deadlines less than 7 days from now.
+
+![deadlines](images/deadlines.png)
+
+Format: `deadline`
+
+* Additional text after `deadline` is ignored.
 
 ## Others
 
@@ -510,9 +521,11 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 | **Delete Project** | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
 | **Show Projects** | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
 | **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot` |
+| **Show Deadlines** | `deadline`                                                                                                                                                                                                                            |
 | **Clear**         | `clear`                                                                                                                                                                                                                               |
 | **Help**          | `help`                                                                                                                                                                                                                                |
 | **Exit**          | `exit`                                                                                                                                                                                                                                |
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary

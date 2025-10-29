@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private ProjectListPanel projectListPanel;
+    private DueSoonWindow dueSoonWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -140,6 +143,25 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Checks all projects and, if any are due within the next 7 days,
+     * shows a popup listing them.
+     */
+    public void showDueSoonPopupIfNeeded(boolean firstShow) {
+        List<Project> allProjects = logic.getFilteredProjectList()
+                .stream()
+                .collect(Collectors.toList());
+
+        List<Project> dueSoonProjects = DueSoonWindow.findProjectsDueSoon(allProjects);
+
+        if (dueSoonProjects.isEmpty() && firstShow) {
+            return;
+        }
+
+        dueSoonWindow = new DueSoonWindow(dueSoonProjects);
+        dueSoonWindow.show();
+    }
+
+    /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
@@ -162,6 +184,15 @@ public class MainWindow extends UiPart<Stage> {
         } else {
             helpWindow.focus();
         }
+    }
+
+    /**
+     * Opens the deadline window.
+     */
+
+    @FXML
+    public void handleDeadline() {
+        showDueSoonPopupIfNeeded(false);
     }
 
     void show() {
@@ -197,6 +228,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
+            }
+
+            if (commandResult.isShowDeadline()) {
+                handleDeadline();
             }
 
             if (commandResult.isExit()) {

@@ -18,6 +18,9 @@ public class CommandResult {
     /** Help information should be shown to the user. */
     private final boolean showHelp;
 
+    /** Deadlines should be shown to the user. */
+    private final boolean showDeadline;
+
     /** The application should exit. */
     private final boolean exit;
 
@@ -33,7 +36,8 @@ public class CommandResult {
     /**
      * Constructs a {@code CommandResult} with all fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
+
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean showDeadline,
                          Index personIndexToSelect, Project projectToShow, boolean showAllProjects) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
 
@@ -61,6 +65,7 @@ public class CommandResult {
         }
 
         this.showHelp = showHelp;
+        this.showDeadline = showDeadline;
         this.exit = exit;
         this.personIndexToSelect = personIndexToSelect;
         this.projectToShow = projectToShow;
@@ -72,35 +77,35 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, null, null, false);
+        this(feedbackToUser, false, false, false, null, null, false);
     }
 
     /**
      * Constructs a {@code CommandResult} for help or exit commands.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this(feedbackToUser, showHelp, exit, null, null, false);
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean showDeadline, boolean exit) {
+        this(feedbackToUser, showHelp, exit, showDeadline, null, null, false);
     }
 
     /**
      * Constructs a {@code CommandResult} with person index to select (for pshow).
      */
     public CommandResult(String feedbackToUser, Index personIndexToSelect) {
-        this(feedbackToUser, false, false, personIndexToSelect, null, false);
+        this(feedbackToUser, false, false, false, personIndexToSelect, null, false);
     }
 
     /**
      * Constructs a {@code CommandResult} with project to show (for pdetails).
      */
     public CommandResult(String feedbackToUser, Project projectToShow) {
-        this(feedbackToUser, false, false, null, projectToShow, false);
+        this(feedbackToUser, false, false, false, null, projectToShow, false);
     }
 
     /**
      * Constructs a {@code CommandResult} for showing all projects (for pshow all).
      */
     public CommandResult(String feedbackToUser, boolean showAllProjects) {
-        this(feedbackToUser, false, false, null, null, showAllProjects);
+        this(feedbackToUser, false, false, false, null, null, showAllProjects);
     }
 
     public String getFeedbackToUser() {
@@ -109,6 +114,10 @@ public class CommandResult {
 
     public boolean isShowHelp() {
         return showHelp;
+    }
+
+    public boolean isShowDeadline() {
+        return showDeadline;
     }
 
     public boolean isExit() {
@@ -165,11 +174,11 @@ public class CommandResult {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
+                .add("showDeadline", showDeadline)
                 .add("exit", exit)
                 .add("personIndexToSelect", personIndexToSelect)
                 .add("projectToShow", projectToShow)
                 .add("showAllProjects", showAllProjects)
                 .toString();
     }
-
 }
