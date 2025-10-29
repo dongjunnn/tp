@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Person;
 import seedu.address.model.project.exceptions.DuplicateProjectException;
 import seedu.address.model.project.exceptions.ProjectNotFoundException;
 
@@ -140,5 +141,30 @@ public class UniqueProjectList implements Iterable<Project> {
             }
         }
         return true;
+    }
+
+    /**
+     * Removes the given member from all projects in the list.
+     *
+     * @param member The member to be removed.
+     */
+    public void removeMemberFromAll(Person member) {
+        requireNonNull(member);
+
+        for (int i = 0; i < internalList.size(); i++) {
+            Project p = internalList.get(i);
+            if (p.getMembers().contains(member)) {
+                java.util.Set<Person> newMembers = new java.util.HashSet<>(p.getMembers());
+                newMembers.remove(member);
+
+                Project updated = new Project(
+                        p.getName(),
+                        p.getPriority(),
+                        p.getDeadline(),
+                        newMembers
+                );
+                internalList.set(i, updated);
+            }
+        }
     }
 }

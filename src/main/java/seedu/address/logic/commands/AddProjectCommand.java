@@ -37,6 +37,7 @@ public class AddProjectCommand extends Command {
             + PREFIX_NAME + "NAME "
             + PREFIX_DEADLINE + "DEADLINE (yyyy-MM-dd) "
             + PREFIX_PRIORITY + "PRIORITY (LOW|MEDIUM|HIGH) "
+            + PREFIX_MEMBER + "MEMBER_INDEX "
             + "[" + PREFIX_MEMBER + "MEMBER_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "IndiDex v1.3 "
@@ -70,6 +71,25 @@ public class AddProjectCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new CommandException("Invalid parameter: name must not be blank.");
+        }
+
+        long distinct = memberIndexes.stream().map(Index::getZeroBased).distinct().count();
+        if (distinct != memberIndexes.size()) {
+            throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
+        }
+
+        // local laptop/pc time
+        LocalDate today = LocalDate.now();
+        if (deadline.isBefore(today)) {
+            throw new CommandException("Invalid parameter: deadline cannot be in the past.");
+        }
+
+        if (memberIndexes.isEmpty()) {
+            throw new CommandException("Project must have at least one member.");
+        }
         ObservableList<Person> persons = model.getFilteredPersonList();
         Set<Person> members = new HashSet<>();
         for (Index idx : memberIndexes) {
@@ -82,7 +102,7 @@ public class AddProjectCommand extends Command {
             members.add(persons.get(z));
         }
 
-        Project toAdd = new Project(name, priority, deadline, members);
+        Project toAdd = new Project(trimmedName, priority, deadline, members);
 
         if (model.hasProject(toAdd)) {
             logger.log(java.util.logging.Level.WARNING,

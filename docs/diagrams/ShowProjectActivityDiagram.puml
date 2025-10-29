@@ -1,0 +1,26 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes pshow command;
+
+:Parse command arguments;
+
+if () then ([valid index])
+else ([invalid])
+    stop
+endif
+
+:Get filtered person list;
+
+if () then ([index within bounds])
+    :Get person at index;
+    :Return CommandResult
+    with target index;
+else ([out of bounds])
+    stop
+endif
+
+stop
+@enduml
