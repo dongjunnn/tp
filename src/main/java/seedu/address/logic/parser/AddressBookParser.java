@@ -99,10 +99,9 @@ public class AddressBookParser {
         case DeleteProjectCommand.COMMAND_WORD:
             return new DeleteProjectCommandParser().parse(arguments);
 
-<<<<<<< HEAD
         case DeadlineCommand.COMMAND_WORD:
             return new DeadlineCommand();
-=======
+
         case EditProjectCommand.COMMAND_WORD:
             return new EditProjectCommandParser().parse(arguments);
 
@@ -118,7 +117,6 @@ public class AddressBookParser {
         case JoinProjectCommand.COMMAND_WORD:
             return new JoinProjectCommandParser().parse(arguments);
 
->>>>>>> upstream/master
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
