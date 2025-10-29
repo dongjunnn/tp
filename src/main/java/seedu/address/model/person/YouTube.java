@@ -10,22 +10,10 @@ public class YouTube {
     /** Message to display if validation fails. */
     public static final String MESSAGE_CONSTRAINTS =
             "YouTube channel must be a valid URL or handle. Supported formats:\n"
-                    + "1. New handle: (https://www.)youtube.com/@YourHandle "
-                    + "-- starts with '@', 3–30 letters, digits, underscores, or hyphens allowed\n"
-                    + "2. Channel ID: (https://www.)youtube.com/channel/UCXXXXXXXXXXXXXX "
-                    + "-- 24 characters, starting with 'UC'\n"
-                    + "3. Legacy custom URL: (https://www.)youtube.com/c/CustomName "
-                    + "-- letters, digits, underscores, hyphens allowed\n"
-                    + "4. Legacy username: (https://www.)youtube.com/user/Username "
-                    + "-- letters, digits, underscores, hyphens allowed\n"
-                    + "Optional http(s)://, www., and trailing '/' are allowed.";
-
-    /** Regex for validating YouTube URLs. */
-    private static final String VALIDATION_REGEX =
-            "^(https?://)?(www\\.)?youtube\\.com/((@[-\\w\\.]{3,30})|" // new handle
-                    + "(channel/UC[\\w-]{22})|" // channel ID
-                    + "(c/[\\w-]+)|" // custom URL
-                    + "(user/[\\w-]+))/?$"; // legacy username
+                    + "- youtube.com/@handle\n"
+                    + "- youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx\n"
+                    + "- youtube.com/c/customName\n"
+                    + "- youtube.com/user/username";
 
     /** The YouTube channel URL. */
     public final String value;
@@ -59,7 +47,7 @@ public class YouTube {
 
         // Must be YouTube domain
         if (!input.matches("^(https?://)?(www\\.)?youtube\\.com/.*")) {
-            return "URL must be a valid YouTube link starting with 'youtube.com'.";
+            return "URL must be a valid YouTube link starting with '(https://(www.))youtube.com/'.";
         }
 
         // Extract path after domain and remove trailing slash
@@ -114,11 +102,7 @@ public class YouTube {
             return null;
         }
 
-        return "Unrecognized YouTube URL format. Must be one of:\n"
-                + "- youtube.com/@handle\n"
-                + "- youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx\n"
-                + "- youtube.com/c/customName\n"
-                + "- youtube.com/user/username";
+        return MESSAGE_CONSTRAINTS;
     }
 
     @Override
