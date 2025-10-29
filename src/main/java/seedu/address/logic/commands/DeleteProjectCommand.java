@@ -15,7 +15,7 @@ import seedu.address.model.project.Project;
 public class DeleteProjectCommand extends Command {
     public static final String COMMAND_WORD = "pdelete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a project by *exact* name (case-sensitive).\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a project by name (case-insensitive).\n"
             + "Parameters: n/NAME\n"
             + "Example: " + COMMAND_WORD + " n/IndiDex Website Revamp";
 
@@ -33,7 +33,7 @@ public class DeleteProjectCommand extends Command {
         List<Project> shown = model.getFilteredProjectList();
 
         Project target = shown.stream()
-                .filter(p -> p.getName() != null && p.getName().equals(name))
+                .filter(p -> p.getName() != null && p.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
 
@@ -49,11 +49,11 @@ public class DeleteProjectCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteProjectCommand
-                && name.equals(((DeleteProjectCommand) other).name));
+                && name.equalsIgnoreCase(((DeleteProjectCommand) other).name));
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return name.toLowerCase().hashCode();
     }
 }

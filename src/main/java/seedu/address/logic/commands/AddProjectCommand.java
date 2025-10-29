@@ -125,7 +125,7 @@ public class AddProjectCommand extends Command {
             return false;
         }
         AddProjectCommand o = (AddProjectCommand) other;
-        return name.equals(o.name)
+        return name.equalsIgnoreCase(o.name)
                 && deadline.equals(o.deadline)
                 && priority.equals(o.priority)
                 && memberIndexes.equals(o.memberIndexes);
@@ -139,5 +139,10 @@ public class AddProjectCommand extends Command {
                 .add("priority", priority)
                 .add("memberIndexes", memberIndexes)
                 .toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return name.toLowerCase().hashCode();
     }
 }
