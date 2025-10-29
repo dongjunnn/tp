@@ -36,7 +36,11 @@ public class TagCommandParser implements Parser<TagCommand> {
         List<String> indexStrings = Arrays.asList(preamble.trim().split("\\s+"));
         List<Index> indexes = new ArrayList<>();
         for (String s : indexStrings) {
-            indexes.add(ParserUtil.parseIndex(s));
+            Index toAdd = ParserUtil.parseIndex(s);
+            if (indexes.contains(toAdd)) {
+                continue;
+            }
+            indexes.add(toAdd);
         }
 
         Set<Tag> tags = ParserUtil.parseTags(argumentMultimap.getAllValues(CliSyntax.PREFIX_TAG));
