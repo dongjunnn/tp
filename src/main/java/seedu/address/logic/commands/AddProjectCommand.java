@@ -71,6 +71,22 @@ public class AddProjectCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new CommandException("Invalid parameter: name must not be blank.");
+        }
+
+        long distinct = memberIndexes.stream().map(Index::getZeroBased).distinct().count();
+        if (distinct != memberIndexes.size()) {
+            throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
+        }
+
+        // local laptop/pc time
+        LocalDate today = LocalDate.now();
+        if (deadline.isBefore(today)) {
+            throw new CommandException("Invalid parameter: deadline cannot be in the past.");
+        }
+
         if (memberIndexes.isEmpty()) {
             throw new CommandException("Project must have at least one member.");
         }
@@ -86,7 +102,7 @@ public class AddProjectCommand extends Command {
             members.add(persons.get(z));
         }
 
-        Project toAdd = new Project(name, priority, deadline, members);
+        Project toAdd = new Project(trimmedName, priority, deadline, members);
 
         if (model.hasProject(toAdd)) {
             logger.log(java.util.logging.Level.WARNING,
