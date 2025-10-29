@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -52,7 +53,7 @@ class AddProjectCommandParserTest {
                 "MyProj",
                 LocalDate.of(2025, 10, 1),
                 Priority.LOW,
-                List.of(Index.fromOneBased(1)) // no members provided
+                List.of(INDEX_FIRST_PERSON)
         );
 
         AddProjectCommand actual = parser.parse(input);
