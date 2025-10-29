@@ -57,7 +57,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_discordOnly_success() {
         Person expectedPerson = new PersonBuilder(BOB)
-                .withSocials("bob#5678", "", "", "")
+                .withSocials("bob5678", "", "", "")
                 .withTags(VALID_TAG_FRIEND).build();
 
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -68,7 +68,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder(BOB)
-                .withSocials("bob#5678", "linkedin.com/in/bob",
+                .withSocials("bob5678", "linkedin.com/in/bob",
                                 "@bob_the_builder", "youtube.com/@bobchannel")
                 .withTags(VALID_TAG_FRIEND).build();
 
@@ -79,7 +79,7 @@ public class AddCommandParserTest {
                 + PRIORITY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB)
-                .withSocials("bob#5678", "linkedin.com/in/bob",
+                .withSocials("bob5678", "linkedin.com/in/bob",
                                 "@bob_the_builder", "youtube.com/@bobchannel")
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();

@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_DISCORD = "amy#1234";
+    public static final String DEFAULT_DISCORD = "amy_1234";
     public static final String DEFAULT_LINKEDIN = "linkedin.com/in/amy";
     public static final String DEFAULT_INSTAGRAM = "@amy_bstyle";
     public static final String DEFAULT_YOUTUBE = "youtube.com/@amybee";
