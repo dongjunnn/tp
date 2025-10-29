@@ -147,7 +147,7 @@ public class ModelManager implements Model {
     public Project getProjectByName(String projectName) {
         requireNonNull(projectName);
         return addressBook.getProjectList().stream()
-                .filter(p -> p.getName().equals(projectName))
+                .filter(p -> p.getName().equalsIgnoreCase(projectName))
                 .findFirst().orElse(null);
     }
 
