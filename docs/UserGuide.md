@@ -274,6 +274,35 @@ Examples:
 * `padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3` - Creates a project and assigns contacts 1, 2, and 3 as members
 * `padd n/Podcast Season 2 d/2025-09-15 pr/LOW m/5` - Creates a low priority project with one team member
 
+### Joining a project: `join`
+
+Adds the specified members to the chosen project.
+
+Format: `join n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
+
+* Adds the contacts at the specified indices to the named project
+* Specifying projects is **case insensitive**
+* Adding existing members has no effect but are allowed only if there is at least one new member joining
+
+Examples:
+* `join n/Shopee Advertisement m/3` - Adds the third contact in the list to the project 'Shopee Advertisement'
+* `join m/6 m/7 n/soc vlog` - Adds the sixth and seventh contact in the list to the project 'SoC Vlog'
+
+### Leaving a project: `leave`
+
+Removes the specified members to the chosen project.
+
+Format: `leave n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
+
+* Removes the contacts at the specified indices to the named project
+* Specifying projects is **case insensitive**
+* Contacts who are not members are not allowed to leave
+* Contacts are not allowed to leave if there will be no member remaining in the project
+
+Examples
+* `leave n/Shopee Advertisement m/2` - Removes the second contact from the project if they are a member
+* `leave m/5 m/6 n/soc vlog` - Removes the fifth and sixth contact from the project
+
 ### Deleting a project: `pdelete`
 
 Removes a project from IndiDex.
