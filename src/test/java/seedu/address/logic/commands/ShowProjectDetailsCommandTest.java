@@ -232,6 +232,11 @@ public class ShowProjectDetailsCommandTest {
         }
 
         @Override
+        public Project getProjectByName(String projectName) {
+            return null;
+        }
+
+        @Override
         public void updateFilteredProjectList(java.util.function.Predicate<Project> predicate) {
             throw new AssertionError();
         }

@@ -101,7 +101,7 @@ public class AddressBookParser {
 
         case ShowProjectDetailsCommand.COMMAND_WORD:
             return new ShowProjectDetailsCommandParser().parse(arguments);
-            
+
         case JoinProjectCommand.COMMAND_WORD:
             return new JoinProjectCommandParser().parse(arguments);
 
