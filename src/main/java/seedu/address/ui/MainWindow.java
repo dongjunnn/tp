@@ -140,6 +140,17 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        logic.getFilteredProjectList().addListener((javafx.collections.ListChangeListener<Project>) change -> {
+            if (dueSoonWindow != null && dueSoonWindow.isShowing()) {
+                List<Project> allProjects = logic.getFilteredProjectList()
+                        .stream()
+                        .collect(Collectors.toList());
+                List<Project> dueSoonProjects = DueSoonWindow.findProjectsDueSoon(allProjects);
+                dueSoonWindow.updateProjects(dueSoonProjects);
+            }
+        });
+
     }
 
     /**
@@ -157,8 +168,17 @@ public class MainWindow extends UiPart<Stage> {
             return;
         }
 
-        dueSoonWindow = new DueSoonWindow(dueSoonProjects);
-        dueSoonWindow.show();
+        if (dueSoonWindow == null) {
+            dueSoonWindow = new DueSoonWindow(dueSoonProjects);
+            dueSoonWindow.show();
+        } else {
+            dueSoonWindow.updateProjects(dueSoonProjects); // refresh content
+            if (!dueSoonWindow.isShowing()) {
+                dueSoonWindow.show();
+            }
+            dueSoonWindow.focus();
+        }
+
     }
 
     /**
@@ -208,6 +228,11 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+
+        if (dueSoonWindow != null && dueSoonWindow.isShowing()) {
+            dueSoonWindow.close();
+        }
+
         primaryStage.hide();
     }
 

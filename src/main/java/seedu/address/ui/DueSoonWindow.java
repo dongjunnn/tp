@@ -100,4 +100,44 @@ public class DueSoonWindow extends UiPart<Stage> {
                 })
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Refreshes the window when there are changes to projects
+     */
+    public void updateProjects(List<Project> updatedProjects) {
+        if (updatedProjects == null) {
+            return;
+        }
+
+        ObservableList<String> displayItems = FXCollections.observableArrayList(
+                updatedProjects.stream()
+                        .sorted(
+                                Comparator
+                                        .comparing(Project::getDeadline)
+                                        .thenComparing(DueSoonWindow::priorityRank)
+                        )
+                        .map(p -> String.format(
+                                "%s  —  due %s  (Priority: %s)",
+                                p.getName(),
+                                p.getDeadline(),
+                                p.getPriority()
+                        ))
+                        .collect(Collectors.toList())
+        );
+
+        dueSoonListView.setItems(displayItems);
+
+        if (!displayItems.isEmpty()) {
+            dueSoonListView.getSelectionModel().select(0);
+        }
+    }
+
+    /**
+     * Closes the window.
+     */
+    public void close() {
+        if (getRoot() != null && getRoot().isShowing()) {
+            getRoot().close();
+        }
+    }
 }
