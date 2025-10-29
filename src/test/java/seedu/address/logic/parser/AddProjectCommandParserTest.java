@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +20,7 @@ class AddProjectCommandParserTest {
 
     @Test
     void parseAllFieldsPresentMembersSpaceSeparated_success() throws Exception {
-        String input = " n/IndiDex v1.3 d/2025-12-31 pr/HIGH m/1 m/3 r/kickoff next week";
+        String input = " n/IndiDex v1.3 d/2025-12-31 pr/HIGH m/1 m/3";
         AddProjectCommand expected = new AddProjectCommand(
                 "IndiDex v1.3",
                 LocalDate.of(2025, 12, 31),
@@ -47,12 +48,12 @@ class AddProjectCommandParserTest {
 
     @Test
     void parseNameTrimmed_success() throws Exception {
-        String input = " n/   MyProj   d/2025-10-01 pr/LOW";
+        String input = " n/   MyProj   m/1 d/2025-10-01 pr/LOW";
         AddProjectCommand expected = new AddProjectCommand(
                 "MyProj",
                 LocalDate.of(2025, 10, 1),
                 Priority.LOW,
-                List.of() // no members provided
+                List.of(INDEX_FIRST_PERSON)
         );
 
         AddProjectCommand actual = parser.parse(input);
@@ -124,9 +125,4 @@ class AddProjectCommandParserTest {
         assertThrows(ParseException.class, () -> parser.parse(input));
     }
 
-    @Test
-    void parseDuplicateRemarksPrefix_failure() {
-        String input = " n/Proj d/2025-12-31 pr/HIGH r/first r/second";
-        assertThrows(ParseException.class, () -> parser.parse(input));
-    }
 }

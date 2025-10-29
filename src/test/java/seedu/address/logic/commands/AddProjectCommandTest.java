@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ public class AddProjectCommandTest {
     // -------------------- execute() --------------------
 
     @Test
-    void execute_noMembers_success() throws Exception {
+    void execute_noMembers_throwsCommandException() throws Exception {
         String name = "IndiDex v1.3";
         LocalDate deadline = LocalDate.of(2025, 12, 31);
         Priority priority = Priority.HIGH;
@@ -41,12 +45,8 @@ public class AddProjectCommandTest {
         AddProjectCommand cmd = new AddProjectCommand(name, deadline, priority, members);
         ModelStubAcceptingProjectAdded model = new ModelStubAcceptingProjectAdded();
 
-        CommandResult result = cmd.execute(model);
-
-        Project expectedProject = new Project(name, priority, deadline, java.util.Set.of());
-        assertEquals(String.format("New project added: %s", expectedProject), result.getFeedbackToUser());
-        assertEquals(1, model.added.size());
-        assertEquals(expectedProject, model.added.get(0));
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Project must have at least one member.", ex.getMessage());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class AddProjectCommandTest {
                 "SameName",
                 Priority.LOW,
                 LocalDate.of(2026, 1, 1),
-                java.util.Set.of()
+                java.util.Set.of(ALICE)
         );
         Model model = new ModelStubWithProject(existing);
 
@@ -63,7 +63,7 @@ public class AddProjectCommandTest {
                 "SameName", // same identity -> duplicate
                 LocalDate.of(2027, 2, 2),
                 Priority.HIGH,
-                List.of()
+                List.of(INDEX_SECOND_PERSON)
         );
 
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
@@ -75,9 +75,9 @@ public class AddProjectCommandTest {
         ModelStubWithPersons model = new ModelStubWithPersons(FXCollections.observableArrayList());
         AddProjectCommand cmd = new AddProjectCommand(
                 "Proj",
-                LocalDate.of(2025, 10, 1),
+                LocalDate.now(),
                 Priority.MEDIUM,
-                List.of(Index.fromOneBased(1))
+                List.of(INDEX_FIRST_PERSON)
         );
 
         CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
@@ -231,6 +231,11 @@ public class AddProjectCommandTest {
         }
 
         @Override
+        public Project getProjectByName(String projectName) {
+            throw new AssertionError();
+        }
+
+        @Override
         public void setProject(Project target, Project editedProject) {
             throw new AssertionError();
         }
@@ -286,6 +291,9 @@ public class AddProjectCommandTest {
 
         private ModelStubWithProject(Project existing) {
             this.existing = existing;
+
+            persons.add(ALICE);
+            persons.add(BOB);
         }
 
         @Override

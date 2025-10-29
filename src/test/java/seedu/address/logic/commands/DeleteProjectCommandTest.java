@@ -182,6 +182,11 @@ public class DeleteProjectCommandTest {
         }
 
         @Override
+        public Project getProjectByName(String projectName) {
+            throw new AssertionError();
+        }
+
+        @Override
         public ObservableList<Project> getFilteredProjectList() {
             throw new AssertionError();
         }
