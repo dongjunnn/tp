@@ -32,6 +32,7 @@ public class EditProjectCommand extends Command {
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "Example: " + COMMAND_WORD + " "
             + "Razer Collaboration Video "
+            + PREFIX_NAME + "Razer Advertisement "
             + PREFIX_DEADLINE + "2025-12-25 "
             + PREFIX_PRIORITY + "HIGH";
 
