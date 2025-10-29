@@ -72,6 +72,13 @@ public class EditProjectCommand extends Command {
             }
         }
 
+        if (editProjectDescriptor.getDeadline().isPresent()) {
+            LocalDate newDeadline = editProjectDescriptor.getDeadline().get();
+            if (newDeadline.isBefore(LocalDate.now())) {
+                throw new CommandException("Deadline cannot be earlier than today.");
+            }
+        }
+
         Project editedProject = createEditedProject(projectToEdit, editProjectDescriptor);
 
         model.setProject(projectToEdit, editedProject);
