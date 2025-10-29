@@ -53,7 +53,7 @@ public class LeaveProjectCommandTest {
         expectedModel.setProject(project, expectedProject);
 
         String expectedMessage = String.format(LeaveProjectCommand.MESSAGE_LEAVE_SUCCESS
-                + "\nRemoved: %2$s", PROJECT_NAME, ALICE.getName());
+                + "\n%2$s", PROJECT_NAME, ALICE.getName());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }

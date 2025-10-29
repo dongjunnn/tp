@@ -35,6 +35,8 @@ public class LeaveProjectCommandParser implements Parser<LeaveProjectCommand> {
                                                    LeaveProjectCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
+
         String projectName = argMultimap.getValue(PREFIX_NAME).get().trim();
         if (projectName.isEmpty()) {
             throw new ParseException("Missing project name.\n" + LeaveProjectCommand.MESSAGE_USAGE);
@@ -48,7 +50,11 @@ public class LeaveProjectCommandParser implements Parser<LeaveProjectCommand> {
 
         List<Index> memberIndexes = new ArrayList<>();
         for (String s : memberStrings) {
-            memberIndexes.add(ParserUtil.parseIndex(s));
+            Index toAdd = ParserUtil.parseIndex(s);
+            if (memberIndexes.contains(toAdd)) {
+                continue;
+            }
+            memberIndexes.add(toAdd);
         }
 
         return new LeaveProjectCommand(projectName, memberIndexes);

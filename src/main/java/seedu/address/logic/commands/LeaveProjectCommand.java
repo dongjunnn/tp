@@ -40,6 +40,8 @@ public class LeaveProjectCommand extends Command {
     public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_MEMBER_NOT_IN_PROJECT =
             "%1$s can't leave a project they aren't a part of!";
+    public static final String MESSAGE_LAST_MEMBER =
+            "Project cannot have no members!";
 
     private final String name;
     private final List<Index> memberIndexes;
@@ -85,6 +87,10 @@ public class LeaveProjectCommand extends Command {
             updatedMembers.remove(personToRemove);
         }
 
+        if (updatedMembers.isEmpty()) {
+            throw new CommandException(MESSAGE_LAST_MEMBER);
+        }
+
         Project updatedProject = new Project(
                 project.getName(),
                 project.getPriority(),
@@ -98,7 +104,7 @@ public class LeaveProjectCommand extends Command {
                 .collect(Collectors.joining(", "));
 
         return new CommandResult(String.format(MESSAGE_LEAVE_SUCCESS
-                + "\nRemoved: %2$s", project.getName(), removedNames));
+                + "\n%2$s", project.getName(), removedNames));
     }
 
     @Override
