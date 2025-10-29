@@ -46,6 +46,9 @@ public class SortPersonsCommandParser implements Parser<SortPersonsCommand> {
         }
 
         Prefix attr = present.get(0);
+        if (dirToken.isEmpty() && attr.equals(PREFIX_PRIORITY)) {
+            ascending = false;
+        }
         return new SortPersonsCommand(attr, ascending);
     }
     /**

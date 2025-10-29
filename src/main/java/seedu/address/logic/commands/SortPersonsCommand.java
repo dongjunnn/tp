@@ -76,9 +76,9 @@ public class SortPersonsCommand extends Command {
 
     static int priorityRank(String s) {
         return switch (s.toUpperCase()) {
-        case "LOW" -> 2;
+        case "LOW" -> 0;
         case "MEDIUM" -> 1;
-        case "HIGH" -> 0;
+        case "HIGH" -> 2;
         default -> -1;
         };
     }

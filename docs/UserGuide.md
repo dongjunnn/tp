@@ -212,12 +212,13 @@ Sort the contact(s) from IndiDex by exactly one chosen attribute.
 Format: `sort (n/|p/|a/|pr/|e/)[asc/desc]`
 
 * Sorts the contacts by the specified attribute
-* Defaults to ascending order
+* Defaults to ascending order (descending order for priority)
 * Alphanumerical attributes are sorted by their unicode values
 
 Examples:
 * `sort n/asc` sorts contacts by name in alphabetical order
-* `sort pr/` sorts contacts by ascending priority (from LOW to HIGH)
+* `sort a/` sorts contacts by address in alphabetical order
+* `sort pr/` sorts contacts by descending priority (from HIGH to LOW)
 * `sort p/desc` sorts contacts by phone numbers in descending numerical order
 
 
