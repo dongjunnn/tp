@@ -49,11 +49,11 @@ public class DeleteProjectCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteProjectCommand
-                && name.equalsIgnoreCase(((DeleteProjectCommand) other).name));
+                && name.equals(((DeleteProjectCommand) other).name));
     }
 
     @Override
     public int hashCode() {
-        return name.toLowerCase().hashCode();
+        return name.hashCode();
     }
 }

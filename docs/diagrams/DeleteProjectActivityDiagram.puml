@@ -1,0 +1,26 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes pdelete command;
+
+:Parse command arguments;
+
+if () then ([valid format])
+else ([invalid])
+    stop
+endif
+
+:Search for project by name
+in filtered project list;
+
+if () then ([project found])
+    :Delete project from Model;
+    :Return success message;
+else ([not found])
+    stop
+endif
+
+stop
+@enduml

@@ -1,0 +1,88 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddProjectCommandParser" as AddProjectCommandParser LOGIC_COLOR
+participant "a:AddProjectCommand" as AddProjectCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("padd n/... d/... p/... m/...")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("padd n/... d/... p/... m/...")
+activate AddressBookParser
+
+create AddProjectCommandParser
+AddressBookParser -> AddProjectCommandParser
+activate AddProjectCommandParser
+
+AddProjectCommandParser --> AddressBookParser
+deactivate AddProjectCommandParser
+
+AddressBookParser -> AddProjectCommandParser : parse("n/... d/... p/... m/...")
+activate AddProjectCommandParser
+
+create AddProjectCommand
+AddProjectCommandParser -> AddProjectCommand
+activate AddProjectCommand
+
+AddProjectCommand --> AddProjectCommandParser :
+deactivate AddProjectCommand
+
+AddProjectCommandParser --> AddressBookParser : a
+deactivate AddProjectCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddProjectCommandParser -[hidden]-> AddressBookParser
+destroy AddProjectCommandParser
+
+AddressBookParser --> LogicManager : a
+deactivate AddressBookParser
+
+LogicManager -> AddProjectCommand : execute(m)
+activate AddProjectCommand
+
+AddProjectCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model --> AddProjectCommand : personList
+deactivate Model
+
+loop for each member index
+    AddProjectCommand -> AddProjectCommand : validate and resolve index
+    activate AddProjectCommand
+    deactivate AddProjectCommand
+end
+
+AddProjectCommand -> Model : hasProject(project)
+activate Model
+
+Model --> AddProjectCommand : false
+deactivate Model
+
+AddProjectCommand -> Model : addProject(project)
+activate Model
+
+Model --> AddProjectCommand
+deactivate Model
+
+create CommandResult
+AddProjectCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddProjectCommand
+deactivate CommandResult
+
+AddProjectCommand --> LogicManager : r
+deactivate AddProjectCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

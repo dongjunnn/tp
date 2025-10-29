@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-IndiDex is a **desktop contact and project management application designed for indie content creators**, optimized for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IndiDex can help you manage your content creator network and projects faster than traditional GUI apps.
+IndiDex is a **desktop contact and project management application designed for indie content creators**, optimised for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IndiDex can help you manage your content creator network and projects faster than traditional GUI apps. Designed for creators managing 20+ collaborators, IndiDex lets you store all contact details (including social media profiles like Discord, Instagram, YouTube, and LinkedIn), create projects with deadlines, and assign team members—all in seconds rather than minutes.
 
 * Table of Contents
   {:toc}
@@ -15,15 +15,15 @@ IndiDex is a **desktop contact and project management application designed for i
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for IndiDex.
+3. Copy the file to the folder you want to use as the _home folder_ for IndiDex.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data (the screenshot contains added projects which won't appear on launch).<br>
    ![image](https://hackmd.io/_uploads/HyrkrTP0gx.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `list` : Lists all contacts.
@@ -38,7 +38,7 @@ IndiDex is a **desktop contact and project management application designed for i
 
     * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -79,6 +79,30 @@ Format: `help`
 
 * Additional text after `help` is ignored.
 
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Understanding the IndiDex Interface:**
+
+IndiDex uses a **two-panel layout** to help you manage both contacts and
+projects efficiently:
+
+* **Left Panel (Contacts)**: Displays your contact list with all their
+  details
+    * Shows contact information including name, phone, email, social media
+      handles, and tags
+    * Use commands like `list`, `find`, `add`, `edit`, and `delete` to manage
+      contacts here
+
+* **Right Panel (Projects)**: Displays all project related details
+    * Use commands like `padd`, `pdelete`, `pshow`, and `pdetails` to manage
+      and view projects here
+    * The panel updates automatically when you run project-related commands
+
+**Tip**: The two panels work together - when you use `pshow INDEX`, the app
+highlights that selected contact in the left panel. Subsequently, one can do  further project related commands for that index. These commands may then be reflected in the right panel.
+
+</div>
+
 ## Contacts
 
 ### Adding a contact: `add`
@@ -94,7 +118,7 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LIN
     * `a/ADDRESS` - Physical or mailing address
 
 * **Optional fields:**
-    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
+    * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`, defaults to `LOW`
     * `dc/DISCORD` - Discord handle/username
     * `li/LINKEDIN` - LinkedIn profile URL
     * `ig/INSTAGRAM` - Instagram handle
@@ -134,7 +158,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/D
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all the contact's tags by typing `t/` without specifying any tags after it.
-* You can remove social media profiles by providing empty values (e.g., `dc/` to remove Discord handle).
+* You can remove social media profiles by providing a '-' as input (e.g., `dc/-` to remove Discord handle).
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 Editing a contact to have the same details as another existing contact will be rejected to prevent duplicates.
@@ -252,6 +276,35 @@ Examples:
 * `padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3` - Creates a project and assigns contacts 1, 2, and 3 as members
 * `padd n/Podcast Season 2 d/2025-09-15 pr/LOW m/5` - Creates a low priority project with one team member
 
+### Joining a project: `join`
+
+Adds the specified members to the chosen project.
+
+Format: `join n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
+
+* Adds the contacts at the specified indices to the named project
+* Specifying projects is **case insensitive**
+* Adding existing members has no effect but are allowed only if there is at least one new member joining
+
+Examples:
+* `join n/Shopee Advertisement m/3` - Adds the third contact in the list to the project 'Shopee Advertisement'
+* `join m/6 m/7 n/soc vlog` - Adds the sixth and seventh contact in the list to the project 'SoC Vlog'
+
+### Leaving a project: `leave`
+
+Removes the specified members to the chosen project.
+
+Format: `leave n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
+
+* Removes the contacts at the specified indices to the named project
+* Specifying projects is **case insensitive**
+* Contacts who are not members are not allowed to leave
+* Contacts are not allowed to leave if there will be no member remaining in the project
+
+Examples
+* `leave n/Shopee Advertisement m/2` - Removes the second contact from the project if they are a member
+* `leave m/5 m/6 n/soc vlog` - Removes the fifth and sixth contact from the project
+
 ### Deleting a project: `pdelete`
 
 Removes a project from IndiDex.
@@ -269,6 +322,56 @@ This operation cannot be undone. The project name must match exactly (case-sensi
 Examples:
 * `pdelete n/Web Series Pilot` - Deletes the project named "Web Series Pilot"
 * `pdelete n/Animation Collab` - Deletes the project named "Animation Collab"
+
+### Showing projects: `pshow`
+
+Displays projects in the project panel.
+
+Format: `pshow INDEX` or `pshow all`
+
+* **With INDEX**: Shows projects for the contact at the specified index
+    * The index refers to the index number shown in the displayed contact list
+    * The index **must be a positive integer** 1, 2, 3, …​
+    * Scrolls to and highlights the contact's associated projects in the
+      project panel
+
+* **With `all`**: Displays all projects in the project panel
+    * Resets any previous contact-specific project filtering
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use `pshow INDEX` to quickly find which projects a specific contact is
+involved in. Use `pshow all` to get an overview of all your projects.
+</div>
+
+Examples:
+* `pshow 1` - Shows all projects that the 1st contact is a member of
+* `pshow all` - Shows all projects in IndiDex
+* `find John` followed by `pshow 1` - Shows projects for the 1st person in
+  the search results
+
+### Showing project details: `pdetails`
+
+Displays detailed information for a specific project by its exact name.
+
+Format: `pdetails n/PROJECT_NAME`
+
+* **Required field:**
+    * `n/PROJECT_NAME` - The exact name of the project (case-sensitive)
+
+* Project name matching is **case-sensitive** and must be exact
+* Displays the project's deadline, priority, and team members in the project
+  panel
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+The project name must match exactly (case-sensitive). Hence, "Web Series" and "web
+series" are considered different projects.
+</div>
+
+Examples:
+* `pdetails n/Web Series Pilot` - Shows detailed information for the "Web
+  Series Pilot" project
+* `pdetails n/Animation Collab` - Shows details for the "Animation Collab"
+  project
 
 ### Showing deadlines: `deadline`
 
@@ -405,21 +508,23 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 ## Command summary
 
-| Action             | Format, Examples                                                                                                                                                                                                                      |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Contact**    | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
-| **List**           | `list`                                                                                                                                                                                                                                |
-| **Edit**           | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
-| **Find**           | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
-| **Tag**            | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
-| **Delete**         | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
-| **Sort**           | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
-| **Add Project**    | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
+| Action            | Format, Examples                                                                                                                                                                                                                      |
+|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Contact**   | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
+| **List**          | `list`                                                                                                                                                                                                                                |
+| **Edit**          | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
+| **Find**          | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
+| **Tag**           | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
+| **Delete**        | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
+| **Sort**          | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
+| **Add Project**   | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
 | **Delete Project** | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
+| **Show Projects** | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot` |
 | **Show Deadlines** | `deadline`                                                                                                                                                                                                                            |
-| **Clear**          | `clear`                                                                                                                                                                                                                               |
-| **Help**           | `help`                                                                                                                                                                                                                                |
-| **Exit**           | `exit`                                                                                                                                                                                                                                |
+| **Clear**         | `clear`                                                                                                                                                                                                                               |
+| **Help**          | `help`                                                                                                                                                                                                                                |
+| **Exit**          | `exit`                                                                                                                                                                                                                                |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -433,5 +538,6 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 * **Priority**: A classification of importance (LOW, MEDIUM, or HIGH) for contacts or projects
 * **Project**: A collection of information about a collaborative effort, including deadline, priority, and team members
 * **JSON**: A file format used to store IndiDex data
+* **Indie Content Creator**: A self-employed person who creates digital content like videos, podcasts, music, or animations and shares it online. "Indie" (short for independent) means they work for themselves rather than for a company, and they often collaborate with other freelancers to produce their content. Examples include independent YouTubers, podcasters, Twitch streamers, and digital artists.
 
 --------------------------------------------------------------------------------------------------------------------

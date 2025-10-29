@@ -16,10 +16,15 @@ import seedu.address.logic.commands.DeadlineCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteProjectCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditProjectCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.JoinProjectCommand;
+import seedu.address.logic.commands.LeaveProjectCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ShowProjectCommand;
+import seedu.address.logic.commands.ShowProjectDetailsCommand;
 import seedu.address.logic.commands.SortPersonsCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -94,8 +99,26 @@ public class AddressBookParser {
         case DeleteProjectCommand.COMMAND_WORD:
             return new DeleteProjectCommandParser().parse(arguments);
 
+<<<<<<< HEAD
         case DeadlineCommand.COMMAND_WORD:
             return new DeadlineCommand();
+=======
+        case EditProjectCommand.COMMAND_WORD:
+            return new EditProjectCommandParser().parse(arguments);
+
+        case ShowProjectCommand.COMMAND_WORD:
+            return new ShowProjectCommandParser().parse(arguments);
+
+        case ShowProjectDetailsCommand.COMMAND_WORD:
+            return new ShowProjectDetailsCommandParser().parse(arguments);
+
+        case LeaveProjectCommand.COMMAND_WORD:
+            return new LeaveProjectCommandParser().parse(arguments);
+
+        case JoinProjectCommand.COMMAND_WORD:
+            return new JoinProjectCommandParser().parse(arguments);
+
+>>>>>>> upstream/master
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
