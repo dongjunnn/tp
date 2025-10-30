@@ -2,7 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -113,7 +119,6 @@ public class DeleteCommand extends Command {
                     int newCount = deleteCountMap.getOrDefault(project, 0) + 1;
                     deleteCountMap.put(project, newCount);
 
-                    // 🔍 Check immediately: if deleting this person empties the project, block
                     if (newCount == members.size()) {
                         throw new CommandException(String.format(
                                 Messages.MESSAGE_PROJECT_MUST_HAVE_MEMBERS, project.getName()
