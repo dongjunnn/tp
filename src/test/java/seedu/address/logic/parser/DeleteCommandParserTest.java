@@ -43,9 +43,7 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_argsWithDuplicates_returnsDeleteCommand() {
-        // duplicates are allowed in input; command deduplicates internally and equality is order-insensitive
-        assertParseSuccess(parser, "1 1 2",
-                new DeleteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)));
+        assertParseFailure(parser, "1 1 2", "Duplicate indexes are not allowed.");
     }
 
     @Test

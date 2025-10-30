@@ -61,7 +61,7 @@ public class Project {
         }
 
         return otherProject != null
-                && otherProject.getName().equals(getName());
+                && otherProject.getName().equalsIgnoreCase(getName());
     }
 
     /** Returns true if all fields are equal. */
