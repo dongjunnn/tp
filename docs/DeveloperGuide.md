@@ -3,13 +3,55 @@ layout: page
 title: Developer Guide
 ---
 * Table of Contents
-{:toc}
+- [Acknowledgements](#acknowledgements)
+- [Setting up, getting started](#setting-up-getting-started)
+- [Design](#design)
+    - [Architecture](#architecture)
+    - [UI component](#ui-component)
+    - [Logic component](#logic-component)
+    - [Model component](#model-component)
+    - [Storage component](#storage-component)
+    - [Common classes](#common-classes)
+- [Implementation](#implementation)
+    - [Project Management Features](#project-management-features)
+        - [Add Project Feature](#add-project-feature)
+        - [Delete Project Feature](#delete-project-feature)
+        - [Show Project Feature](#show-project-feature)
+    - [\[Proposed\] Undo/redo feature](#proposed-undoredo-feature)
+        - [Proposed Implementation](#proposed-implementation)
+        - [Design considerations:](#design-considerations)
+    - [\[Proposed\] Data archiving](#proposed-data-archiving)
+- [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#appendix-requirements)
+    - [Product scope](#product-scope)
+    - [User stories](#user-stories)
+    - [Use cases](#use-cases)
+    - [Non-Functional Requirements](#non-functional-requirements)
+    - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+    - [1. Launch, shutdown & window preferences](#1-launch-shutdown--window-preferences)
+    - [2. Quick seed data (contacts)](#2-quick-seed-data-contacts)
+    - [3. add, edit, find, tag, sort (contacts)](#3-add-edit-find-tag-sort-contacts)
+    - [4. delete (contacts)](#4-delete-contacts)
+    - [5. Create projects with padd](#5-create-projects-with-padd)
+    - [6. View projects: pshow & pdetails](#6-view-projects-pshow--pdetails)
+    - [7. Join & Leave projects: join, leave (+ safety)](#7-join--leave-projects-join-leave--safety)
+    - [8. Edit projects: pedit](#8-edit-projects-pedit)
+    - [9. Delete projects: pdelete](#9-delete-projects-pdelete)
+    - [10. Deadlines view: deadline](#10-deadlines-view-deadline)
+    - [11. Data saving & file edits](#11-data-saving--file-edits)
+    - [12. Help & known-issues checks](#12-help--known-issues-checks)
+    - [13. Clear & Exit](#13-clear--exit)
+    - [Suggested end-to-end path (copy-paste block)](#suggested-end-to-end-path-copy-paste-block)
+    - [Notes on edge cases for exploratory testing](#notes-on-edge-cases-for-exploratory-testing)
+
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* Libraries used: [Checkstyle](https://github.com/checkstyle/checkstyle), [Jackson](https://github.com/FasterXML/jackson), [JavaFX](https://openjfx.io/), [JUnit](https://github.com/junit-team/junit5), [Shadow](https://github.com/GradleUp/shadow)
+* References used: [SE-EDU initiative](https://se-education.org/), [AB3](https://github.com/se-edu/addressbook-level3)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -155,6 +197,87 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Project Management Features
+
+The project management features allow users to create, delete, and display projects within the application. These features are implemented through three main commands (a fourth command `pdetails` (project details) is similarly implemented to `pshow`): `padd` (add project), `pdelete` (delete project), and `pshow` (show project).
+
+#### Add Project Feature
+
+##### Implementation
+
+The add project mechanism is facilitated by `AddProjectCommand` and `AddProjectCommandParser`. The command allows users to create a new project with a name, deadline, priority, and member indices.
+
+The following sequence diagram shows how the add project operation works:
+
+<img src="diagrams/AddProjectSequenceDiagram.png" alt="Add Project Sequence Diagram" />
+
+##### How the Add Project feature works:
+
+1. When the user executes the `padd` command (e.g. `padd n/Website Redesign d/Revamp company website p/web t/urgent m/1 m/2`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates an `AddProjectCommandParser` to parse the command arguments.
+3. The parser validates the command format and extracts the project name, description, project tags, and member indices.
+4. For each member index provided, the command validates that the index exists in the filtered person list.
+5. An `AddProjectCommand` object is created with the parsed project details.
+6. When executed, the command checks if a project with the same name already exists using `Model#hasProject()`.
+7. If the project is unique, it is added to the model using `Model#addProject()`.
+8. A `CommandResult` is returned with a success message.
+
+The following activity diagram summarizes what happens when a user executes the `padd` command:
+
+<img src="diagrams/AddProjectActivityDiagram.png" alt="Add Project Activity Diagram" />
+
+#### Delete Project Feature
+
+##### Implementation
+
+The delete project mechanism is facilitated by `DeleteProjectCommand` and `DeleteProjectCommandParser`. The command allows users to delete an existing project by its exact name.
+
+The following sequence diagram shows how the delete project operation works:
+
+<img src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" />
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteProjectCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+</div>
+
+##### How the Delete Project feature works:
+
+1. When the user executes the `pdelete` command (e.g. `pdelete n/Website Redesign`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates a `DeleteProjectCommandParser` to parse the command arguments.
+3. The parser extracts the project name from the command.
+4. A `DeleteProjectCommand` object is created with the parsed project name.
+5. When executed, the command retrieves the filtered project list using `Model#getFilteredProjectList()`.
+6. The command searches for a project with the matching name in the list.
+7. If found, the project is deleted from the model using `Model#deleteProject()`.
+8. A `CommandResult` is returned with a success message.
+
+The following activity diagram summarizes what happens when a user executes the `pdelete` command:
+
+<img src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" />
+
+#### Show Project Feature
+
+##### Implementation
+
+The show project mechanism is facilitated by `ShowProjectCommand` and `ShowProjectCommandParser`. The command allows users to display information about a specific person's projects by their index.
+
+The following sequence diagram shows how the show project operation works:
+
+<img src="diagrams/ShowProjectSequenceDiagram.png" alt="Show Project Sequence Diagram" />
+
+##### How the Show Project feature works:
+
+1. When the user executes the `pshow` command (e.g. `pshow 1`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates a `ShowProjectCommandParser` to parse the command arguments.
+3. The parser validates and extracts the person index from the command.
+4. A `ShowProjectCommand` object is created with the parsed index.
+5. When executed, the command retrieves the filtered person list using `Model#getFilteredPersonList()`.
+6. The command validates that the index is within the bounds of the person list.
+7. A `CommandResult` is returned with the target person index, allowing the UI to display the person's project details.
+
+The following activity diagram summarizes what happens when a user executes the `pshow` command:
+
+<img src="diagrams/ShowProjectActivityDiagram.png" alt="Show Project Activity Diagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -238,62 +361,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
-
-### Delete Project (`pdelete`) Feature
-
-Deletes a single project by exact name (case‑insensitive).
-
-- Overview
-    - Command word: `pdelete`
-    - Parser: `src/main/java/seedu/address/logic/parser/DeleteProjectCommandParser.java`
-    - Command: `src/main/java/seedu/address/logic/commands/DeleteProjectCommand.java`
-
-- Usage
-    - Syntax: `pdelete n/NAME`
-    - Constraints:
-        - Exactly one `n/` value is required.
-        - No preamble is allowed.
-        - Name is trimmed and must be non‑empty.
-
-- Matching and Scope
-    - Matching is exact and case‑insensitive (`String.equalsIgnoreCase`).
-    - Search scope is the current filtered project list (`Model#getFilteredProjectList()`), not the full list.
-    - Deletes the first matching project only.
-
-- Behavior
-    - On success: deletes the target project and returns `Deleted Project:\n<project>`.
-    - On failure: throws an error if no project in the filtered list matches the provided name.
-
-- Examples
-    - `pdelete n/IndiDex Website Revamp`  
-      Deletes the first project named `IndiDex Website Revamp` (case‑insensitive) visible in the current filtered list.
-
-- Error Cases
-    - `pdelete` → missing `n/` prefix. Parser rejects with usage message.
-    - `pdelete n/` → empty name. Parser rejects with “Project name cannot be empty.”
-    - `pdelete n/A n/B` → multiple names. Parser rejects with “Provide exactly one project name with n/.”
-    - `pdelete test` → preamble present. Parser rejects with usage message.
-    - `pdelete n/Unknown` → name not found in the filtered list. Command fails with a not‑found message.
-
-- Diagrams
-    - Sequence
-      <puml src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" width="720" />
-      Shows end‑to‑end flow: `LogicManager` → `AddressBookParser` → `DeleteProjectCommandParser` → `DeleteProjectCommand` → `Model`, including case‑insensitive lookup and deletion, returning `CommandResult`.
-
-    - Activity
-      <puml src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" width="520" />
-      Summarizes control flow: parse → validate → search in filtered list (case‑insensitive) → delete on hit → report not found otherwise.
-
-
-- Design Notes
-    - Single‑delete only; batch deletion is not supported.
-    - Exact, case‑insensitive comparison is intentional for now.
-    - Operation affects only the filtered view; ensure the target is visible or adjust filters before deletion.
-
-- Possible Enhancements
-    - Support multiple `n/` values for batch deletion with atomic behavior.
-    - Configurable case sensitivity or fuzzy matching.
-    - Search across the full project list rather than the filtered view.
 
 ### \[Proposed\] Data archiving
 
@@ -457,53 +524,363 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
 
-Given below are instructions to test the app manually.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
 
-</div>
 
-### Launch and shutdown
+## Appendix: Instructions for manual testing
 
-1. Initial launch
+Given below are practical, copy-pasteable steps to help you chart a path through IndiDex’s **new/modified features**. These complement the UG and are not an exhaustive test suite. Where the UG specifies case sensitivity/insensitivity, tests below are written to verify that behavior explicitly.
 
-   1. Download the jar file and copy into an empty folder
+> **Note:** Start each section from the state specified in its **Prerequisites**. If none are given, you can begin from any state. When commands are shown on separate lines, press **Enter** after each line in the app.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+---
 
-1. Saving window preferences
+## 1. Launch, shutdown & window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+**Prerequisites:** App JAR present.  
+**Steps**
+1. Double-click the JAR.  
+   **Expected:** App launches with sample data; two panels (Contacts left, Projects right) visible.
+2. Resize and move window → Close app (click **X**) → Launch again.  
+   **Expected:** Previous window size and position are retained.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+---
 
-1. _{ more test cases …​ }_
+## 2. Quick seed data (contacts)
 
-### Deleting a person
+Use these to set up a predictable contact list for the rest of the tests.
 
-1. Deleting a person while all persons are being shown
+**Prerequisites:** Run `clear` first to avoid clashes.
+```text
+clear
+add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
+add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice#1111 t/collab
+add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
+add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
+add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/irfan
+list
+```
+**Expected:** 5 contacts appear in order 1…5.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+---
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+## 3. `add`, `edit`, `find`, `tag`, `sort` (contacts)
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+**Prerequisites:** Seed data from §2.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+**Add**
+```text
+add n/Emily Wong p/81112222 e/emily@studio.com a/Depot Rd pr/HIGH t/animator
+```
+**Expected:** Emily appears as next contact with tag `animator`.
 
-1. _{ more test cases …​ }_
+**Edit (replace tags & update socials)**
+```text
+edit 2 t/producer t/2025 dc/bernice_new#2222
+```
+**Expected:** Contact 2 now has exactly `producer`, `2025` tags; Discord updated.
 
-### Saving data
+**Find (name exact, phone exact, email domain)**
+```text
+find charlotte
+find 91031282
+find @gmail.com
+```
+**Expected:** Results respectively include “Charlotte…”, exactly David’s phone contact, and all `@gmail.com` emails.
 
-1. Dealing with missing/corrupted data files
+**Tag (cumulative across multiple contacts)**
+```text
+tag 1 3 t/urgent t/client
+```
+**Expected:** Contacts 1 and 3 gain (not replace) `urgent` and `client` tags, preserving existing tags.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+**Sort**
+```text
+list
+sort pr/desc
+```
+**Expected:** Contacts sorted by priority HIGH→LOW (see UG note on ordering).
 
-1. _{ more test cases …​ }_
+---
+
+## 4. `delete` (contacts)
+
+**Prerequisites:** At least contacts 1…5 exist; run `list` so indices are clear.
+
+**Valid delete**
+```text
+delete 1
+```
+**Expected:** First listed contact removed; status bar shows deleted contact.
+
+**Invalid index**
+```text
+delete 0
+delete 999
+```
+**Expected:** Error; no deletion.
+
+**Duplicate indices rejected**
+```text
+delete 2 2
+```
+**Expected:** Error about duplicate indices (command rejected).
+
+**Project-safety guard (covered later in §7):** Deleting a contact that would leave a project with 0 members is blocked.
+
+---
+
+## 5. Create projects with `padd`
+
+**Prerequisites:** Have at least 3 contacts; ensure you know their current indices (use `list`).
+
+**Create simple**
+```text
+padd n/Web Series Pilot d/2025-11-30 pr/HIGH m/1
+```
+**Expected:** Project "Web Series Pilot" added; right panel lists it; member is contact 1.
+
+**Create with multiple members**
+```text
+padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3
+```
+**Expected:** New project with members 1,2,3 appears.
+
+**Reject duplicate member indices for a single padd**
+```text
+padd n/Duplicate Indices Demo d/2025-12-31 pr/LOW m/1 1
+```
+**Expected:** Error (duplicate indices not allowed in one command).
+
+**Name uniqueness (per UG note under `padd`)**
+```text
+padd n/web series pilot d/2025-12-15 pr/LOW m/2
+```
+**Expected:** Should be **rejected** due to name clash ignoring case (case-insensitive uniqueness as stated under `padd`).
+
+---
+
+## 6. View projects: `pshow` & `pdetails`
+
+**Prerequisites:** Projects from §5 exist.
+
+**Show by contact**
+```text
+pshow 1
+```
+**Expected:** Project panel filters to projects involving contact at index 1. The person card at index 1 will highlight.
+
+**Show all**
+```text
+pshow all
+```
+**Expected:** Project panel lists all projects.
+
+**Project details (case-sensitive exact match, per UG)**
+```text
+pdetails n/Web Series Pilot
+```
+**Expected:** Right panel shows deadline, priority, and members for exactly "Web Series Pilot".
+
+**Case mismatch should fail (per UG for `pdetails`)**
+```text
+pdetails n/web series pilot
+```
+**Expected:** Error (exact case required).
+
+---
+
+## 7. Join & Leave projects: `join`, `leave` (+ safety)
+
+**Prerequisites:** “Animation Collab” exists with members 1,2,3.
+
+**Join (mix of existing & new indices; allowed if ≥1 new)**
+```text
+join n/Animation Collab m/3 m/4
+```
+**Expected:** Contact 4 is added; adding existing member 3 has no effect; command accepted because there was at least one new member.
+
+**Join (no new members)**
+```text
+join n/Animation Collab m/1 m/2 m/3 m/4
+```
+**Expected:** Error or no-op rejected (per UG: must include at least one new member).
+
+**Leave (valid)**
+```text
+leave n/Animation Collab m/2
+```
+**Expected:** Contact 2 removed from project.
+
+**Leave (not a member)**
+```text
+leave n/Animation Collab m/5
+```
+**Expected:** Error (non-member cannot leave).
+
+**Leave last member safety**
+1. First, reduce a project to a single member (e.g., remove all but member 1).
+2. Then:
+```text
+leave n/Animation Collab m/1
+```
+**Expected:** Rejected (cannot leave a project with no members remaining).
+
+**Contact deletion safety (cross-feature)**
+1. Ensure a project currently has exactly one member, whose contact index is, say, `3`.
+2. Try:
+```text
+delete 3
+```
+**Expected:** Rejected (would leave a project with 0 members).
+
+---
+
+## 8. Edit projects: `pedit`
+
+**Prerequisites:** Project “Web Series Pilot” exists.
+
+**Rename only**
+```text
+pedit Web Series Pilot n/Web Series Season 1
+```
+**Expected:** Name changed; verify with `pdetails n/Web Series Season 1`.
+
+**Change deadline & priority**
+```text
+pedit Web Series Season 1 d/2025-12-15 pr/MEDIUM
+```
+**Expected:** Deadline and priority updated.
+
+**Rename clash (case-insensitive clash per UG note under `pedit`)**
+```text
+pedit Web Series Season 1 n/web series season 1
+```
+**Expected:** Rejected (cannot change to another project’s name ignoring case; or to the same name differing only by case).
+
+**Past deadline**
+```text
+pedit Web Series Season 1 d/2020-01-01
+```
+**Expected:** Rejected (deadline cannot be in the past).
+
+---
+
+## 9. Delete projects: `pdelete`
+
+**Prerequisites:** Project "Animation Collab" exists.
+
+**Delete (case-insensitive match per UG)**
+```text
+pdelete n/animation collab
+```
+**Expected:** Project “Animation Collab” is deleted.
+
+**Non-existent**
+```text
+pdelete n/Nonexistent Project
+```
+**Expected:** Error (no such project).
+
+---
+
+## 10. Deadlines view: `deadline`
+
+**Prerequisites:** Create one project due within 7 days and one beyond.
+
+```text
+padd n/Soon Due d/2025-11-02 pr/HIGH m/1
+padd n/Later Due d/2026-01-31 pr/LOW m/1
+deadline
+```
+**Expected:** "Soon Due" listed; "Later Due" excluded.
+
+---
+
+## 11. Data saving & file edits
+
+**Automatic saving**
+1. Run a few mutating commands (e.g., `add`, `padd`, `delete`).
+2. Close and relaunch the app.  
+   **Expected:** All changes persist.
+
+**Locate the data file**
+- File path: `[JAR location]/data/indidex.json`.
+
+**Simulate corrupted file**
+1. Close the app.
+2. Open `indidex.json` in a text editor and replace contents with `not json`. Save.
+3. Launch the app.  
+   **Expected (per UG):** Invalid format → IndiDex discards data and starts with an **empty** data file. (Back up before editing.)
+
+---
+
+## 12. Help & known-issues checks
+
+**Help command**
+```text
+help
+```
+**Expected:** Help window opens. If minimized, you may need to restore it manually (see Known Issues in UG).
+
+---
+
+## 13. Clear & Exit
+
+**Clear all**
+```text
+clear
+```
+**Expected:** All contacts and projects removed (irreversible).
+
+**Exit**
+```text
+exit
+```
+**Expected:** App closes.
+
+---
+
+## Suggested end-to-end path (copy-paste block)
+
+Use this if you want a single, guided walkthrough that touches each feature once. Paste line-by-line.
+
+```text
+clear
+add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
+add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice#1111 t/collab
+add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
+add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
+add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/irfan
+tag 1 3 t/urgent
+find @gmail.com
+sort pr/desc
+padd n/Web Series Pilot d/2025-11-30 pr/HIGH m/1
+padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3
+pshow 1
+pdetails n/Web Series Pilot
+join n/Animation Collab m/3 m/4
+leave n/Animation Collab m/2
+deadline
+pedit Web Series Pilot n/Web Series Season 1 d/2025-12-15 pr/MEDIUM
+pdelete n/animation collab
+list
+delete 1
+clear
+exit
+```
+
+**Expected (high-level):** You’ll see contact add/edit/find/tag/sort working, project create/view/details, join/leave with safety, deadline filtering, project editing and deletion, and finally data clearing and exit.
+
+---
+
+## Notes on edge cases for exploratory testing
+
+- **Case sensitivity**:
+    - `pdetails` requires **exact case**; try mismatched case to confirm rejection.
+    - `pdelete` matches **case-insensitively**; try mixed case to confirm acceptance.
+    - `padd`/`pedit` name clashes are enforced **ignoring case** per UG notes in those sections; try creating/renaming with only case differences.
+- **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
+- **Deadlines**: Past dates should be rejected on create/edit.
+- **Join/Leave safety**: Ensure projects never end up with zero members; leaving the last member or deleting that only contact should be blocked.
