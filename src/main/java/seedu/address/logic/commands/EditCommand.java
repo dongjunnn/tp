@@ -37,6 +37,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Socials;
 import seedu.address.model.person.YouTube;
+import seedu.address.model.project.Project;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -101,6 +102,18 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            List<Project> projectList = model.getFilteredProjectList();
+
+            for (Project project : projectList) {
+                if (project.getMembers().contains(personToEdit)) {
+                    Project updatedProject = project.updateMember(personToEdit, editedPerson);
+                    model.setProject(project, updatedProject);
+                }
+            }
+        }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
