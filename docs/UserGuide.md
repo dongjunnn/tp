@@ -28,7 +28,7 @@ IndiDex is a **desktop contact and project management application designed for i
 
     * `list` : Lists all contacts.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/HIGH dc/johndoe#1234` : Adds a contact named `John Doe` with high priority and Discord handle to IndiDex.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/HIGH dc/johndoe` : Adds a contact named `John Doe` with high priority and Discord handle to IndiDex.
 
     * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -135,7 +135,7 @@ IndiDex prevents duplicate contacts. You cannot add a contact with the same name
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Alex Tan p/87654321 e/alex@example.com a/Clementi Ave 2 pr/HIGH dc/alextanyt#1234 ig/@alextan yt/youtube.com/alextanchannel t/animator t/friend`
+* `add n/Alex Tan p/87654321 e/alex@example.com a/Clementi Ave 2 pr/HIGH dc/alextanyt ig/@alextan yt/youtube.com/@alextanchannel t/animator t/friend`
 * `add n/Sarah Lee p/91234567 e/sarah@creator.com a/Bukit Timah Road pr/MEDIUM li/linkedin.com/in/sarahlee t/musician`
 
 ### Listing all contacts : `list`
@@ -167,7 +167,7 @@ Editing a contact to have the same details as another existing contact will be r
 Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` - Edits the phone number and email address of the 1st contact.
 * `edit 2 n/Betsy Crower t/` - Edits the name of the 2nd contact and clears all existing tags.
-* `edit 3 pr/HIGH dc/newhandle#5678 ig/@newinsta` - Updates priority and social media profiles of the 3rd contact.
+* `edit 3 pr/HIGH dc/newhandle ig/@newinsta` - Updates priority and social media profiles of the 3rd contact.
 
 ### Finding contacts: `find`
 
@@ -572,26 +572,26 @@ Supported formats:
 
 ## Command summary
 
-| Action                   | Format, Examples                                                                                                                                                                                                                      |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
-| **List**                 | `list`                                                                                                                                                                                                                                |
-| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
-| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
-| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
-| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
-| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
-| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                             |
-| **Edit Project**         | `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                   |
-| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                        |
-| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                      |
-| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
-| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
-| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                     |
-| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                            |
-| **Clear**                | `clear`                                                                                                                                                                                                                               |
-| **Help**                 | `help`                                                                                                                                                                                                                                |
-| **Exit**                 | `exit`                                                                                                                                                                                                                                |
+| Action                   | Format, Examples                                                                                                                                                                                                                 |
+|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho t/friend` |
+| **List**                 | `list`                                                                                                                                                                                                                           |
+| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                             |
+| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                    |
+| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                   |
+| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                               |
+| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                     |
+| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                        |
+| **Edit Project**         | `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                              |
+| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                   |
+| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                 |
+| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                    |
+| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                              |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                |
+| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                       |
+| **Clear**                | `clear`                                                                                                                                                                                                                          |
+| **Help**                 | `help`                                                                                                                                                                                                                           |
+| **Exit**                 | `exit`                                                                                                                                                                                                                           |
 
 --------------------------------------------------------------------------------------------------------------------
 
