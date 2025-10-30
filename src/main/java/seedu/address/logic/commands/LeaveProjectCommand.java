@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_PROJECT_NOT_FOUND_BY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -37,7 +38,6 @@ public class LeaveProjectCommand extends Command {
             + PREFIX_MEMBER + "3";
 
     public static final String MESSAGE_LEAVE_SUCCESS = "Removed members from `%1$s`: ";
-    public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_MEMBER_NOT_IN_PROJECT =
             "%1$s can't leave a project they aren't a part of!";
     public static final String MESSAGE_LAST_MEMBER =
@@ -64,7 +64,7 @@ public class LeaveProjectCommand extends Command {
 
         Project project = model.getProjectByName(name);
         if (project == null) {
-            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND, name));
+            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND_BY_NAME, name));
         }
 
         List<Person> personList = model.getFilteredPersonList();

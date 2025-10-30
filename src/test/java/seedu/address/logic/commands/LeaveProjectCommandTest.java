@@ -62,7 +62,7 @@ public class LeaveProjectCommandTest {
     public void execute_projectNotFound_failure() {
         LeaveProjectCommand command = new LeaveProjectCommand("Nonexistent", List.of(INDEX_FIRST_PERSON));
         assertCommandFailure(command, model,
-                String.format(LeaveProjectCommand.MESSAGE_PROJECT_NOT_FOUND, "Nonexistent"));
+                String.format(Messages.MESSAGE_PROJECT_NOT_FOUND_BY_NAME, "Nonexistent"));
     }
 
     @Test
