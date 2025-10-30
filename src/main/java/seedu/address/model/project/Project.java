@@ -1,6 +1,7 @@
 package seedu.address.model.project;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class Project {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
-        this.members = new java.util.HashSet<>(members);
+        this.members = new HashSet<>(members);
     }
 
     /** Returns the project name. */

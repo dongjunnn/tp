@@ -84,6 +84,43 @@ public class AddProjectCommandTest {
         assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, ex.getMessage());
     }
 
+    @Test
+    void execute_duplicateMemberIndexes_throwsCommandException() {
+        ObservableList<Person> persons = FXCollections.observableArrayList(ALICE, BOB);
+        ModelStubWithPersons model = new ModelStubWithPersons(persons);
+
+        // Pass duplicate indexes (both INDEX_FIRST_PERSON)
+        AddProjectCommand cmd = new AddProjectCommand(
+                "TestProject",
+                LocalDate.of(2025, 12, 31),
+                Priority.MEDIUM,
+                List.of(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON)
+        );
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Invalid parameter: duplicate member indexes are not allowed.", ex.getMessage());
+    }
+
+    @Test
+    void execute_invalidIndexBeforeDuplicateCheck_throwsInvalidIndexException() {
+        // This test verifies that bounds checking happens before duplicate checking
+        ObservableList<Person> persons = FXCollections.observableArrayList(ALICE);
+        ModelStubWithPersons model = new ModelStubWithPersons(persons);
+
+        // Pass an out-of-bounds index twice
+        Index outOfBounds = Index.fromOneBased(5);
+        AddProjectCommand cmd = new AddProjectCommand(
+                "TestProject",
+                LocalDate.of(2025, 12, 31),
+                Priority.MEDIUM,
+                List.of(outOfBounds, outOfBounds)
+        );
+
+        // Should throw invalid index exception, not duplicate index exception
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, ex.getMessage());
+    }
+
     // -------------------- equals() --------------------
 
     @Test
