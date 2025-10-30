@@ -171,7 +171,7 @@ The following sequence diagram shows how the add project operation works:
 
 ##### How the Add Project feature works:
 
-1. When the user executes the `padd` command (e.g., `padd n/Website Redesign d/Revamp company website p/web t/urgent m/1 m/2`), the `LogicManager` receives the command string.
+1. When the user executes the `padd` command (e.g. `padd n/Website Redesign d/Revamp company website p/web t/urgent m/1 m/2`), the `LogicManager` receives the command string.
 2. The `AddressBookParser` creates an `AddProjectCommandParser` to parse the command arguments.
 3. The parser validates the command format and extracts the project name, description, project tags, and member indices.
 4. For each member index provided, the command validates that the index exists in the filtered person list.
@@ -224,7 +224,7 @@ The following sequence diagram shows how the show project operation works:
 
 ##### How the Show Project feature works:
 
-1. When the user executes the `pshow` command (e.g., `pshow 1`), the `LogicManager` receives the command string.
+1. When the user executes the `pshow` command (e.g. `pshow 1`), the `LogicManager` receives the command string.
 2. The `AddressBookParser` creates a `ShowProjectCommandParser` to parse the command arguments.
 3. The parser validates and extracts the person index from the command.
 4. A `ShowProjectCommand` object is created with the parsed index.
