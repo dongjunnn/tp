@@ -239,6 +239,62 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Delete Project (`pdelete`) Feature
+
+Deletes a single project by exact name (case‑insensitive).
+
+- Overview
+    - Command word: `pdelete`
+    - Parser: `src/main/java/seedu/address/logic/parser/DeleteProjectCommandParser.java`
+    - Command: `src/main/java/seedu/address/logic/commands/DeleteProjectCommand.java`
+
+- Usage
+    - Syntax: `pdelete n/NAME`
+    - Constraints:
+        - Exactly one `n/` value is required.
+        - No preamble is allowed.
+        - Name is trimmed and must be non‑empty.
+
+- Matching and Scope
+    - Matching is exact and case‑insensitive (`String.equalsIgnoreCase`).
+    - Search scope is the current filtered project list (`Model#getFilteredProjectList()`), not the full list.
+    - Deletes the first matching project only.
+
+- Behavior
+    - On success: deletes the target project and returns `Deleted Project:\n<project>`.
+    - On failure: throws an error if no project in the filtered list matches the provided name.
+
+- Examples
+    - `pdelete n/IndiDex Website Revamp`  
+      Deletes the first project named `IndiDex Website Revamp` (case‑insensitive) visible in the current filtered list.
+
+- Error Cases
+    - `pdelete` → missing `n/` prefix. Parser rejects with usage message.
+    - `pdelete n/` → empty name. Parser rejects with “Project name cannot be empty.”
+    - `pdelete n/A n/B` → multiple names. Parser rejects with “Provide exactly one project name with n/.”
+    - `pdelete test` → preamble present. Parser rejects with usage message.
+    - `pdelete n/Unknown` → name not found in the filtered list. Command fails with a not‑found message.
+
+- Diagrams
+    - Sequence
+      <puml src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" width="720" />
+      Shows end‑to‑end flow: `LogicManager` → `AddressBookParser` → `DeleteProjectCommandParser` → `DeleteProjectCommand` → `Model`, including case‑insensitive lookup and deletion, returning `CommandResult`.
+
+    - Activity
+      <puml src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" width="520" />
+      Summarizes control flow: parse → validate → search in filtered list (case‑insensitive) → delete on hit → report not found otherwise.
+
+
+- Design Notes
+    - Single‑delete only; batch deletion is not supported.
+    - Exact, case‑insensitive comparison is intentional for now.
+    - Operation affects only the filtered view; ensure the target is visible or adjust filters before deletion.
+
+- Possible Enhancements
+    - Support multiple `n/` values for batch deletion with atomic behavior.
+    - Configurable case sensitivity or fuzzy matching.
+    - Search across the full project list rather than the filtered view.
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
@@ -268,8 +324,8 @@ _{Explain here how the data archiving feature will be implemented}_
 * Needs quick access to contact info and project associations.
 * Values efficiency, organization, and minimal disruption to creative flow.
 
-**Value proposition**: Targeted at tech content creators who manage their projects and clients independently. 
-It will allow them to manage their projects and clients easily within the app by 
+**Value proposition**: Targeted at tech content creators who manage their projects and clients independently.
+It will allow them to manage their projects and clients easily within the app by
 providing quick access to contact details and their information.
 
 
@@ -351,7 +407,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 * 3b. The given tag is invalid.
-  * 3a1. AddressBook shows an error message.
+    * 3a1. AddressBook shows an error message.
       Use case resumes at step 2.
 
 **Use Case: Add a person**
@@ -366,8 +422,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The person's details are invalid.
-  * 1a1. AddressBook shows an error message.
-    Use case ends.
+    * 1a1. AddressBook shows an error message.
+      Use case ends.
 
 * 1b. The person has a duplicate name with another contact.
 
@@ -414,15 +470,15 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -431,16 +487,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `delete 1`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: `delete 0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
@@ -448,6 +504,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
