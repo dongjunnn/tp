@@ -239,6 +239,62 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Delete Project (`pdelete`) Feature
+
+Deletes a single project by exact name (case‑insensitive).
+
+- Overview
+    - Command word: `pdelete`
+    - Parser: `src/main/java/seedu/address/logic/parser/DeleteProjectCommandParser.java`
+    - Command: `src/main/java/seedu/address/logic/commands/DeleteProjectCommand.java`
+
+- Usage
+    - Syntax: `pdelete n/NAME`
+    - Constraints:
+        - Exactly one `n/` value is required.
+        - No preamble is allowed.
+        - Name is trimmed and must be non‑empty.
+
+- Matching and Scope
+    - Matching is exact and case‑insensitive (`String.equalsIgnoreCase`).
+    - Search scope is the current filtered project list (`Model#getFilteredProjectList()`), not the full list.
+    - Deletes the first matching project only.
+
+- Behavior
+    - On success: deletes the target project and returns `Deleted Project:\n<project>`.
+    - On failure: throws an error if no project in the filtered list matches the provided name.
+
+- Examples
+    - `pdelete n/IndiDex Website Revamp`  
+      Deletes the first project named `IndiDex Website Revamp` (case‑insensitive) visible in the current filtered list.
+
+- Error Cases
+    - `pdelete` → missing `n/` prefix. Parser rejects with usage message.
+    - `pdelete n/` → empty name. Parser rejects with “Project name cannot be empty.”
+    - `pdelete n/A n/B` → multiple names. Parser rejects with “Provide exactly one project name with n/.”
+    - `pdelete test` → preamble present. Parser rejects with usage message.
+    - `pdelete n/Unknown` → name not found in the filtered list. Command fails with a not‑found message.
+
+- Diagrams
+    - Sequence
+      <puml src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" width="720" />
+      Shows end‑to‑end flow: `LogicManager` → `AddressBookParser` → `DeleteProjectCommandParser` → `DeleteProjectCommand` → `Model`, including case‑insensitive lookup and deletion, returning `CommandResult`.
+
+    - Activity
+      <puml src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" width="520" />
+      Summarizes control flow: parse → validate → search in filtered list (case‑insensitive) → delete on hit → report not found otherwise.
+
+
+- Design Notes
+    - Single‑delete only; batch deletion is not supported.
+    - Exact, case‑insensitive comparison is intentional for now.
+    - Operation affects only the filtered view; ensure the target is visible or adjust filters before deletion.
+
+- Possible Enhancements
+    - Support multiple `n/` values for batch deletion with atomic behavior.
+    - Configurable case sensitivity or fuzzy matching.
+    - Search across the full project list rather than the filtered view.
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
