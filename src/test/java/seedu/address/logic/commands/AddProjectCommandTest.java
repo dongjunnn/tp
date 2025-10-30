@@ -102,7 +102,7 @@ public class AddProjectCommandTest {
     }
 
     @Test
-    void execute_invalidIndexBeforeDuplicateCheck_throwsInvalidIndexException() {
+    void execute_invalidIndexBeforeDuplicateCheck_throwsCommandException() {
         // This test verifies that bounds checking happens before duplicate checking
         ObservableList<Person> persons = FXCollections.observableArrayList(ALICE);
         ModelStubWithPersons model = new ModelStubWithPersons(persons);
