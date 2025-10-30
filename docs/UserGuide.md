@@ -222,6 +222,7 @@ Format: `delete INDEX [MORE_INDICES]`
 * Multiple contacts can be deleted in one command
 * The index refers to the index number shown in the displayed contact list
 * Contacts cannot be deleted if it results in a project having no members left
+* Duplicate indices are not allowed (e.g., `delete 1 1` is rejected)
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 This operation cannot be undone. Make sure you are deleting the correct contact(s).
@@ -252,30 +253,24 @@ Examples:
 
 ### Adding a project: `padd`
 
-Creates a new project in IndiDex and assigns team members to it.
+Creates a new project in IndiDex and assigns at least one team member to it.
 
-Format: `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`
-
+Format: `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…​`
 * **Required fields:**
-    * `n/PROJECT_NAME` - Name of the project (must be unique)
-    * `d/DEADLINE` - Project deadline in `yyyy-MM-dd` format (e.g., 2025-12-31)
+    * `n/PROJECT_NAME` - Name of the project (case-insensitive)
+    * `d/DEADLINE` - Project deadline in `yyyy-MM-dd` format (e.g., 2025-12-31; cannot be in the past)
     * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
-
-* **Optional fields:**
-    * `m/MEMBER_INDEX` - Index of contacts to add as project members (can specify multiple)
+    *  `m/MEMBER_INDEX` – At least one member index (you can add multiple)
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-You can view all your projects in the project panel on the right side of the application. Contacts assigned to projects will show clickable project links on their contact cards.
+You can view all your projects in the project panel on the right side of the application.
 </div>
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-Project names are case-sensitive and must be unique. You cannot create two projects with the same name.
-</div>
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:** Project names are **case-insensitive** for uniqueness. **Duplicate member indices are rejected** (e.g., `m/1 1`). Member indices must refer to contacts in the **currently displayed list**.</div>
 
 Examples:
-* `padd n/Web Series Pilot d/2025-06-30 pr/HIGH` - Creates a high priority project with deadline
+* `padd n/Web Series Pilot d/2025-11-30 pr/HIGH m/1` - Creates a high priority project with deadline and assigns contact 1
 * `padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3` - Creates a project and assigns contacts 1, 2, and 3 as members
-* `padd n/Podcast Season 2 d/2025-09-15 pr/LOW m/5` - Creates a low priority project with one team member
+* `padd n/Podcast Season 2 d/2026-09-15 pr/LOW m/5` - Creates a low priority project with one team member
 
 ### Editing a project: `pedit`
 
@@ -325,19 +320,19 @@ Examples
 
 Removes a project from IndiDex.
 
-Format: `pdelete PROJECT_NAME`
+Format: `pdelete n/PROJECT_NAME`
 
-* Deletes the project with the exact matching name
-* Project name matching is **case-sensitive**
-* Must be an exact match of the project name
+* Deletes the project whose name matches exactly (case-insensitive)
+* Provide exactly one `n/PROJECT_NAME`
+* Operates on the currently displayed project list
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-This operation cannot be undone. The project name must match exactly (case-sensitive).
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**  
+This action cannot be undone. Ensure the project is visible in the project panel and the name matches exactly, ignoring case.  
 </div>
 
 Examples:
-* `pdelete n/Web Series Pilot` - Deletes the project named "Web Series Pilot"
-* `pdelete n/Animation Collab` - Deletes the project named "Animation Collab"
+* `pdelete n/Web Series Pilot` - Deletes the project named “Web Series Pilot”
+* `pdelete n/Animation Collab` - Also deletes “Animation Collab” (matching is case-insensitive)
 
 ### Showing projects: `pshow`
 
@@ -534,7 +529,7 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 | **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
 | **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
 | **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
-| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
+| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                             |
 | **Edit Project**         | `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                   |
 | **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                        |
 | **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                      |
