@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -111,7 +111,6 @@ public class DeleteCommand extends Command {
         List<Person> personsToDelete = indexesAsc.stream()
                 .map(lastShownList::get)
                 .collect(Collectors.toList());
-        
         for (Person person : personsToDelete) {
             for (Project project : model.getFilteredProjectList()) {
                 Set<Person> members = project.getMembers();
