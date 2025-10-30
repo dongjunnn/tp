@@ -460,15 +460,66 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 * Not case-sensitive (can be lowercase or uppercase)
 
 ### Social Media Profiles
-* **Discord**: In the format username#1234, where username is 3-32 alphanumeric characters and discriminator is exactly 4 digits
-    * Example: `johndoe#1234`
-* **LinkedIn**: LinkedIn profile URL starting with '(https://(www.)linkedin.com/in/' followed by profile identifier
-    * Example: `linkedin.com/in/johndoe`
-* **Instagram**: Instagram handle starting with '@' and be 1-30 alphanumeric characters or underscores.
-    * Example: `@johndo`
-* **YouTube**: YouTube channel URL starting with '(https://(www.))youtube.com/'
-    * Example: `www.youtube.com/johndoe`
-* All social media fields are optional
+* All social media fields are **optional**.  
+* Empty fields will simply not be displayed.
+
+**Discord**
+* Must be **2–32 characters long**.
+* Can only contain **lowercase letters**, **digits**, **periods (.)**, or **underscores (_)**.
+* Cannot **start or end** with a period or underscore.
+* Cannot have **consecutive periods or underscores**.
+* **Examples:**
+    * ✅ `john_doe`
+    * ❌ `_johndoe` (starts with underscore)
+    * ❌ `john..doe` (consecutive periods)
+
+
+**Instagram**
+* Must **start with '@'** followed by **1–30 characters**.
+* Can contain **letters**, **numbers**, **underscores (_)**, or **periods (.)**.
+* Cannot **start or end** with a period.
+* Cannot have **consecutive periods**.
+* **Examples:**
+    * ✅ `@john.doe_23`
+    * ❌ `@.johndoe` (starts with period)
+    * ❌ `@john..doe` (consecutive periods)
+
+
+**LinkedIn**
+* Must be a **valid LinkedIn profile URL** that starts with  
+  `'https://www.linkedin.com/in/'` or `'https://linkedin.com/in/'`.
+* Must be followed by your **profile identifier** (letters, digits, hyphens, or underscores).
+* **Examples:**
+    * ✅ `https://www.linkedin.com/in/john-doe`
+    * ❌ `linkedin.com/johndoe` (missing `/in/` segment)
+
+
+**YouTube**
+* Must be a **valid YouTube URL** or **handle**, starting with `https://(www.)youtube.com/`.  
+
+Supported formats:
+- `youtube.com/@handle`
+    * Handle must be **3–30 characters long**.
+    * Can include **letters**, **digits**, **underscores (_)**, **hyphens (-)**, or **periods (.)**.
+    * Cannot **start or end** with an underscore or hyphen.
+
+- `youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx`
+    * Must start with `UC` and be **24 characters long**.
+    * Remaining 22 characters may include **letters**, **digits**, **underscores**, or **hyphens**.
+
+- `youtube.com/c/customName`
+    * Can include **letters**, **digits**, **underscores**, or **hyphens**.
+    * Cannot **start or end** with an underscore or hyphen.
+
+- `youtube.com/user/username`
+    * Can include **letters**, **digits**, **underscores**, or **hyphens**.
+
+  **Examples:**
+    * ✅ `https://www.youtube.com/@john_doe`
+    * ✅ `https://www.youtube.com/channel/UCabcdef1234567890ghijkl`
+    * ✅ `https://www.youtube.com/c/JohnTech`
+    * ✅ `https://www.youtube.com/user/johntech`
+    * ❌ `https://www.youtube.com/@_john` (starts with underscore)
 
 ### Tags
 * Alphanumeric characters only (no spaces or special characters)
