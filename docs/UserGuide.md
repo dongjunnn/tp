@@ -221,6 +221,7 @@ Format: `delete INDEX [MORE_INDICES]`
 * Deletes the contact(s) at the specified index/indices
 * Multiple contacts can be deleted in one command
 * The index refers to the index number shown in the displayed contact list
+* Contacts cannot be deleted if it results in a project having no members left
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 This operation cannot be undone. Make sure you are deleting the correct contact(s).
@@ -275,6 +276,21 @@ Examples:
 * `padd n/Web Series Pilot d/2025-06-30 pr/HIGH` - Creates a high priority project with deadline
 * `padd n/Animation Collab d/2025-12-31 pr/MEDIUM m/1 2 3` - Creates a project and assigns contacts 1, 2, and 3 as members
 * `padd n/Podcast Season 2 d/2025-09-15 pr/LOW m/5` - Creates a low priority project with one team member
+
+### Editing a project: `pedit`
+
+Edits the details of the chosen project.
+
+Format: `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`
+
+* At least one of the optional fields must be specified
+* Project name cannot be changed to that of another project (**case insensitive**)
+* Project deadline cannot be changed to a past date
+* Member editing is handled using the leave and join commands instead
+
+Examples:
+* `pedit Web Series n/Web Series Pilot` -  Changes the name of the project to 'Web Series Pilot'
+* `pedit Razer Video d/2025-11-11 pr/high` - Moves the deadline of the project and changes its priority to high
 
 ### Joining a project: `join`
 
@@ -466,6 +482,7 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 ### Project Deadline
 * Must be in `yyyy-MM-dd` format
 * Examples: `2025-12-31`, `2025-06-15`, `2025-01-01`
+* Cannot be created with or edited to have a past date
 
 ### Project Name
 * Can contain any characters
@@ -508,23 +525,26 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 ## Command summary
 
-| Action            | Format, Examples                                                                                                                                                                                                                      |
-|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Contact**   | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
-| **List**          | `list`                                                                                                                                                                                                                                |
-| **Edit**          | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
-| **Find**          | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
-| **Tag**           | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
-| **Delete**        | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
-| **Sort**          | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
-| **Add Project**   | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
-| **Delete Project** | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
-| **Show Projects** | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
-| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot` |
-| **Show Deadlines** | `deadline`                                                                                                                                                                                                                            |
-| **Clear**         | `clear`                                                                                                                                                                                                                               |
-| **Help**          | `help`                                                                                                                                                                                                                                |
-| **Exit**          | `exit`                                                                                                                                                                                                                                |
+| Action                   | Format, Examples                                                                                                                                                                                                                      |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho#1234 t/friend` |
+| **List**                 | `list`                                                                                                                                                                                                                                |
+| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                                  |
+| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                         |
+| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                        |
+| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                    |
+| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                          |
+| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY [m/MEMBER_INDEX]…​`<br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                            |
+| **Edit Project**         | `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                   |
+| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                        |
+| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                      |
+| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                         |
+| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                   |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                     |
+| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                            |
+| **Clear**                | `clear`                                                                                                                                                                                                                               |
+| **Help**                 | `help`                                                                                                                                                                                                                                |
+| **Exit**                 | `exit`                                                                                                                                                                                                                                |
 
 --------------------------------------------------------------------------------------------------------------------
 
