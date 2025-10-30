@@ -74,10 +74,7 @@ public class SortPersonsCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    private static int priorityRank(String s) {
-        if (s == null) {
-            return -1;
-        }
+    static int priorityRank(String s) {
         return switch (s.toUpperCase()) {
         case "LOW" -> 0;
         case "MEDIUM" -> 1;
@@ -96,10 +93,5 @@ public class SortPersonsCommand extends Command {
         }
         SortPersonsCommand o = (SortPersonsCommand) other;
         return attribute.equals(o.attribute) && ascending == o.ascending;
-    }
-
-    @Override
-    public int hashCode() {
-        return java.util.Objects.hash(attribute, ascending);
     }
 }
