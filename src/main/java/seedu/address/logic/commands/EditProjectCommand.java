@@ -26,10 +26,10 @@ public class EditProjectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the project identified. "
             + "Parameters: "
-            + "OLDNAME "
-            + "[" + PREFIX_NAME + "NEWNAME] "
+            + "OLD_PROJECT_NAME "
+            + "[" + PREFIX_NAME + "NEW_PROJECT_NAME] "
             + "[" + PREFIX_DEADLINE + "DEADLINE(yyyy-MM-dd)] "
-            + "[" + PREFIX_PRIORITY + "PRIORITY] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] \n"
             + "Example: " + COMMAND_WORD + " "
             + "Razer Collaboration Video "
             + PREFIX_NAME + "Razer Advertisement "
