@@ -21,7 +21,7 @@ IndiDex is a **desktop contact and project management application designed for i
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data (the screenshot contains added projects which won't appear on launch).<br>
-   ![image](https://hackmd.io/_uploads/HyrkrTP0gx.png)
+   ![image](images/startup.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
