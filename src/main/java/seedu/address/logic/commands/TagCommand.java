@@ -6,8 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -35,6 +37,8 @@ public class TagCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Tagged %s to %d person(s)";
 
+    private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
+
     private final List<Index> targetIndexes;
     private final Set<Tag> tagsToAdd;
 
@@ -52,6 +56,9 @@ public class TagCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+
+        // Log TagCommand execution start
+        logger.info("Executing TagCommand for tags: " + tagsToAdd);
 
         for (Index index : targetIndexes) {
             if (index.getZeroBased() >= lastShownList.size()) {
@@ -76,6 +83,8 @@ public class TagCommand extends Command {
 
             model.setPerson(personToTag, updatedPerson);
         }
+
+        logger.info("Successfully executed TagCommand for tags: " + tagsToAdd);
 
         return new CommandResult(
                 String.format(
