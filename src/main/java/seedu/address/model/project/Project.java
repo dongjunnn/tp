@@ -32,7 +32,7 @@ public class Project {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
-        this.members = members;
+        this.members = new java.util.HashSet<>(members);
     }
 
     /** Returns the project name. */
