@@ -39,8 +39,6 @@ public class LeaveProjectCommand extends Command {
     public static final String MESSAGE_LEAVE_SUCCESS = "Removed members from `%1$s`: ";
     public static final String MESSAGE_MEMBER_NOT_IN_PROJECT =
             "%1$s can't leave a project they aren't a part of!";
-    public static final String MESSAGE_LAST_MEMBER =
-            "Project '%1$s' cannot have no members!";
 
     private final String name;
     private final List<Index> memberIndexes;

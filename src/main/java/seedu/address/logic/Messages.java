@@ -21,7 +21,8 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
-    public static final String MESSAGE_PROJECT_MUST_HAVE_MEMBERS = "Removed members from `%1$s`: ";
+    public static final String MESSAGE_PROJECT_MUST_HAVE_MEMBERS =
+            "Project '%1$s' cannot have no members. pdelete or add new members first.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
