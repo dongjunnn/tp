@@ -109,7 +109,7 @@ highlights that selected contact in the left panel. Subsequently, one can do  fu
 
 Adds a contact to IndiDex.
 
-Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`
+Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [pr/PRIORITY] [t/TAG]…​`
 
 * **Required fields:**
     * `n/NAME` - Contact's full name
@@ -119,11 +119,13 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LIN
 
 * **Optional fields:**
     * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`, defaults to `LOW`
-    * `dc/DISCORD` - Discord handle/username
-    * `li/LINKEDIN` - LinkedIn profile URL
-    * `ig/INSTAGRAM` - Instagram handle
-    * `yt/YOUTUBE` - YouTube channel URL
+    * `dc/DISCORD_HANDLE` - Discord handle/username
+    * `li/LINKEDIN_PROFILE` - LinkedIn profile URL
+    * `ig/INSTAGRAM_HANDLE` - Instagram handle
+    * `yt/YOUTUBE_CHANNEL` - YouTube channel URL
     * `t/TAG` - Tags for categorizing contacts (can add multiple tags)
+
+Refer to [Field Constraints and Validation](#field-constraints-and-validation) for more details on the acceptable input formats for each parameter.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A contact can have any number of tags (including 0). Social media profiles are optional and will only display if provided.
@@ -151,14 +153,14 @@ Format: `list`
 
 Edits an existing contact in IndiDex.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​`
 
 * Edits the contact at the specified `INDEX`.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all the contact's tags by typing `t/` without specifying any tags after it.
-* You can remove social media profiles by providing a '-' as input (e.g., `dc/-` to remove Discord handle).
+* You can remove existing social media profiles by providing a '-' as input (e.g., `dc/-` to remove Discord handle).
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 Editing a contact to have the same details as another existing contact will be rejected to prevent duplicates.
@@ -277,7 +279,7 @@ Examples:
 
 Edits the details of the chosen project.
 
-Format: `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`
+Format: `pedit OLD_PROJECT_NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`
 
 * At least one of the optional fields must be specified
 * Project name cannot be changed to that of another project (**case insensitive**)
@@ -487,7 +489,7 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 **LinkedIn**
 * Must be a **valid LinkedIn profile URL** that starts with  
-  `'https://www.linkedin.com/in/'` or `'https://linkedin.com/in/'`.
+  `'https://www.linkedin.com/in/'`, `'www.linkedin.com/in/'` or `'linkedin.com/in/'`.
 * Must be followed by your **profile identifier** (letters, digits, hyphens, or underscores).
 * **Examples:**
     * ✅ `https://www.linkedin.com/in/john-doe`
@@ -495,7 +497,7 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 
 **YouTube**
-* Must be a **valid YouTube URL** or **handle**, starting with `https://(www.)youtube.com/`.  
+* Must be a **valid YouTube URL** or **handle**, starting with `https://www.youtube.com/`, `www.youtube.com/` or `youtube.com/`.  
 
 Supported formats:
 - `youtube.com/@handle`
@@ -572,26 +574,26 @@ Supported formats:
 
 ## Command summary
 
-| Action                   | Format, Examples                                                                                                                                                                                                                 |
-|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho t/friend` |
-| **List**                 | `list`                                                                                                                                                                                                                           |
-| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD] [li/LINKEDIN] [ig/INSTAGRAM] [yt/YOUTUBE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                             |
-| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                    |
-| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                   |
-| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                               |
-| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                     |
-| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                        |
-| **Edit Project**         | `pedit OLD_PROJECT NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                              |
-| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                   |
-| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                 |
-| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                    |
-| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                              |
-| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                |
-| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                       |
-| **Clear**                | `clear`                                                                                                                                                                                                                          |
-| **Help**                 | `help`                                                                                                                                                                                                                           |
-| **Exit**                 | `exit`                                                                                                                                                                                                                           |
+| Action                   | Format, Examples                                                                                                                                                                                                                                               |
+|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho t/friend` |
+| **List**                 | `list`                                                                                                                                                                                                                                                         |
+| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                             |
+| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                                                  |
+| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                                                 |
+| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                                             |
+| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                                                   |
+| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                                      |
+| **Edit Project**         | `pedit OLD_PROJECT_NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                                            |
+| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                                                 |
+| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                                               |
+| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                                                  |
+| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                                            |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                                              |
+| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                                                     |
+| **Clear**                | `clear`                                                                                                                                                                                                                                                        |
+| **Help**                 | `help`                                                                                                                                                                                                                                                         |
+| **Exit**                 | `exit`                                                                                                                                                                                                                                                         |
 
 --------------------------------------------------------------------------------------------------------------------
 

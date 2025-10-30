@@ -16,7 +16,7 @@ public class DeleteProjectCommand extends Command {
     public static final String COMMAND_WORD = "pdelete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a project by name (case-insensitive).\n"
-            + "Parameters: n/NAME\n"
+            + "Parameters: n/PROJECT_NAME\n"
             + "Example: " + COMMAND_WORD + " n/IndiDex Website Revamp";
 
     public static final String MESSAGE_DELETE_PROJECT_SUCCESS = "Deleted Project:\n%1$s";
