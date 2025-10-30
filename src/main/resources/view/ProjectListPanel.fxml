@@ -15,7 +15,7 @@
 
     <!-- Placeholder shown when no person selected -->
     <VBox fx:id="placeholderContainer" alignment="CENTER" VBox.vgrow="ALWAYS">
-        <Label text="Select a person to view their projects" styleClass="placeholder-text" />
+        <Label text="Use the commands pshow and pdetails to view projects" styleClass="placeholder-text" />
     </VBox>
 
     <!-- Content shown when person selected - SpACING from 10 to 5 -->
