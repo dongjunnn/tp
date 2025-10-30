@@ -9,10 +9,12 @@ public class Instagram {
 
     /** Message to display if validation fails. */
     public static final String MESSAGE_CONSTRAINTS =
-            "Instagram handle should start with @ and be 1-30 alphanumeric characters or underscores.";
+            "Instagram handle should start with '@', followed by 1 to 30 characters. "
+                    + "It can contain letters, numbers, underscores, or periods, "
+                    + "but cannot start or end with a period, nor have consecutive periods.";
 
     /** Regex for validating Instagram handles. */
-    private static final String VALIDATION_REGEX = "^@[A-Za-z0-9_]{1,30}$";
+    private static final String VALIDATION_REGEX = "^@(?!.*\\.\\.)(?!\\.)(?!.*\\.$)[A-Za-z0-9._]{1,30}$";
 
     /** The Instagram handle. */
     public final String value;

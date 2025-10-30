@@ -27,7 +27,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Socials(
-                            new Discord("alexyeoh#1234"),
+                            new Discord("alexyeoh_82"),
                             new LinkedIn("linkedin.com/in/alexyeoh"),
                             new Instagram("@alex_yo"),
                             new YouTube("youtube.com/@alexyeohchannel")),
@@ -35,7 +35,7 @@ public class SampleDataUtil {
                     getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Socials(
-                            new Discord("bernice#5678"),
+                            new Discord("bernice58"),
                             new LinkedIn("linkedin.com/in/berniceyu"),
                             new Instagram("@berniceyu"),
                             null),
@@ -50,14 +50,14 @@ public class SampleDataUtil {
                     getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                     new Socials(
-                            new Discord("david#1121"),
+                            new Discord("david1121"),
                             new LinkedIn("linkedin.com/in/davidli"),
                             null,
                             new YouTube("youtube.com/@davidlichannel")),
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new Priority("LOW"),
                     getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Socials(new Discord("irfan#3141"),
+                    new Socials(new Discord("irfan141"),
                             null,
                             new Instagram("@irfanibrahim"),
                             new YouTube("youtube.com/@irfanibrahimchannel")),

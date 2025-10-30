@@ -9,11 +9,11 @@ public class YouTube {
 
     /** Message to display if validation fails. */
     public static final String MESSAGE_CONSTRAINTS =
-            "YouTube channel should be a valid URL starting with 'https://www.youtube.com/'";
-
-    /** Regex for validating YouTube URLs. */
-    private static final String VALIDATION_REGEX =
-            "^(https?://)?(www\\.)?youtube\\.com/(channel/[A-Za-z0-9_-]+|@?[A-Za-z0-9_.-]{1,30})/?$";
+            "YouTube channel must be a valid URL or handle. Supported formats:\n"
+                    + "- youtube.com/@handle\n"
+                    + "- youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx\n"
+                    + "- youtube.com/c/customName\n"
+                    + "- youtube.com/user/username";
 
     /** The YouTube channel URL. */
     public final String value;
@@ -22,7 +22,6 @@ public class YouTube {
      * Constructs a {@code YouTube} object.
      *
      * @param channelUrl The YouTube channel URL. Must be valid.
-     * @throws NullPointerException if channelUrl is null
      * @throws IllegalArgumentException if channelUrl is invalid
      */
     public YouTube(String channelUrl) {
@@ -30,18 +29,85 @@ public class YouTube {
             this.value = "";
             return;
         }
-        checkArgument(isValidYouTube(channelUrl), MESSAGE_CONSTRAINTS);
-        this.value = channelUrl;
+        String error = getValidationError(channelUrl);
+        checkArgument(error == null, error);
+        this.value = channelUrl.trim();
     }
 
     /**
-     * Returns true if a given string is a valid YouTube URL.
-     *
-     * @param test The string to test
-     * @return true if valid, false otherwise
+     * Returns null if input is valid; otherwise returns a specific error message.
      */
-    public static boolean isValidYouTube(String test) {
-        return test.isEmpty() || test.equals("-") || test.matches(VALIDATION_REGEX);
+    public static String getValidationError(String input) {
+        input = input.trim();
+
+        // Allow "-" for clearing the field
+        if (input.equals("-") || input.isEmpty()) {
+            return null;
+        }
+
+        // Must be YouTube domain
+        if (!input.matches("^(https?://)?(www\\.)?youtube\\.com/.*")) {
+            return "URL must be a valid YouTube link starting with '(http(s)://(www.))youtube.com/'.";
+        }
+
+        // Extract path after domain and remove trailing slash
+        String path = input.replaceFirst("^(https?://)?(www\\.)?youtube\\.com/", "")
+                .replaceAll("/$", "");
+
+        // Handle format: youtube.com/@handle
+        if (path.startsWith("@")) {
+            String handle = path.substring(1); // remove '@'
+            if (handle.length() < 3 || handle.length() > 30) {
+                return "Handle must be 3–30 characters long.";
+            }
+            // Regex: letters, digits, underscores, hyphens, periods allowed
+            // Cannot start or end with _ or -
+            if (!handle.matches("^(?![_-])[A-Za-z0-9._-]{3,30}(?<![_-])$")) {
+                return "Handle can only contain letters, digits, underscores, hyphens, or periods, "
+                        + "and must not start or end with an underscore or hyphen.";
+            }
+            return null; // valid handle URL
+        }
+
+        // Channel ID format: youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx
+        if (path.startsWith("channel/")) {
+            String id = path.substring("channel/".length());
+            if (!id.startsWith("UC") || id.length() != 24) {
+                return "Channel ID must start with 'UC' and be 24 characters long.";
+            }
+            if (!id.substring(2).matches("[\\w-]{22}")) {
+                return "Channel ID can only contain letters, digits, underscores, or hyphens after 'UC'.";
+            }
+            return null; // valid channel ID
+        }
+
+        // Legacy custom URL: youtube.com/c/...
+        if (path.startsWith("c/")) {
+            String name = path.substring("c/".length());
+            if (name.isEmpty()) {
+                return "Custom URL must not be empty.";
+            }
+            // Regex: letters, digits, underscores, hyphens only, cannot start/end with _ or -
+            if (!name.matches("^(?![_-])[A-Za-z0-9_-]+(?<![_-])$")) {
+                return "Custom URL can only contain letters, digits, underscores, or hyphens, "
+                        + "and must not start or end with an underscore or hyphen.";
+            }
+            return null;
+        }
+
+        // Legacy username: youtube.com/user/...
+        if (path.startsWith("user/")) {
+            String username = path.substring("user/".length());
+            if (username.isEmpty()) {
+                return "Username must not be empty.";
+            }
+            if (!username.matches("[-\\w]+")) {
+                return "Username can only contain letters, digits, underscores, or hyphens.";
+            }
+            return null;
+        }
+
+        return MESSAGE_CONSTRAINTS;
     }
 
     @Override

@@ -201,8 +201,9 @@ public class ParserUtil {
             return new YouTube("");
         }
 
-        if (!YouTube.isValidYouTube(trimmedYouTubeChannel)) {
-            throw new ParseException(YouTube.MESSAGE_CONSTRAINTS);
+        String validationError = YouTube.getValidationError(trimmedYouTubeChannel);
+        if (validationError != null) {
+            throw new ParseException(validationError);
         }
 
         return new YouTube(trimmedYouTubeChannel);

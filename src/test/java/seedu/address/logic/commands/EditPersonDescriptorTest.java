@@ -40,7 +40,7 @@ public class EditPersonDescriptorTest {
                 new Name("Alice"),
                 new Phone("12345678"),
                 new Email("alice@example.com"),
-                new Socials(new Discord("aliceD#1234"), new LinkedIn("linkedin.com/in/alice"),
+                new Socials(new Discord("alice12"), new LinkedIn("linkedin.com/in/alice"),
                         new Instagram("@alic3"), new YouTube("youtube.com/@alicechannel")),
                 new Address("123 Wonderland"),
                 new Priority("LOW"),
