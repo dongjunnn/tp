@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -155,6 +155,87 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Project Management Features
+
+The project management features allow users to create, delete, and display projects within the application. These features are implemented through three main commands (a fourth command `pdetails` (project details) is similarly implemented to `pshow`): `padd` (add project), `pdelete` (delete project), and `pshow` (show project).
+
+#### Add Project Feature
+
+##### Implementation
+
+The add project mechanism is facilitated by `AddProjectCommand` and `AddProjectCommandParser`. The command allows users to create a new project with a name, deadline, priority, and member indices.
+
+The following sequence diagram shows how the add project operation works:
+
+<puml src="diagrams/AddProjectSequenceDiagram.puml" alt="Add Project Sequence Diagram" />
+
+##### How the Add Project feature works:
+
+1. When the user executes the `padd` command (e.g. `padd n/Website Redesign d/Revamp company website p/web t/urgent m/1 m/2`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates an `AddProjectCommandParser` to parse the command arguments.
+3. The parser validates the command format and extracts the project name, description, project tags, and member indices.
+4. For each member index provided, the command validates that the index exists in the filtered person list.
+5. An `AddProjectCommand` object is created with the parsed project details.
+6. When executed, the command checks if a project with the same name already exists using `Model#hasProject()`.
+7. If the project is unique, it is added to the model using `Model#addProject()`.
+8. A `CommandResult` is returned with a success message.
+
+The following activity diagram summarizes what happens when a user executes the `padd` command:
+
+<puml src="diagrams/AddProjectActivityDiagram.puml" alt="Add Project Activity Diagram" />
+
+#### Delete Project Feature
+
+##### Implementation
+
+The delete project mechanism is facilitated by `DeleteProjectCommand` and `DeleteProjectCommandParser`. The command allows users to delete an existing project by its exact name.
+
+The following sequence diagram shows how the delete project operation works:
+
+<puml src="diagrams/DeleteProjectSequenceDiagram.puml" alt="Delete Project Sequence Diagram" />
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteProjectCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+</div>
+
+##### How the Delete Project feature works:
+
+1. When the user executes the `pdelete` command (e.g. `pdelete n/Website Redesign`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates a `DeleteProjectCommandParser` to parse the command arguments.
+3. The parser extracts the project name from the command.
+4. A `DeleteProjectCommand` object is created with the parsed project name.
+5. When executed, the command retrieves the filtered project list using `Model#getFilteredProjectList()`.
+6. The command searches for a project with the matching name in the list.
+7. If found, the project is deleted from the model using `Model#deleteProject()`.
+8. A `CommandResult` is returned with a success message.
+
+The following activity diagram summarizes what happens when a user executes the `pdelete` command:
+
+<puml src="diagrams/DeleteProjectActivityDiagram.puml" alt="Delete Project Activity Diagram" />
+
+#### Show Project Feature
+
+##### Implementation
+
+The show project mechanism is facilitated by `ShowProjectCommand` and `ShowProjectCommandParser`. The command allows users to display information about a specific person's projects by their index.
+
+The following sequence diagram shows how the show project operation works:
+
+<puml src="diagrams/ShowProjectSequenceDiagram.puml" alt="Show Project Sequence Diagram" />
+
+##### How the Show Project feature works:
+
+1. When the user executes the `pshow` command (e.g. `pshow 1`), the `LogicManager` receives the command string.
+2. The `AddressBookParser` creates a `ShowProjectCommandParser` to parse the command arguments.
+3. The parser validates and extracts the person index from the command.
+4. A `ShowProjectCommand` object is created with the parsed index.
+5. When executed, the command retrieves the filtered person list using `Model#getFilteredPersonList()`.
+6. The command validates that the index is within the bounds of the person list.
+7. A `CommandResult` is returned with the target person index, allowing the UI to display the person's project details.
+
+The following activity diagram summarizes what happens when a user executes the `pshow` command:
+
+<puml src="diagrams/ShowProjectActivityDiagram.puml" alt="Show Project Activity Diagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -229,13 +310,13 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -268,8 +349,8 @@ _{Explain here how the data archiving feature will be implemented}_
 * Needs quick access to contact info and project associations.
 * Values efficiency, organization, and minimal disruption to creative flow.
 
-**Value proposition**: Targeted at tech content creators who manage their projects and clients independently. 
-It will allow them to manage their projects and clients easily within the app by 
+**Value proposition**: Targeted at tech content creators who manage their projects and clients independently.
+It will allow them to manage their projects and clients easily within the app by
 providing quick access to contact details and their information.
 
 
@@ -351,7 +432,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 * 3b. The given tag is invalid.
-  * 3a1. AddressBook shows an error message.
+    * 3a1. AddressBook shows an error message.
       Use case resumes at step 2.
 
 **Use Case: Add a person**
@@ -366,8 +447,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The person's details are invalid.
-  * 1a1. AddressBook shows an error message.
-    Use case ends.
+    * 1a1. AddressBook shows an error message.
+      Use case ends.
 
 * 1b. The person has a duplicate name with another contact.
 
@@ -414,15 +495,15 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -431,16 +512,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `delete 1`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: `delete 0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
@@ -448,6 +529,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
