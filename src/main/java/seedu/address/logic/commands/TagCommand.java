@@ -54,7 +54,7 @@ public class TagCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         for (Index index : targetIndexes) {
-            if (index.getZeroBased() >= lastShownList.size()) {
+            if (index.getZeroBased() < 0 || index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }

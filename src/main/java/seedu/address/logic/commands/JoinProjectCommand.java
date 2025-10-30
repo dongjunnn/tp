@@ -69,7 +69,7 @@ public class JoinProjectCommand extends Command {
         StringBuilder addedNamesBuilder = new StringBuilder();
 
         for (Index index : memberIndexes) {
-            if (index.getZeroBased() >= personList.size()) {
+            if (index.getZeroBased() < 0 || index.getZeroBased() >= personList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 

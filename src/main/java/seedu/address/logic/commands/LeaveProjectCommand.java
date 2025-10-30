@@ -71,7 +71,7 @@ public class LeaveProjectCommand extends Command {
         Set<Person> updatedMembers = new HashSet<>(project.getMembers());
 
         for (Index index : memberIndexes) {
-            if (index.getZeroBased() >= personList.size()) {
+            if (index.getZeroBased() < 0 || index.getZeroBased() >= personList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
