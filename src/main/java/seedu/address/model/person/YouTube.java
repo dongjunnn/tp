@@ -47,7 +47,7 @@ public class YouTube {
 
         // Must be YouTube domain
         if (!input.matches("^(https?://)?(www\\.)?youtube\\.com/.*")) {
-            return "URL must be a valid YouTube link starting with '(https://(www.))youtube.com/'.";
+            return "URL must be a valid YouTube link starting with '(http(s)://(www.))youtube.com/'.";
         }
 
         // Extract path after domain and remove trailing slash
@@ -60,8 +60,11 @@ public class YouTube {
             if (handle.length() < 3 || handle.length() > 30) {
                 return "Handle must be 3–30 characters long.";
             }
-            if (!handle.matches("[-\\w]+")) {
-                return "Handle can only contain letters, digits, underscores, or hyphens.";
+            // Regex: letters, digits, underscores, hyphens, periods allowed
+            // Cannot start or end with _ or -
+            if (!handle.matches("^(?![_-])[A-Za-z0-9._-]{3,30}(?<![_-])$")) {
+                return "Handle can only contain letters, digits, underscores, hyphens, or periods, "
+                        + "and must not start or end with an underscore or hyphen.";
             }
             return null; // valid handle URL
         }
@@ -84,8 +87,10 @@ public class YouTube {
             if (name.isEmpty()) {
                 return "Custom URL must not be empty.";
             }
-            if (!name.matches("[-\\w]+")) {
-                return "Custom URL can only contain letters, digits, underscores, or hyphens.";
+            // Regex: letters, digits, underscores, hyphens only, cannot start/end with _ or -
+            if (!name.matches("^(?![_-])[A-Za-z0-9_-]+(?<![_-])$")) {
+                return "Custom URL can only contain letters, digits, underscores, or hyphens, "
+                        + "and must not start or end with an underscore or hyphen.";
             }
             return null;
         }
