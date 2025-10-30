@@ -1,15 +1,15 @@
 package seedu.address.model.project;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.priority.Priority;
 
-
-//todo: change each field to a class
-//v1.3: we deal with members next week
 /**
  * Represents a project in the address book.
  * Guarantees: details are non-null and validated where applicable; immutable where possible.
@@ -99,8 +99,23 @@ public class Project {
      * @return true if the member was present and removed; false otherwise
      */
     public boolean deleteMember(Person person) {
-        Objects.requireNonNull(person);
+        requireNonNull(person);
         return members.remove(person);
+    }
+
+    /**
+     * Updates a member with new details.
+     */
+    public Project updateMember(Person oldPerson, Person newPerson) {
+        requireNonNull(oldPerson);
+        requireNonNull(newPerson);
+
+        Set<Person> updatedMembers = new HashSet<>(members);
+        if (updatedMembers.remove(oldPerson)) {
+            updatedMembers.add(newPerson);
+        }
+
+        return new Project(name, priority, deadline, updatedMembers);
     }
 
     @Override

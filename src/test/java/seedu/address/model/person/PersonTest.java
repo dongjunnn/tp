@@ -34,11 +34,11 @@ public class PersonTest {
         assertEquals(new Name("Amy Bee"), person.getName());
         assertEquals(new Phone("85355255"), person.getPhone());
         assertEquals(new Email("amy@gmail.com"), person.getEmail());
-        assertEquals("amy#1234", person.getSocials().getDiscord().value);
+        assertEquals("amy_1234", person.getSocials().getDiscord().value);
         assertEquals("linkedin.com/in/amy", person.getSocials().getLinkedIn().value);
         assertEquals("@amy_bstyle", person.getSocials().getInstagram().value);
         assertEquals("youtube.com/@amybee", person.getSocials().getYouTube().value);
-        assertEquals("Discord: amy#1234, LinkedIn: linkedin.com/in/amy, "
+        assertEquals("Discord: amy_1234, LinkedIn: linkedin.com/in/amy, "
                         + "Instagram: @amy_bstyle, YouTube: youtube.com/@amybee",
                 person.getSocials().toString());
         assertEquals(new Address("123, Jurong West Ave 6, #08-111"), person.getAddress());

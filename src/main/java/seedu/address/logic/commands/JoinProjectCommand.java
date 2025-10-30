@@ -7,7 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -39,6 +41,8 @@ public class JoinProjectCommand extends Command {
     public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_NO_NEW_MEMBERS = "All specified members already in `%1$s`";
 
+    private static final Logger logger = LogsCenter.getLogger(JoinProjectCommand.class);
+
     private final String name;
     private final List<Index> memberIndexes;
 
@@ -57,6 +61,8 @@ public class JoinProjectCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        logger.info("Executing JoinProjectCommand for project: " + name);
 
         Project project = model.getProjectByName(name);
         if (project == null) {
@@ -97,6 +103,8 @@ public class JoinProjectCommand extends Command {
         if (addedNames.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_NEW_MEMBERS, project.getName()));
         }
+
+        logger.info("Successful executed JoinProjectCommand for project: " + name);
 
         return new CommandResult(String.format(MESSAGE_JOIN_SUCCESS + "%2$s", project.getName(), addedNames));
     }

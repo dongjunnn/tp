@@ -44,7 +44,7 @@ public class AddCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_DISCORD + "johnnyD#1234 "
+            + PREFIX_DISCORD + "johnny.doe "
             + PREFIX_LINKEDIN + "linkedin.com/in/johndoe "
             + PREFIX_INSTAGRAM + "@john_doe "
             + PREFIX_YOUTUBE + "youtube.com/@johndoe "

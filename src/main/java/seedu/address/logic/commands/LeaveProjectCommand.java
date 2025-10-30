@@ -7,8 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -43,6 +45,8 @@ public class LeaveProjectCommand extends Command {
     public static final String MESSAGE_LAST_MEMBER =
             "Project cannot have no members!";
 
+    private static final Logger logger = LogsCenter.getLogger(LeaveProjectCommand.class);
+
     private final String name;
     private final List<Index> memberIndexes;
 
@@ -61,6 +65,8 @@ public class LeaveProjectCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        logger.info("Executing LeaveProjectCommand for project: " + name);
 
         Project project = model.getProjectByName(name);
         if (project == null) {
@@ -102,6 +108,8 @@ public class LeaveProjectCommand extends Command {
         String removedNames = memberIndexes.stream()
                 .map(i -> personList.get(i.getZeroBased()).getName().toString())
                 .collect(Collectors.joining(", "));
+
+        logger.info("Successfully executed JoinProjectCommand for project: " + name);
 
         return new CommandResult(String.format(MESSAGE_LEAVE_SUCCESS
                 + "\n%2$s", project.getName(), removedNames));

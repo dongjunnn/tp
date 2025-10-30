@@ -352,13 +352,13 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -391,8 +391,8 @@ _{Explain here how the data archiving feature will be implemented}_
 * Needs quick access to contact info and project associations.
 * Values efficiency, organization, and minimal disruption to creative flow.
 
-**Value proposition**: Targeted at tech content creators who manage their projects and clients independently. 
-It will allow them to manage their projects and clients easily within the app by 
+**Value proposition**: Targeted at tech content creators who manage their projects and clients independently.
+It will allow them to manage their projects and clients easily within the app by
 providing quick access to contact details and their information.
 
 
@@ -474,7 +474,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 * 3b. The given tag is invalid.
-  * 3a1. AddressBook shows an error message.
+    * 3a1. AddressBook shows an error message.
       Use case resumes at step 2.
 
 **Use Case: Add a person**
@@ -489,8 +489,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The person's details are invalid.
-  * 1a1. AddressBook shows an error message.
-    Use case ends.
+    * 1a1. AddressBook shows an error message.
+      Use case ends.
 
 * 1b. The person has a duplicate name with another contact.
 

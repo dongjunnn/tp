@@ -106,6 +106,20 @@ public class PersonCard extends UiPart<Region> {
         priority.setText("Priority: " + person.getPriority().value);
         email.setText(person.getEmail().value);
 
+        switch (person.getPriority().value.toLowerCase()) {
+        case "high":
+            priority.setStyle("-fx-text-fill: #FF4D4D; -fx-padding: 5 3 5 0;"); // Red for high
+            break;
+        case "medium":
+            priority.setStyle("-fx-text-fill: #FFFF66; -fx-padding: 5 3 5 0;"); // Yellow for medium
+            break;
+        case "low":
+            priority.setStyle("-fx-text-fill: #66CC66; -fx-padding: 5 3 5 0;"); // Green for low
+            break;
+        default:
+            priority.setStyle("-fx-text-fill: white; -fx-padding: 5 3 5 0;"); // Default
+        }
+
         // Handle optional Discord handle
         handleOptionalField(discordHandle, person.getSocials().getDiscord().value, "Discord: ");
 
