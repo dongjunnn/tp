@@ -209,7 +209,7 @@ The add project mechanism is facilitated by `AddProjectCommand` and `AddProjectC
 
 The following sequence diagram shows how the add project operation works:
 
-<img src="diagrams/AddProjectSequenceDiagram.png" alt="Add Project Sequence Diagram" />
+<img src="images/AddProjectSequenceDiagram.png" alt="Add Project Sequence Diagram" />
 
 ##### How the Add Project feature works:
 
@@ -224,7 +224,7 @@ The following sequence diagram shows how the add project operation works:
 
 The following activity diagram summarizes what happens when a user executes the `padd` command:
 
-<img src="diagrams/AddProjectActivityDiagram.png" alt="Add Project Activity Diagram" />
+<img src="images/AddProjectActivityDiagram.png" alt="Add Project Activity Diagram" />
 
 #### Delete Project Feature
 
@@ -234,7 +234,7 @@ The delete project mechanism is facilitated by `DeleteProjectCommand` and `Delet
 
 The following sequence diagram shows how the delete project operation works:
 
-<img src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" />
+<img src="images/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteProjectCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
@@ -252,7 +252,7 @@ The following sequence diagram shows how the delete project operation works:
 
 The following activity diagram summarizes what happens when a user executes the `pdelete` command:
 
-<img src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" />
+<img src="images/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" />
 
 #### Show Project Feature
 
@@ -400,29 +400,27 @@ providing quick access to contact details and their information.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                    | So that I can…​                                                                                 |
-| -------- |---------|-------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| `* * *`  | content creator | quickly add new contacts                       | save project and collaborators' details without interrupting my creative flow                   |
-| `* * *`  | content creator | search my contacts by name, platform or role | immediately find collaborators when planning a project or sending an email                      |
-| `* * *`  | content creator | associate contacts with specific projects or videos | see who is involved in which project at a glance                                               |
-| `* * *`  | content creator | delete outdated or duplicate contacts         | keep my contact list clean and relevant                                                        |
-| `* * *`  | content creator | group contacts into categories like sponsors or editors | organise my network logically and avoid mixing up roles                                       |
-| `* * *`  | content creator | assign the same contact to multiple projects | avoid re-entering the same person multiple times                                               |
-| `* * *`  | content creator | store all of a collaborator’s info in one profile | access email, Discord, socials, phone, etc., without switching apps                            |
-| `* * *`  | creator managing multiple projects and roles | tag contacts (sponsor, editor, collab, Project Alpha) | quickly find everyone related to a role or project                                            |
-| `* * *`  | content creator | update a contact’s details                     | keep information accurate                                                                       |
-| `* *`    | creator managing sponsors and collaborators | add notes to each contact and see them in a timeline | recall past interactions easily and follow up efficiently                                      |
-| `* *`    | content creator | export contact details as CSV                  | back up my data                                                                                 |
-| `* *`    | content creator working with many collaborators | quickly get a list of all their emails      | easily disseminate information                                                                 |
-| `* * *`  | content creator | bookmark certain contacts as high priority    | not miss notifications from collaborators like sponsors or recurring editors                   |
-| `* * *`  | busy content creator | add an event to an unscheduled list/group | schedule them when I have free time                                                           |
-| `* * *`  | content creator | rank my tasks                                  | ensure tasks with higher priority appear higher on the list                                     |
-| `* * *`  | content creator | get reminders of upcoming tasks               | stay aware of what I need to do when I enter the app                                           |
-| `* * *`  | content creator | upload a profile picture for collaborators    | visually recognize them                                                                        |
-| `* * *`  | content creator | sort my tasks into weeks                       | see my todos for this week and the upcoming week easily                                        |
-| `* * *`  | content creator | get warnings when scheduling conflicting events | avoid double-booking or overlapping tasks                                                     |
-| `* * *`  | content creator | view my events in a calendar format            | easily see my schedule                                                                         |
-*{More to be added}*
+| Priority | As a …​                                         | I want to …​                                            | So that I can…​                                                               |
+|----------|-------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------------------------|
+| `* * *`  | content creator                                 | quickly add new contacts                                | save project and collaborators' details without interrupting my creative flow |
+| `* * *`  | content creator                                 | search my contacts by name, phone number or email       | immediately find collaborators when planning a project or sending an email    |
+| `* * *`  | content creator                                 | associate contacts with specific projects               | see who is involved in which project at a glance                              |
+| `* * *`  | content creator                                 | delete outdated or duplicate contacts                   | keep my contact list clean and relevant                                       |
+| `* * *`  | content creator                                 | group contacts into categories like sponsors or editors | organise my network logically and avoid mixing up roles                       |
+| `* * *`  | content creator                                 | assign the same contact to multiple projects            | avoid re-entering the same person multiple times                              |
+| `* * *`  | content creator                                 | store all of a collaborator’s info in one profile       | access email, Discord, socials, phone, etc., without switching apps           |
+| `* * *`  | creator managing multiple projects and roles    | tag contacts (sponsor, editor, collab, Project Alpha)   | quickly find everyone related to a role or project                            |
+| `* * *`  | content creator                                 | update a contact’s details                              | keep information accurate                                                     |
+| `* *`    | creator managing sponsors and collaborators     | add notes to each contact and see them in a timeline    | recall past interactions easily and follow up efficiently                     |
+| `* *`    | content creator working with many collaborators | quickly get a list of all their emails                  | easily disseminate information                                                |
+| `* * *`  | content creator                                 | bookmark certain contacts as high priority              | not miss notifications from collaborators like sponsors or recurring editors  |
+| `* * *`  | busy content creator                            | add an event to an unscheduled list/group               | schedule them when I have free time                                           |
+| `* * *`  | content creator                                 | rank my tasks                                           | ensure tasks with higher priority appear higher on the list                   |
+| `* * *`  | content creator                                 | get reminders of upcoming projects                      | stay aware of what I need to do when I enter the app                          |
+| `* * *`  | content creator                                 | upload a profile picture for collaborators              | visually recognize them                                                       |
+| `* * *`  | content creator                                 | sort my tasks into weeks                                | see my todos for this week and the upcoming week easily                       |
+| `* * *`  | content creator                                 | get warnings when scheduling conflicting events         | avoid double-booking or overlapping tasks                                     |
+| `* * *`  | content creator                                 | view my events in a calendar format                     | easily see my schedule                                                        |
 
 ### Use cases
 
