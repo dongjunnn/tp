@@ -76,30 +76,35 @@ public class AddProjectCommand extends Command {
             throw new CommandException("Invalid parameter: name must not be blank.");
         }
 
-        long distinct = memberIndexes.stream().map(Index::getZeroBased).distinct().count();
-        if (distinct != memberIndexes.size()) {
-            throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
+        // Check for empty member list early
+        if (memberIndexes.isEmpty()) {
+            throw new CommandException("Project must have at least one member.");
+        }
+
+        // Validate all indexes and detect duplicates in a single pass
+        ObservableList<Person> persons = model.getFilteredPersonList();
+        Set<Person> members = new HashSet<>();
+        Set<Integer> seenIndexes = new HashSet<>();
+
+        for (Index idx : memberIndexes) {
+            int z = idx.getZeroBased();
+            // Check bounds first
+            if (z < 0 || z >= persons.size()) {
+                logger.log(java.util.logging.Level.WARNING,
+                        "Invalid member index provided: " + idx);
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            // Then check for duplicate indexes
+            if (!seenIndexes.add(z)) {
+                throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
+            }
+            members.add(persons.get(z));
         }
 
         // local laptop/pc time
         LocalDate today = LocalDate.now();
         if (deadline.isBefore(today)) {
             throw new CommandException("Invalid parameter: deadline cannot be in the past.");
-        }
-
-        if (memberIndexes.isEmpty()) {
-            throw new CommandException("Project must have at least one member.");
-        }
-        ObservableList<Person> persons = model.getFilteredPersonList();
-        Set<Person> members = new HashSet<>();
-        for (Index idx : memberIndexes) {
-            int z = idx.getZeroBased();
-            if (z < 0 || z >= persons.size()) {
-                logger.log(java.util.logging.Level.WARNING,
-                        "Invalid member index provided: " + idx);
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-            members.add(persons.get(z));
         }
 
         Project toAdd = new Project(trimmedName, priority, deadline, members);

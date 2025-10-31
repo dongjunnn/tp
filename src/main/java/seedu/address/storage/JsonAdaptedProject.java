@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,7 @@ class JsonAdaptedProject {
         final LocalDate dl;
         try {
             dl = LocalDate.parse(deadline);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new IllegalValueException("Invalid project deadline (expected yyyy-MM-dd): " + deadline);
         }
 
