@@ -6,7 +6,37 @@ title: User Guide
 IndiDex is a **desktop contact and project management application designed for indie content creators**, optimised for use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, IndiDex can help you manage your content creator network and projects faster than traditional GUI apps. Designed for creators managing 20+ collaborators, IndiDex lets you store all contact details (including social media profiles like Discord, Instagram, YouTube, and LinkedIn), create projects with deadlines, and assign team members—all in seconds rather than minutes.
 
 * Table of Contents
-  {:toc}
+  * [Quick start](#quick-start)
+  * [Features](#features)
+    * [Contacts](#contacts)
+      * [Adding a contact: `add`](#adding-a-contact-add)
+      * [Listing all contacts: `list`](#listing-all-contacts--list)
+      * [Editing a contact: `edit`](#editing-a-contact--edit)
+      * [Finding contacts: `find`](#finding-contacts-find)
+      * [Tagging contacts: `tag`](#tagging-contacts-tag)
+      * [Deleting contacts: `delete`](#deleting-contacts--delete)
+      * [Sorting contacts: `sort`](#sorting-contacts--sort)
+    * [Projects](#projects)
+      * [Adding a project: `padd`](#adding-a-project-padd)
+      * [Editing a project: `pedit`](#editing-a-project-pedit)
+      * [Joining a project: `join`](#joining-a-project-join)
+      * [Leaving a project: `leave`](#leaving-a-project-leave)
+      * [Deleting a project: `pdelete`](#deleting-a-project-pdelete)
+      * [Showing projects: `pshow`](#showing-projects-pshow)
+      * [Showing project details:
+        `pdetails`](#showing-project-details-pdetails)
+      * [Showing deadlines: `deadline`](#showing-deadlines-deadline)
+    * [Others](#others)
+      * [Clearing all entries: `clear`](#clearing-all-entries--clear)
+      * [Exiting the program: `exit`](#exiting-the-program--exit)
+      * [Saving the data](#saving-the-data)
+      * [Editing the data file](#editing-the-data-file)
+  * [Field Constraints and
+    Validation](#field-constraints-and-validation)
+  * [FAQ](#faq)
+  * [Known issues](#known-issues)
+  * [Command summary](#command-summary)
+  * [Glossary](#glossary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -19,7 +49,7 @@ IndiDex is a **desktop contact and project management application designed for i
 
 3. Copy the file to the folder you want to use as the _home folder_ for IndiDex.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar indidex.jar` command to run the application.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar IndiDex.jar` command to run the application.
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data (the screenshot contains added projects which won't appear on launch).<br>
    ![image](images/startup.png)
 
@@ -52,7 +82,7 @@ IndiDex is a **desktop contact and project management application designed for i
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -158,7 +188,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/D
 * Edits the contact at the specified `INDEX`.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the contact will be removed i.e. adding of tags is not cumulative.
 * You can remove all the contact's tags by typing `t/` without specifying any tags after it.
 * You can remove existing social media profiles by providing a '-' as input (e.g., `dc/-` to remove Discord handle).
 
@@ -177,11 +207,12 @@ Finds contacts whose details match any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Searches across **name, phone number, and email address**
 * Note that the following fields have different matching criteria:
     * Name has partial matching. E.g. `find Alex` and `find Alex Tan` can both return `Alex Tan`
+    * Note that you still have to enter a complete word (e.g. `Alex` instead of `Ale` to search for all names containing `Alex`)
     * You have to enter the entire phone number`find PHONENUM` to search for it
     * Email has partial matching. Either find the entire email e.g. `john@gmail.com` or enter the email domain to find corresponding addresses e.g. `@gmail.com`
 * Contacts matching at least one keyword will be returned (i.e. `OR` search).
@@ -243,7 +274,7 @@ Format: `sort (n/|p/|a/|pr/|e/)[asc/desc]`
 
 * Sorts the contacts by the specified attribute
 * Defaults to ascending order (descending order for priority)
-* Alphanumerical attributes are sorted by their unicode values
+* Alphanumerical attributes are sorted by their Unicode values
 
 Examples:
 * `sort n/asc` sorts contacts by name in alphabetical order
@@ -282,7 +313,7 @@ Edits the details of the chosen project.
 Format: `pedit OLD_PROJECT_NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`
 
 * At least one of the optional fields must be specified
-* Project name cannot be changed to that of another project (**case insensitive**)
+* Project name cannot be changed to that of another project (**case-insensitive**)
 * Project deadline cannot be changed to a past date
 * Member editing is handled using the leave and join commands instead
 
@@ -297,7 +328,7 @@ Adds the specified members to the chosen project.
 Format: `join n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
 
 * Adds the contacts at the specified indices to the named project
-* Specifying projects is **case insensitive**
+* Specifying projects is **case-insensitive**
 * Adding existing members has no effect but are allowed only if there is at least one new member joining
 
 Examples:
@@ -311,7 +342,7 @@ Removes the specified members to the chosen project.
 Format: `leave n/PROJECT_NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...`
 
 * Removes the contacts at the specified indices to the named project
-* Specifying projects is **case insensitive**
+* Specifying projects is **case-insensitive**
 * Contacts who are not members are not allowed to leave
 * Contacts are not allowed to leave if there will be no member remaining in the project
 
@@ -346,10 +377,10 @@ Format: `pshow INDEX` or `pshow all`
 * **With INDEX**: Shows projects for the contact at the specified index
     * The index refers to the index number shown in the displayed contact list
     * The index **must be a positive integer** 1, 2, 3, …​
-    * Scrolls to and highlights the contact's associated projects in the
-      project panel
+    * Highlights the contact in the person panel. 
+    * If the selected person belongs to only 1 project, that project is highlighted as well
 
-* **With `all`**: Displays all projects in the project panel
+* **With `pshow all`**: Displays all projects in the project panel
     * Resets any previous contact-specific project filtering
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
@@ -375,6 +406,8 @@ Format: `pdetails n/PROJECT_NAME`
 * Project name matching is **case-sensitive** and must be exact
 * Displays the project's deadline, priority, and team members in the project
   panel
+* Note that if a person's projects are listed using `pshow`, executing `pdetails n/PROJECT_NAME` for a project belonging to 
+  that member will show project details in the same pane. It would be standalone otherwise is no `pshow` is used.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 The project name must match exactly (case-sensitive). Hence, "Web Series" and "web
@@ -406,7 +439,7 @@ Clears all entries (both persons and projects) from IndiDex.
 Format: `clear`
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-This will delete ALL contacts and projects. This operation cannot be undone. Make sure to backup your data before using this command.
+This will delete ALL contacts and projects. This operation cannot be undone. Make sure to back up your data before using this command.
 </div>
 
 ### Exiting the program : `exit`
@@ -425,7 +458,7 @@ IndiDex data are saved automatically as a JSON file `[JAR file location]/data/in
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, IndiDex will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
