@@ -1,6 +1,6 @@
 ---
 layout: page
-title: AddressBook Level-3
+title: IndiDex
 ---
 
 [![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
@@ -8,11 +8,16 @@ title: AddressBook Level-3
 
 ![Ui](images/Ui.png)
 
-**AddressBook is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
-
-* If you are interested in using AddressBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
-* If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
-
+* This is **an application to help indie content creators to manage their contacts efficiently**.<br>
+  Example usages:
+    * Adding clients' contacts
+    * Tracking upcoming project deadlines
+* The project simulates an ongoing software project for a desktop application (called _Indidex_) used for managing contact details.
+    * It is **written in OOP fashion** and follows good software engineering practices.
+    * It comes with a **reasonable level of user and developer documentation**.
+* It is named `IndiDex` because it is an index-based address book for indie developers.
+* For the detailed documentation of this project, see the **[IndiDex User Guide](https://ay2526s1-cs2103t-w11-3.github.io/tp/UserGuide.html)**.
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
 **Acknowledgements**
 
