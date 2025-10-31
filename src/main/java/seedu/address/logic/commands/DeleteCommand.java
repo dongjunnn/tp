@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Project;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -104,18 +107,38 @@ public class DeleteCommand extends Command {
             deletedNamesForMessage.add(Messages.format(lastShownList.get(i)));
         }
 
+        Map<Project, Integer> deleteCountMap = new HashMap<>();
+        List<Person> personsToDelete = indexesAsc.stream()
+                .map(lastShownList::get)
+                .collect(Collectors.toList());
+        for (Person person : personsToDelete) {
+            for (Project project : model.getFilteredProjectList()) {
+                Set<Person> members = project.getMembers();
+                if (members.contains(person)) {
+                    int newCount = deleteCountMap.getOrDefault(project, 0) + 1;
+                    deleteCountMap.put(project, newCount);
+
+                    if (newCount == members.size()) {
+                        throw new CommandException(String.format(
+                                Messages.MESSAGE_PROJECT_MUST_HAVE_MEMBERS, project.getName()
+                        ));
+                    }
+                }
+            }
+        }
+
         // Delete by descending index so earlier deletions don't shift later indexes
         List<Integer> indexesDesc = new ArrayList<>(indexesAsc);
         Collections.reverse(indexesDesc); // now descending
         for (Integer idx : indexesDesc) {
             Person p = lastShownList.get(idx);
+
             model.deletePerson(p);
         }
 
         // Build final message showing names in ascending/display order
         String resultMessage = String.join(",\n", deletedNamesForMessage);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, resultMessage));
-
     }
 
     @Override

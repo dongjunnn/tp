@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_PROJECT_NOT_FOUND_BY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
@@ -38,7 +39,6 @@ public class EditProjectCommand extends Command {
 
     public static final String MESSAGE_EDIT_PROJECT_SUCCESS = "Edited Project: %s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the address book.";
 
     private final String oldName;
@@ -62,7 +62,7 @@ public class EditProjectCommand extends Command {
 
         Project projectToEdit = model.getProjectByName(oldName);
         if (projectToEdit == null) {
-            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND, oldName));
+            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND_BY_NAME, oldName));
         }
 
         if (editProjectDescriptor.getName().isPresent()) {

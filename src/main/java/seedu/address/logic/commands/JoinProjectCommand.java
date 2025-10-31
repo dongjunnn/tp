@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_PROJECT_NOT_FOUND_BY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -38,7 +39,6 @@ public class JoinProjectCommand extends Command {
             + PREFIX_MEMBER + "3";
 
     public static final String MESSAGE_JOIN_SUCCESS = "Added new members to `%1$s`: ";
-    public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_NO_NEW_MEMBERS = "All specified members already in `%1$s`";
 
     private static final Logger logger = LogsCenter.getLogger(JoinProjectCommand.class);
@@ -66,7 +66,7 @@ public class JoinProjectCommand extends Command {
 
         Project project = model.getProjectByName(name);
         if (project == null) {
-            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND, name));
+            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND_BY_NAME, name));
         }
 
         List<Person> personList = model.getFilteredPersonList();
