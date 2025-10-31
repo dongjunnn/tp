@@ -27,9 +27,9 @@ public class TagCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a tag to all people identified by the index number used in the displayed person list. \n"
-            + "Parameters: INDEX [INDEX]... (must be positive integers) "
+            + "Parameters: INDEX [MORE_INDICES]... (must be positive integers) "
             + PREFIX_TAG + "TAG "
-            + "[" + PREFIX_TAG + "TAG ]..."
+            + "[" + PREFIX_TAG + "MORE_TAGS]...\n"
             + "Example: " + COMMAND_WORD + " "
             + "1 2 3 "
             + PREFIX_TAG + "websiteRedesign "

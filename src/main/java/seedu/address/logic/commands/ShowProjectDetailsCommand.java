@@ -20,7 +20,7 @@ public class ShowProjectDetailsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows details for the project by *exact* name (case-sensitive).\n"
-            + "Parameters: n/NAME\n"
+            + "Parameters: n/PROJECT_NAME\n"
             + "Example: " + COMMAND_WORD + " n/IndiDex Website Revamp";
 
     public static final String MESSAGE_SHOW_PROJECT_DETAILS_SUCCESS = "Showing details for project: %1$s";
