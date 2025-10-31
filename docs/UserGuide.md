@@ -71,9 +71,9 @@ IndiDex is a **desktop contact and project management application designed for i
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page. 
+Shows a message explaining how to access the help page.
 
-![help message](images/helpMessage.png)
+![help message](images/helpMessage1.png)
 
 Format: `help`
 
