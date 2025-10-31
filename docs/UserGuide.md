@@ -130,7 +130,7 @@ A contact can have any number of tags (including 0). Social media profiles are o
 </div>
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-IndiDex prevents duplicate contacts. You cannot add a contact with the same name, phone, and email as an existing contact.
+IndiDex prevents duplicate contacts. You cannot add a contact with the same name as an existing contact (case-sensitive).
 </div>
 
 Examples:
@@ -337,6 +337,8 @@ Examples:
 
 ### Showing projects: `pshow`
 
+![pshow example](images/pshow.png)
+
 Displays projects in the project panel.
 
 Format: `pshow INDEX` or `pshow all`
@@ -362,6 +364,8 @@ Examples:
   the search results
 
 ### Showing project details: `pdetails`
+
+![pdetails example](images/pdetails.png)
 
 Displays detailed information for a specific project by its exact name.
 
