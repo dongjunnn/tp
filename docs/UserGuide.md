@@ -130,7 +130,7 @@ A contact can have any number of tags (including 0). Social media profiles are o
 </div>
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-IndiDex prevents duplicate contacts. You cannot add a contact with the same name as an existing contact (case-sensitive).
+IndiDex prevents duplicate contacts. You cannot add a contact with the same name (case-sensitive) as an existing contact.
 </div>
 
 Examples:
