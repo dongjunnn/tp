@@ -358,28 +358,18 @@ providing quick access to contact details and their information.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                    | So that I can…​                                                                                 |
-| -------- |---------|-------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| `* * *`  | content creator | quickly add new contacts                       | save project and collaborators' details without interrupting my creative flow                   |
-| `* * *`  | content creator | search my contacts by name, platform or role | immediately find collaborators when planning a project or sending an email                      |
-| `* * *`  | content creator | associate contacts with specific projects or videos | see who is involved in which project at a glance                                               |
-| `* * *`  | content creator | delete outdated or duplicate contacts         | keep my contact list clean and relevant                                                        |
-| `* * *`  | content creator | group contacts into categories like sponsors or editors | organise my network logically and avoid mixing up roles                                       |
-| `* * *`  | content creator | assign the same contact to multiple projects | avoid re-entering the same person multiple times                                               |
-| `* * *`  | content creator | store all of a collaborator’s info in one profile | access email, Discord, socials, phone, etc., without switching apps                            |
-| `* * *`  | creator managing multiple projects and roles | tag contacts (sponsor, editor, collab, Project Alpha) | quickly find everyone related to a role or project                                            |
-| `* * *`  | content creator | update a contact’s details                     | keep information accurate                                                                       |
-| `* *`    | creator managing sponsors and collaborators | add notes to each contact and see them in a timeline | recall past interactions easily and follow up efficiently                                      |
-| `* *`    | content creator | export contact details as CSV                  | back up my data                                                                                 |
-| `* *`    | content creator working with many collaborators | quickly get a list of all their emails      | easily disseminate information                                                                 |
-| `* * *`  | content creator | bookmark certain contacts as high priority    | not miss notifications from collaborators like sponsors or recurring editors                   |
-| `* * *`  | busy content creator | add an event to an unscheduled list/group | schedule them when I have free time                                                           |
-| `* * *`  | content creator | rank my tasks                                  | ensure tasks with higher priority appear higher on the list                                     |
-| `* * *`  | content creator | get reminders of upcoming tasks               | stay aware of what I need to do when I enter the app                                           |
-| `* * *`  | content creator | upload a profile picture for collaborators    | visually recognize them                                                                        |
-| `* * *`  | content creator | sort my tasks into weeks                       | see my todos for this week and the upcoming week easily                                        |
-| `* * *`  | content creator | get warnings when scheduling conflicting events | avoid double-booking or overlapping tasks                                                     |
-| `* * *`  | content creator | view my events in a calendar format            | easily see my schedule                                                                         |
+| Priority | As a…                         | I want to…                                              | So that I can…                                                                |
+|----------|-------------------------------|---------------------------------------------------------|-------------------------------------------------------------------------------|
+| ***      | content creator working alone | quickly add new contacts                                | save project and collaborators' details without interrupting my creative flow |
+| ***      | content creator               | add multiple tags to multiple contacts in one command   | quickly organise my network logically and avoid mixing up roles               |
+| ***      | content creator               | store all of a collaborator’s info in one profile       | access their phone, email, discord and other social media handles in one app  |
+| ***      | content creator               | quickly delete outdated and unused contacts             | keep my contact list relevant                                                 |
+| ***      | content creator               | search contacts by fields such as name or organisations | immediately find collaborators when planning a project or sending an email    |
+| ***      | content creator               | update a contact’s details                              | keep information accurate                                                     |
+| ***      | content creator               | associate contacts with specific projects and videos    | see who is involved in which project at a glance                              |
+| ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
+| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
+| *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
 *{More to be added}*
 
 ### Use cases
