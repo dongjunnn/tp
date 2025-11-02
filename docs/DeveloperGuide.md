@@ -567,7 +567,7 @@ add n/Emily Wong p/81112222 e/emily@studio.com a/Depot Rd pr/HIGH t/animator
 
 **Edit (replace tags & update socials)**
 ```text
-edit 2 t/producer t/2025 dc/bernice_new#2222
+edit 2 t/producer t/2025 dc/bernice_new
 ```
 **Expected:** Contact 2 now has exactly `producer`, `2025` tags; Discord updated.
 
