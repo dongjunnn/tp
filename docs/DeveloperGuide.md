@@ -830,19 +830,11 @@ Use this if you want a single, guided walkthrough that touches each feature once
 
 ```text
 clear
-<<<<<<< HEAD
 add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
 add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice t/collab
 add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
 add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
 add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/@irfan
-=======
-add n/Alex p/87438807 e/alex@gmail.com a/Geylang 29 pr/LOW t/client
-add n/Bernice  p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
-add n/Charlotte p/93210283 e/ch@example.com a/Marymount pr/HIGH ig/@charlotte
-add n/David p/91031282 e/d@outlok.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
-add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
->>>>>>> master
 tag 1 3 t/urgent
 find @gmail.com
 sort pr/desc
