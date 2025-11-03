@@ -37,8 +37,13 @@ public class EditProjectCommandParser implements Parser<EditProjectCommand> {
         EditProjectDescriptor editProjectDescriptor = new EditProjectDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            if (argMultimap.getValue(PREFIX_NAME).get().length() > MAX_NAME_LENGTH) {
+            String name = argMultimap.getValue(PREFIX_NAME).get();
+            if (name.length() > MAX_NAME_LENGTH) {
                 throw new ParseException("Invalid parameter: name must be at most " + MAX_NAME_LENGTH + " characters.");
+            }
+            if (name.isEmpty()) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditProjectCommand.MESSAGE_USAGE));
             }
             editProjectDescriptor.setName(argMultimap.getValue(PREFIX_NAME).get());
         }
