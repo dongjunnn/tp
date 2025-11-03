@@ -53,7 +53,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         // Check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_DISCORD,
-                PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
+                PREFIX_PRIORITY, PREFIX_LINKEDIN, PREFIX_INSTAGRAM, PREFIX_YOUTUBE, PREFIX_ADDRESS);
 
         // Parse individual fields
         // Safe to call get() because presence is checked above

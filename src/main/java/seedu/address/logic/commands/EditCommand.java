@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISCORD;
@@ -103,7 +104,7 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
 
-        if (editPersonDescriptor.getName().isPresent()) {
+        if (!personToEdit.equals(editedPerson)) {
             List<Project> projectList = model.getFilteredProjectList();
 
             for (Project project : projectList) {
