@@ -291,7 +291,7 @@ Creates a new project in IndiDex and assigns at least one team member to it.
 
 Format: `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…​`
 * **Required fields:**
-    * `n/PROJECT_NAME` - Name of the project (case-insensitive)
+    * `n/PROJECT_NAME` - Name of the project (case-insensitive) and restricted to 35 characters
     * `d/DEADLINE` - Project deadline in `yyyy-MM-dd` format (e.g., 2025-12-31; cannot be in the past)
     * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
     *  `m/MEMBER_INDEX` – At least one member index (you can add multiple)
