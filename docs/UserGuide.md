@@ -504,16 +504,14 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 ### Social Media Profiles
 * All social media fields are **optional**.  
 * Empty fields will simply not be displayed.
-* **Note:** The application does not check for duplicate social media handles across different persons, as users may legitimately share handles for group, community, or institutional accounts. Enforcing uniqueness could unnecessarily restrict valid entries.
+* **Note:** The application does not check for duplicate social media handles across different persons, as multiple contacts may legitimately share handles for group, community, or institutional accounts. Enforcing uniqueness could unnecessarily restrict valid entries.
 
 **Discord**
 * Must be **2–32 characters long**
 * Can only contain **lowercase letters**, **digits**, **periods (.)**, or **underscores (_)**
-* Cannot **start or end** with a period or underscore
-* Cannot have **consecutive periods or underscores**
+* Cannot have **consecutive periods**
 * **Examples:**
     * ✅ `john_doe`
-    * ❌ `_johndoe` (starts with underscore)
     * ❌ `john..doe` (consecutive periods)
 
 
