@@ -44,6 +44,7 @@ title: Developer Guide
     - [13. Clear & Exit](#13-clear--exit)
     - [Suggested end-to-end path (copy-paste block)](#suggested-end-to-end-path-copy-paste-block)
     - [Notes on edge cases for exploratory testing](#notes-on-edge-cases-for-exploratory-testing)
+- [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -405,7 +406,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | ***      | content creator               | update a contact’s details                              | keep information accurate                                                     |
 | ***      | content creator               | associate contacts with specific projects and videos    | see who is involved in which project at a glance                              |
 | ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
-| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
+| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |
 | *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
 
 
@@ -519,11 +520,11 @@ Given below are practical, copy-pasteable steps to help you chart a path through
 
 ## 1. Launch, shutdown & window preferences
 
-**Prerequisites:** App JAR present.  
+**Prerequisites:** App JAR present.
 **Steps**
-1. Double-click the JAR.  
+1. Double-click the JAR.
    **Expected:** App launches with sample data; two panels (Contacts left, Projects right) visible.
-2. Resize and move window → Close app (click **X**) → Launch again.  
+2. Resize and move window → Close app (click **X**) → Launch again.
    **Expected:** Previous window size and position are retained.
 
 ---
@@ -783,7 +784,7 @@ NOTE: choose a date that is within 7 days from now for 'Soon Due'
 
 **Automatic saving**
 1. Run a few mutating commands (e.g., `add`, `padd`, `delete`).
-2. Close and relaunch the app.  
+2. Close and relaunch the app.
    **Expected:** All changes persist.
 
 **Locate the data file**
@@ -865,3 +866,23 @@ exit
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
 - **Deadlines**: Past dates should be rejected on create/edit.
 - **Join/Leave safety**: Ensure projects never end up with zero members; leaving the last member or deleting that only contact should be blocked.
+
+## Appendix: Planned Enhancements
+
+Team Size: 5
+
+1. **Strengthen email validation further:** Enhance existing validation rules to support a wider variety of legitimate email formats and edge cases, ensuring greater robustness and reliability.
+
+2. **Standardise case sensitivity:** Standardise case-handling for fields such as names and tags to improve search accuracy.
+
+3. **Make the app support other languages:** Ensure full functionality for languages such as Arabic such as proper UI rendering. This allows a broader range of creators internationally to use the app.
+
+4. **Revive help/deadline Window after minimising:** Fix the current issue where minimising the pop-up windows causes them to disappear until they are clicked in the computer dock.
+
+5. **Modify deadline to handle timezone changes:** When users travel or change timezone settings, deadlines should automatically adjust accordingly to maintain accuracy.
+
+6. **Support international phone numbers:** Allow the `+` character for international formats for use across different countries and platforms.
+
+7. **Make `Phone` and `address` fields optional:** For many content creators, private information such as phone numbers or addresses is not necessary to share. Making these fields optional reduces friction when adding contacts and protects personal privacy.
+
+8. **Introduce `untag` ommand:** While the `tag` command exists, the opposite does not. We plan to add it to allow users to remove tags efficiently.
