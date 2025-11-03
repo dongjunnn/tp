@@ -78,7 +78,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -110,13 +110,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/resources/view/MainWindow.fxml).
 
 The `UI` component,
 
@@ -127,7 +127,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -157,7 +157,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -178,7 +178,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-W11-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -209,7 +209,7 @@ The add project mechanism is facilitated by `AddProjectCommand` and `AddProjectC
 
 The following sequence diagram shows how the add project operation works:
 
-<img src="diagrams/AddProjectSequenceDiagram.png" alt="Add Project Sequence Diagram" />
+<img src="images/AddProjectSequenceDiagram.png" alt="Add Project Sequence Diagram" />
 
 ##### How the Add Project feature works:
 
@@ -224,7 +224,7 @@ The following sequence diagram shows how the add project operation works:
 
 The following activity diagram summarizes what happens when a user executes the `padd` command:
 
-<img src="diagrams/AddProjectActivityDiagram.png" alt="Add Project Activity Diagram" />
+<img src="images/AddProjectActivityDiagram.png" alt="Add Project Activity Diagram" />
 
 #### Delete Project Feature
 
@@ -234,7 +234,7 @@ The delete project mechanism is facilitated by `DeleteProjectCommand` and `Delet
 
 The following sequence diagram shows how the delete project operation works:
 
-<img src="diagrams/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" />
+<img src="images/DeleteProjectSequenceDiagram.png" alt="Delete Project Sequence Diagram" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteProjectCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
@@ -252,7 +252,7 @@ The following sequence diagram shows how the delete project operation works:
 
 The following activity diagram summarizes what happens when a user executes the `pdelete` command:
 
-<img src="diagrams/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" />
+<img src="images/DeleteProjectActivityDiagram.png" alt="Delete Project Activity Diagram" />
 
 #### Show Project Feature
 
@@ -262,7 +262,7 @@ The show project mechanism is facilitated by `ShowProjectCommand` and `ShowProje
 
 The following sequence diagram shows how the show project operation works:
 
-<img src="diagrams/ShowProjectSequenceDiagram.png" alt="Show Project Sequence Diagram" />
+<img src="images/ShowProjectSequenceDiagram.png" alt="Show Project Sequence Diagram" />
 
 ##### How the Show Project feature works:
 
@@ -276,7 +276,7 @@ The following sequence diagram shows how the show project operation works:
 
 The following activity diagram summarizes what happens when a user executes the `pshow` command:
 
-<img src="diagrams/ShowProjectActivityDiagram.png" alt="Show Project Activity Diagram" />
+<img src="images/ShowProjectActivityDiagram.png" alt="Show Project Activity Diagram" />
 
 ### \[Proposed\] Undo/redo feature
 
@@ -360,11 +360,6 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -400,33 +395,21 @@ providing quick access to contact details and their information.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                                    | So that I can…​                                                                                 |
-| -------- |---------|-------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| `* * *`  | content creator | quickly add new contacts                       | save project and collaborators' details without interrupting my creative flow                   |
-| `* * *`  | content creator | search my contacts by name, platform or role | immediately find collaborators when planning a project or sending an email                      |
-| `* * *`  | content creator | associate contacts with specific projects or videos | see who is involved in which project at a glance                                               |
-| `* * *`  | content creator | delete outdated or duplicate contacts         | keep my contact list clean and relevant                                                        |
-| `* * *`  | content creator | group contacts into categories like sponsors or editors | organise my network logically and avoid mixing up roles                                       |
-| `* * *`  | content creator | assign the same contact to multiple projects | avoid re-entering the same person multiple times                                               |
-| `* * *`  | content creator | store all of a collaborator’s info in one profile | access email, Discord, socials, phone, etc., without switching apps                            |
-| `* * *`  | creator managing multiple projects and roles | tag contacts (sponsor, editor, collab, Project Alpha) | quickly find everyone related to a role or project                                            |
-| `* * *`  | content creator | update a contact’s details                     | keep information accurate                                                                       |
-| `* *`    | creator managing sponsors and collaborators | add notes to each contact and see them in a timeline | recall past interactions easily and follow up efficiently                                      |
-| `* *`    | content creator | export contact details as CSV                  | back up my data                                                                                 |
-| `* *`    | content creator working with many collaborators | quickly get a list of all their emails      | easily disseminate information                                                                 |
-| `* * *`  | content creator | bookmark certain contacts as high priority    | not miss notifications from collaborators like sponsors or recurring editors                   |
-| `* * *`  | busy content creator | add an event to an unscheduled list/group | schedule them when I have free time                                                           |
-| `* * *`  | content creator | rank my tasks                                  | ensure tasks with higher priority appear higher on the list                                     |
-| `* * *`  | content creator | get reminders of upcoming tasks               | stay aware of what I need to do when I enter the app                                           |
-| `* * *`  | content creator | upload a profile picture for collaborators    | visually recognize them                                                                        |
-| `* * *`  | content creator | sort my tasks into weeks                       | see my todos for this week and the upcoming week easily                                        |
-| `* * *`  | content creator | get warnings when scheduling conflicting events | avoid double-booking or overlapping tasks                                                     |
-| `* * *`  | content creator | view my events in a calendar format            | easily see my schedule                                                                         |
-*{More to be added}*
+| Priority | As a…                         | I want to…                                              | So that I can…                                                                |
+|----------|-------------------------------|---------------------------------------------------------|-------------------------------------------------------------------------------|
+| ***      | content creator working alone | quickly add new contacts                                | save project and collaborators' details without interrupting my creative flow |
+| ***      | content creator               | add multiple tags to multiple contacts in one command   | quickly organise my network logically and avoid mixing up roles               |
+| ***      | content creator               | store all of a collaborator’s info in one profile       | access their phone, email, discord and other social media handles in one app  |
+| ***      | content creator               | quickly delete outdated and unused contacts             | keep my contact list relevant                                                 |
+| ***      | content creator               | search contacts by fields such as name or organisations | immediately find collaborators when planning a project or sending an email    |
+| ***      | content creator               | update a contact’s details                              | keep information accurate                                                     |
+| ***      | content creator               | associate contacts with specific projects and videos    | see who is involved in which project at a glance                              |
+| ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
+| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
+| *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
+
 
 ### Use cases
-
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
@@ -474,7 +457,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 * 3b. The given tag is invalid.
-    * 3a1. AddressBook shows an error message.
+    * 3b1. AddressBook shows an error message.
       Use case resumes at step 2.
 
 **Use Case: Add a person**
@@ -497,7 +480,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. AddressBook shows a warning message edits the newest person's name with a number behind.
       Use case resumes at step 2.
 
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -515,7 +497,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 12. The data file should be human-readable (JSON format) to allow advanced users to manually edit or backup their data.
 13. Should work offline without requiring internet connectivity.
 
-*{More to be added}*
 
 ### Glossary
 
@@ -554,11 +535,11 @@ Use these to set up a predictable contact list for the rest of the tests.
 **Prerequisites:** Run `clear` first to avoid clashes.
 ```text
 clear
-add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
-add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice t/collab
-add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
-add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
-add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/@irfan
+add n/Alex p/87438807 e/a@gmail.com a/Blk 30 pr/LOW t/client
+add n/Bernice p/9928 e/bernice@c.com a/Lorong 3 pr/MEDIUM dc/bernice#1111 t/collab
+add n/Charlotte p/93210283 e/char@example.com a/Marymount pr/HIGH ig/@charlotte
+add n/David p/91031282 e/david@outlk.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
+add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
 list
 ```
 **Expected:** 5 contacts appear in order 1…5.
@@ -577,7 +558,7 @@ add n/Emily Wong p/81112222 e/emily@studio.com a/Depot Rd pr/HIGH t/animator
 
 **Edit (replace tags & update socials)**
 ```text
-edit 2 t/producer t/2025 dc/bernice_new#2222
+edit 2 t/producer t/2025 dc/bernice_new
 ```
 **Expected:** Contact 2 now has exactly `producer`, `2025` tags; Discord updated.
 

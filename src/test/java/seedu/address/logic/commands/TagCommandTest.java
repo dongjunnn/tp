@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +52,7 @@ public class TagCommandTest {
         String expectedMessage = String.format(
                 TagCommand.MESSAGE_SUCCESS,
                 String.join(", ", tagsToAdd.stream().map(Tag::toString).toList()),
-                1
+                Messages.format(updatedPerson)
         );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -85,7 +86,9 @@ public class TagCommandTest {
         String expectedMessage = String.format(
                 TagCommand.MESSAGE_SUCCESS,
                 String.join(", ", tagsToAdd.stream().map(Tag::toString).toList()),
-                indexes.size()
+                indexes.stream().map(index ->
+                                Messages.format(expectedModel.getFilteredPersonList().get(index.getZeroBased())))
+                        .collect(Collectors.joining("\n"))
         );
 
         assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
@@ -120,7 +123,7 @@ public class TagCommandTest {
         String expectedMessage = String.format(
                 TagCommand.MESSAGE_SUCCESS,
                 String.join(", ", tagsToAdd.stream().map(Tag::toString).toList()),
-                1
+                Messages.format(updatedPerson)
         );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

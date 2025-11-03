@@ -39,11 +39,8 @@ public class LeaveProjectCommand extends Command {
             + PREFIX_MEMBER + "3";
 
     public static final String MESSAGE_LEAVE_SUCCESS = "Removed members from `%1$s`: ";
-    public static final String MESSAGE_PROJECT_NOT_FOUND = "Project '%1$s' not found!";
     public static final String MESSAGE_MEMBER_NOT_IN_PROJECT =
             "%1$s can't leave a project they aren't a part of!";
-    public static final String MESSAGE_LAST_MEMBER =
-            "Project cannot have no members!";
 
     private static final Logger logger = LogsCenter.getLogger(LeaveProjectCommand.class);
 
@@ -70,7 +67,7 @@ public class LeaveProjectCommand extends Command {
 
         Project project = model.getProjectByName(name);
         if (project == null) {
-            throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND, name));
+            throw new CommandException(String.format(Messages.MESSAGE_PROJECT_NOT_FOUND_BY_NAME, name));
         }
 
         List<Person> personList = model.getFilteredPersonList();
@@ -94,7 +91,7 @@ public class LeaveProjectCommand extends Command {
         }
 
         if (updatedMembers.isEmpty()) {
-            throw new CommandException(MESSAGE_LAST_MEMBER);
+            throw new CommandException(String.format(Messages.MESSAGE_PROJECT_MUST_HAVE_MEMBERS, project.getName()));
         }
 
         Project updatedProject = new Project(

@@ -75,8 +75,8 @@ public class ShowProjectDetailsCommandTest {
     }
 
     @Test
-    public void execute_caseSensitiveMatch_success() throws Exception {
-        // Test that exact case match is required
+    public void execute_caseInsensitiveMatch_success() throws Exception {
+        // Test that case-insensitive matching works
         Project p1 = new Project(
                 "ProjectName",
                 Priority.MEDIUM,
@@ -90,10 +90,13 @@ public class ShowProjectDetailsCommandTest {
         ShowProjectDetailsCommand cmd = new ShowProjectDetailsCommand("ProjectName");
         CommandResult result = cmd.execute(model);
         assertTrue(result.hasProjectToShow());
+        assertEquals(p1, result.getProjectToShow());
 
-        // Different case should fail
-        ShowProjectDetailsCommand cmdWrongCase = new ShowProjectDetailsCommand("projectname");
-        assertThrows(CommandException.class, () -> cmdWrongCase.execute(model));
+        // Different case should also work (case-insensitive)
+        ShowProjectDetailsCommand cmdDifferentCase = new ShowProjectDetailsCommand("projectname");
+        CommandResult result2 = cmdDifferentCase.execute(model);
+        assertTrue(result2.hasProjectToShow());
+        assertEquals(p1, result2.getProjectToShow());
     }
 
     @Test

@@ -10,11 +10,11 @@ public class Discord {
     /** Message to display if validation fails. */
     public static final String MESSAGE_CONSTRAINTS =
             "Discord username must be 2-32 characters long, only contain lowercase letters, digits, periods (.) "
-                    + "or underscores (_), cannot start or end with a period or underscore, and cannot have "
-                    + "consecutive periods or underscores.";
+                    + "or underscores (_), cannot have "
+                    + "consecutive periods.";
 
     /** Regex for validating Discord handles. */
-    private static final String VALIDATION_REGEX = "^(?=.{2,32}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$";
+    private static final String VALIDATION_REGEX = "^(?!.*\\.\\.)[a-z0-9._]{2,32}$";
 
     /** The Discord handle value. */
     public final String value;

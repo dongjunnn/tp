@@ -35,7 +35,7 @@ public class TagCommand extends Command {
             + PREFIX_TAG + "websiteRedesign "
             + PREFIX_TAG + "highPriority";
 
-    public static final String MESSAGE_SUCCESS = "Tagged %s to %d person(s)";
+    public static final String MESSAGE_SUCCESS = "The specified person(s) now have the tag(s) %s:\n%s";
 
     private static final Logger logger = LogsCenter.getLogger(TagCommand.class);
 
@@ -92,7 +92,8 @@ public class TagCommand extends Command {
                         tagsToAdd.stream()
                                 .map(Tag::toString)
                                 .collect(Collectors.joining(", ")),
-                        targetIndexes.size()
+                        targetIndexes.stream().map(index -> Messages.format(lastShownList.get(index.getZeroBased())))
+                                .collect(Collectors.joining("\n"))
                 )
         );
     }

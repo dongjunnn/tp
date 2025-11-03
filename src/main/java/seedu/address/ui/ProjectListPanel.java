@@ -34,6 +34,7 @@ public class ProjectListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ProjectListPanel.class);
 
     private final ObservableList<Project> allProjects;
+    private final ObservableList<Person> filteredPersons;
     private boolean isShowingAllProjects = false;
     private String currentlyDisplayedProjectName = null; // Track project being displayed for auto-refresh
     private Person currentlySelectedPerson = null; // Track person whose projects are being shown
@@ -72,15 +73,18 @@ public class ProjectListPanel extends UiPart<Region> {
     private VBox projectDetailsContainer;
 
     /**
-     * Creates a {@code ProjectListPanel} with the given list of all projects.
+     * Creates a {@code ProjectListPanel} with the given list of all projects and filtered persons.
      *
      * @param allProjects The list of all projects. Must not be null.
+     * @param filteredPersons The filtered list of persons. Must not be null.
      */
-    public ProjectListPanel(ObservableList<Project> allProjects) {
+    public ProjectListPanel(ObservableList<Project> allProjects, ObservableList<Person> filteredPersons) {
         super(FXML);
         requireNonNull(allProjects, "Project list cannot be null");
+        requireNonNull(filteredPersons, "Filtered persons list cannot be null");
 
         this.allProjects = allProjects;
+        this.filteredPersons = filteredPersons;
 
         // Setup project list view
         projectListView.setCellFactory(listView -> new ProjectListViewCell());
@@ -104,6 +108,21 @@ public class ProjectListPanel extends UiPart<Region> {
         // Listen to changes in the projects list to auto-refresh displayed project
         allProjects.addListener((javafx.collections.ListChangeListener<Project>) change -> {
             refreshDisplayedProjectIfNeeded();
+        });
+
+        // Listen to changes in filtered person list to clear stale person data
+        filteredPersons.addListener((javafx.collections.ListChangeListener<Person>) change -> {
+            // If we're showing a specific person's projects
+            if (currentlySelectedPerson != null) {
+                // Check if that person is still in the filtered list
+                if (!filteredPersons.contains(currentlySelectedPerson)) {
+                    logger.info("Selected person filtered out, clearing projects panel");
+                    showPlaceholder();
+                } else if (filteredPersons.size() > 1) {
+                    logger.info("Multiple people visible after filter, clearing projects panel");
+                    showPlaceholder();
+                }
+            }
         });
 
         showPlaceholder();

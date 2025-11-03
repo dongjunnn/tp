@@ -25,7 +25,7 @@ class DiscordTest {
 
     @Test
     void constructor_invalidValue_throwsIllegalArgumentException() {
-        String invalidHandle = ".invalid"; // starts with period
+        String invalidHandle = "..invalid"; // starts with period
         assertThrows(IllegalArgumentException.class, () -> new Discord(invalidHandle));
     }
 
@@ -48,6 +48,10 @@ class DiscordTest {
 
         // letters + dot + underscore
         assertTrue(Discord.isValidDiscord("a.b_c"));
+        assertTrue(Discord.isValidDiscord(".a._c"));
+        assertTrue(Discord.isValidDiscord("_a._c"));
+        assertTrue(Discord.isValidDiscord("a._c_"));
+        assertTrue(Discord.isValidDiscord("a__c"));
 
         // max length
         assertTrue(Discord.isValidDiscord("a".repeat(32)));
@@ -63,21 +67,6 @@ class DiscordTest {
 
         // too long
         assertFalse(Discord.isValidDiscord("a".repeat(33)));
-
-        // starts with underscore
-        assertFalse(Discord.isValidDiscord("_abc"));
-
-        // starts with dot
-        assertFalse(Discord.isValidDiscord(".abc"));
-
-        // ends with underscore
-        assertFalse(Discord.isValidDiscord("abc_"));
-
-        // ends with dot
-        assertFalse(Discord.isValidDiscord("abc."));
-
-        // consecutive underscores
-        assertFalse(Discord.isValidDiscord("ab__cd"));
 
         // consecutive dots
         assertFalse(Discord.isValidDiscord("ab..cd"));
