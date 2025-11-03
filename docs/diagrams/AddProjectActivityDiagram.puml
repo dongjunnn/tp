@@ -19,8 +19,8 @@ repeat
     else ([invalid])
         stop
     endif
-repeat while (more members?) is (yes)
-->no;
+repeat while () is ( [has more members])
+->[has no more members];
 
 :Create Project object;
 
