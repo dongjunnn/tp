@@ -44,6 +44,7 @@ title: Developer Guide
     - [13. Clear & Exit](#13-clear--exit)
     - [Suggested end-to-end path (copy-paste block)](#suggested-end-to-end-path-copy-paste-block)
     - [Notes on edge cases for exploratory testing](#notes-on-edge-cases-for-exploratory-testing)
+- [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -405,7 +406,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | ***      | content creator               | update a contact’s details                              | keep information accurate                                                     |
 | ***      | content creator               | associate contacts with specific projects and videos    | see who is involved in which project at a glance                              |
 | ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
-| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
+| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |
 | *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
 
 
@@ -519,11 +520,11 @@ Given below are practical, copy-pasteable steps to help you chart a path through
 
 ## 1. Launch, shutdown & window preferences
 
-**Prerequisites:** App JAR present.  
+**Prerequisites:** App JAR present.
 **Steps**
-1. Double-click the JAR.  
+1. Double-click the JAR.
    **Expected:** App launches with sample data; two panels (Contacts left, Projects right) visible.
-2. Resize and move window → Close app (click **X**) → Launch again.  
+2. Resize and move window → Close app (click **X**) → Launch again.
    **Expected:** Previous window size and position are retained.
 
 ---
@@ -658,11 +659,17 @@ pshow all
 ```
 **Expected:** Project panel lists all projects.
 
-**Project details (case-insensitive match, per UG)**
+**Project details**
 ```text
 pdetails n/Web Series Pilot
 ```
-**Expected:** Right panel shows deadline, priority, and members for "Web Series Pilot" (case-insensitive).
+**Expected:** Right panel shows deadline, priority, and members for the project "Web Series Pilot".
+
+**Different case should work for project details**
+```text
+pdetails n/web series pilot
+```
+**Expected:** Right panel shows deadline, priority, and members for the project as above.
 
 ---
 
@@ -732,7 +739,7 @@ pedit Web Series Season 1 d/2025-12-15 pr/MEDIUM
 ```text
 pedit Web Series Season 1 n/web series season 1
 ```
-**Expected:** Rejected (cannot change to another project’s name ignoring case; or to the same name differing only by case).
+**Expected:** Not rejected 
 
 **Past deadline**
 ```text
@@ -770,22 +777,22 @@ padd n/Later Due d/2026-01-31 pr/LOW m/1
 deadline
 ```
 **Expected:** "Soon Due" listed; "Later Due" excluded.
-
+NOTE: choose a date that is within 7 days from now for 'Soon Due'
 ---
 
 ## 11. Data saving & file edits
 
 **Automatic saving**
 1. Run a few mutating commands (e.g., `add`, `padd`, `delete`).
-2. Close and relaunch the app.  
+2. Close and relaunch the app.
    **Expected:** All changes persist.
 
 **Locate the data file**
-- File path: `[JAR location]/data/indidex.json`.
+- File path: `[JAR location]/data/addressbook.json`.
 
 **Simulate corrupted file**
 1. Close the app.
-2. Open `indidex.json` in a text editor and replace contents with `not json`. Save.
+2. Open `addressbook.json` in a text editor and replace contents with `not json`. Save.
 3. Launch the app.  
    **Expected (per UG):** Invalid format → IndiDex discards data and starts with an **empty** data file. (Back up before editing.)
 
@@ -823,11 +830,19 @@ Use this if you want a single, guided walkthrough that touches each feature once
 
 ```text
 clear
+<<<<<<< HEAD
 add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
 add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice t/collab
 add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
 add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
 add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/@irfan
+=======
+add n/Alex p/87438807 e/alex@gmail.com a/Geylang 29 pr/LOW t/client
+add n/Bernice  p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
+add n/Charlotte p/93210283 e/ch@example.com a/Marymount pr/HIGH ig/@charlotte
+add n/David p/91031282 e/d@outlok.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
+add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
+>>>>>>> master
 tag 1 3 t/urgent
 find @gmail.com
 sort pr/desc
@@ -858,3 +873,23 @@ exit
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
 - **Deadlines**: Past dates should be rejected on create/edit.
 - **Join/Leave safety**: Ensure projects never end up with zero members; leaving the last member or deleting that only contact should be blocked.
+
+## Appendix: Planned Enhancements
+
+Team Size: 5
+
+1. **Strengthen email validation further:** Enhance existing validation rules to support a wider variety of legitimate email formats and edge cases, ensuring greater robustness and reliability.
+
+2. **Standardise case sensitivity:** Standardise case-handling for fields such as names and tags to improve search accuracy.
+
+3. **Make the app support other languages:** Ensure full functionality for languages such as Arabic such as proper UI rendering. This allows a broader range of creators internationally to use the app.
+
+4. **Revive help/deadline Window after minimising:** Fix the current issue where minimising the pop-up windows causes them to disappear until they are clicked in the computer dock.
+
+5. **Modify deadline to handle timezone changes:** When users travel or change timezone settings, deadlines should automatically adjust accordingly to maintain accuracy.
+
+6. **Support international phone numbers:** Allow the `+` character for international formats for use across different countries and platforms.
+
+7. **Make `Phone` and `address` fields optional:** For many content creators, private information such as phone numbers or addresses is not necessary to share. Making these fields optional reduces friction when adding contacts and protects personal privacy.
+
+8. **Introduce `untag` ommand:** While the `tag` command exists, the opposite does not. We plan to add it to allow users to remove tags efficiently.
