@@ -16,6 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class EditProjectCommandParser implements Parser<EditProjectCommand> {
 
+    private static final int MAX_NAME_LENGTH = 35;
     /**
      * Parses the given {@code String} of arguments in the context of the EditProjectCommand
      * and returns an EditCommand object for execution.
@@ -36,6 +37,9 @@ public class EditProjectCommandParser implements Parser<EditProjectCommand> {
         EditProjectDescriptor editProjectDescriptor = new EditProjectDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            if (argMultimap.getValue(PREFIX_NAME).get().length() > MAX_NAME_LENGTH) {
+                throw new ParseException("Invalid parameter: name must be at most " + MAX_NAME_LENGTH + " characters.");
+            }
             editProjectDescriptor.setName(argMultimap.getValue(PREFIX_NAME).get());
         }
 
