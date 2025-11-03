@@ -568,11 +568,6 @@ Supported formats:
 * Examples: `2025-12-31`, `2025-06-15`, `2025-01-01`
 * Cannot be created with or edited to have a past date
 
-### Project Name
-* Can contain any characters
-* Must be unique (case-sensitive)
-* Cannot be blank
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
