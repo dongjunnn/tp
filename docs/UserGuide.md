@@ -502,8 +502,9 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 * Not case-sensitive (can be lowercase or uppercase)
 
 ### Social Media Profiles
-* All social media fields are **optional**
-* Empty fields will simply not be displayed
+* All social media fields are **optional**.  
+* Empty fields will simply not be displayed.
+* **Note:** The application does not check for duplicate social media handles across different persons, as users may legitimately share handles for group, community, or institutional accounts. Enforcing uniqueness could unnecessarily restrict valid entries.
 
 **Discord**
 * Must be **2–32 characters long**
@@ -565,6 +566,7 @@ Supported formats:
 
 ### Tags
 * Alphanumeric characters only (no spaces or special characters)
+* No longer than 35 characters
 * Each tag is displayed as a separate label
 * Tags are automatically sorted alphabetically on display
 
