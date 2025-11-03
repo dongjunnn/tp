@@ -416,11 +416,6 @@ Format: `pdetails n/PROJECT_NAME`
     otherwise if the project doesn't belong to the selected member.
   * Without executing any `pshow` command prior will show project details only.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-The project name must match exactly (case-sensitive). Hence, "Web Series" and "web
-series" are considered different projects.
-</div>
-
 Examples:
 * `pdetails n/Web Series Pilot` - Shows detailed information for the "Web
   Series Pilot" project
