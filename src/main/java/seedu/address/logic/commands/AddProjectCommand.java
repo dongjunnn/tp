@@ -29,6 +29,8 @@ public class AddProjectCommand extends Command {
 
     public static final String COMMAND_WORD = "padd";
 
+    private static final int MAX_NAME_LENGTH = 35;
+
     private static final Logger logger =
             Logger.getLogger(AddProjectCommand.class.getName());
 
@@ -76,6 +78,11 @@ public class AddProjectCommand extends Command {
             throw new CommandException("Invalid parameter: name must not be blank.");
         }
 
+        if (trimmedName.length() > MAX_NAME_LENGTH) {
+            throw new CommandException("Invalid parameter: name must be at most "
+                    + MAX_NAME_LENGTH + " characters.");
+        }
+
         long distinct = memberIndexes.stream().map(Index::getZeroBased).distinct().count();
         if (distinct != memberIndexes.size()) {
             throw new CommandException("Invalid parameter: duplicate member indexes are not allowed.");
@@ -92,6 +99,7 @@ public class AddProjectCommand extends Command {
         }
         ObservableList<Person> persons = model.getFilteredPersonList();
         Set<Person> members = new HashSet<>();
+        java.util.List<String> memberSummaries = new java.util.ArrayList<>();
         for (Index idx : memberIndexes) {
             int z = idx.getZeroBased();
             if (z < 0 || z >= persons.size()) {
@@ -99,7 +107,9 @@ public class AddProjectCommand extends Command {
                         "Invalid member index provided: " + idx);
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            members.add(persons.get(z));
+            Person p = persons.get(z);
+            members.add(p);
+            memberSummaries.add(p.getName().fullName + " (" + idx.getOneBased() + ")");
         }
 
         Project toAdd = new Project(trimmedName, priority, deadline, members);
@@ -113,7 +123,9 @@ public class AddProjectCommand extends Command {
         model.addProject(toAdd);
         logger.log(java.util.logging.Level.INFO,
                 "Project added successfully: " + toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        String memberList = String.join(",\n", memberSummaries);
+        return new CommandResult(String.format(
+                "New project added: %s%nMembers (each shown on a new line):%n%s", toAdd, memberList));
     }
 
     @Override
