@@ -122,7 +122,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         // Create ProjectListPanel first
-        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
+        projectListPanel = new ProjectListPanel(
+                logic.getFilteredProjectList(),
+                logic.getFilteredPersonList());
         projectPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
 
         // Create PersonListPanel with selection callback
