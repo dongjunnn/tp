@@ -520,11 +520,11 @@ Given below are practical, copy-pasteable steps to help you chart a path through
 
 ## 1. Launch, shutdown & window preferences
 
-**Prerequisites:** App JAR present.  
+**Prerequisites:** App JAR present.
 **Steps**
-1. Double-click the JAR.  
+1. Double-click the JAR.
    **Expected:** App launches with sample data; two panels (Contacts left, Projects right) visible.
-2. Resize and move window → Close app (click **X**) → Launch again.  
+2. Resize and move window → Close app (click **X**) → Launch again.
    **Expected:** Previous window size and position are retained.
 
 ---
@@ -784,7 +784,7 @@ deadline
 
 **Automatic saving**
 1. Run a few mutating commands (e.g., `add`, `padd`, `delete`).
-2. Close and relaunch the app.  
+2. Close and relaunch the app.
    **Expected:** All changes persist.
 
 **Locate the data file**
@@ -793,7 +793,7 @@ deadline
 **Simulate corrupted file**
 1. Close the app.
 2. Open `indidex.json` in a text editor and replace contents with `not json`. Save.
-3. Launch the app.  
+3. Launch the app.
    **Expected (per UG):** Invalid format → IndiDex discards data and starts with an **empty** data file. (Back up before editing.)
 
 ---
@@ -871,7 +871,7 @@ exit
 
 Team Size: 5
 
-1. **Strengthen email validation further:** Enhance existing validation rules to support a wider variety of legitimate email formats and edge cases, ensuring greater robustness and reliability. 
+1. **Strengthen email validation further:** Enhance existing validation rules to support a wider variety of legitimate email formats and edge cases, ensuring greater robustness and reliability.
 
 2. **Standardise case sensitivity:** Standardise case-handling for fields such as names and tags to improve search accuracy.
 
