@@ -276,6 +276,10 @@ Format: `sort (n/|p/|a/|pr/|e/)[asc/desc]`
 * Defaults to ascending order (descending order for priority)
 * Alphanumerical attributes are sorted by their Unicode values
 
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+This operation changes the ordering of contacts permanently. 
+</div>
+
 Examples:
 * `sort n/asc` sorts contacts by name in alphabetical order
 * `sort a/` sorts contacts by address in alphabetical order
