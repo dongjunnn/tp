@@ -118,6 +118,9 @@ public class ProjectListPanel extends UiPart<Region> {
                 if (!filteredPersons.contains(currentlySelectedPerson)) {
                     logger.info("Selected person filtered out, clearing projects panel");
                     showPlaceholder();
+                } else if (filteredPersons.size() > 1) {
+                    logger.info("Multiple people visible after filter, clearing projects panel");
+                    showPlaceholder();
                 }
             }
         });
