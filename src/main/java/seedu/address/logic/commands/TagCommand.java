@@ -16,6 +16,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.project.Project;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -80,6 +81,17 @@ public class TagCommand extends Command {
                     personToTag.getPriority(),
                     updatedTags
             );
+
+            if (!personToTag.equals(updatedPerson)) {
+                List<Project> projectList = model.getFilteredProjectList();
+
+                for (Project project : projectList) {
+                    if (project.getMembers().contains(personToTag)) {
+                        Project updatedProject = project.updateMember(personToTag, updatedPerson);
+                        model.setProject(project, updatedProject);
+                    }
+                }
+            }
 
             model.setPerson(personToTag, updatedPerson);
         }
