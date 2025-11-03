@@ -360,11 +360,6 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -412,11 +407,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
 | **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
 | *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
-*{More to be added}*
+
 
 ### Use cases
-
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
@@ -464,7 +457,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 * 3b. The given tag is invalid.
-    * 3a1. AddressBook shows an error message.
+    * 3b1. AddressBook shows an error message.
       Use case resumes at step 2.
 
 **Use Case: Add a person**
@@ -487,7 +480,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. AddressBook shows a warning message edits the newest person's name with a number behind.
       Use case resumes at step 2.
 
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -505,7 +497,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 12. The data file should be human-readable (JSON format) to allow advanced users to manually edit or backup their data.
 13. Should work offline without requiring internet connectivity.
 
-*{More to be added}*
 
 ### Glossary
 
@@ -544,11 +535,11 @@ Use these to set up a predictable contact list for the rest of the tests.
 **Prerequisites:** Run `clear` first to avoid clashes.
 ```text
 clear
-add n/Alex Yeoh p/87438807 e/alex@gmail.com a/Blk 30 Geylang Street 29, #06-40 pr/LOW t/client
-add n/Bernice Yu p/99272758 e/bernice@creator.com a/Blk 30 Lorong 3, #07-18 pr/MEDIUM dc/bernice#1111 t/collab
-add n/Charlotte Oliveiro p/93210283 e/charlotte@example.com a/Marymount Rd pr/HIGH ig/@charlotte
-add n/David Li p/91031282 e/david@outlook.com a/Clementi Ave 3 pr/LOW li/linkedin.com/in/davidli
-add n/Irfan Ibrahim p/92492021 e/irfan@gmail.com a/Tampines Ave 2 pr/MEDIUM yt/youtube.com/irfan
+add n/Alex p/87438807 e/a@gmail.com a/Blk 30 pr/LOW t/client
+add n/Bernice p/9928 e/bernice@c.com a/Lorong 3 pr/MEDIUM dc/bernice#1111 t/collab
+add n/Charlotte p/93210283 e/char@example.com a/Marymount pr/HIGH ig/@charlotte
+add n/David p/91031282 e/david@outlk.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
+add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
 list
 ```
 **Expected:** 5 contacts appear in order 1…5.
