@@ -830,7 +830,7 @@ Use this if you want a single, guided walkthrough that touches each feature once
 
 ```text
 clear
-add n/Alex p/87438807 e/alex@gmail.com a/Blk 30 Geylang 29 pr/LOW t/client
+add n/Alex p/87438807 e/alex@gmail.com a/Geylang 29 pr/LOW t/client
 add n/Bernice p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
 add n/Charlotte p/93210283 e/ch@example.com a/Marymount pr/HIGH ig/@charlotte
 add n/David p/91031282 e/d@outlok.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
