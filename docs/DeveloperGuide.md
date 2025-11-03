@@ -658,17 +658,11 @@ pshow all
 ```
 **Expected:** Project panel lists all projects.
 
-**Project details (case-sensitive exact match, per UG)**
+**Project details (case-insensitive match, per UG)**
 ```text
 pdetails n/Web Series Pilot
 ```
-**Expected:** Right panel shows deadline, priority, and members for exactly "Web Series Pilot".
-
-**Case mismatch should fail (per UG for `pdetails`)**
-```text
-pdetails n/web series pilot
-```
-**Expected:** Error (exact case required).
+**Expected:** Right panel shows deadline, priority, and members for "Web Series Pilot" (case-insensitive).
 
 ---
 
@@ -771,7 +765,7 @@ pdelete n/Nonexistent Project
 **Prerequisites:** Create one project due within 7 days and one beyond.
 
 ```text
-padd n/Soon Due d/2025-11-02 pr/HIGH m/1
+padd n/Soon Due d/2025-11-10 pr/HIGH m/1
 padd n/Later Due d/2026-01-31 pr/LOW m/1
 deadline
 ```
@@ -859,8 +853,7 @@ exit
 ## Notes on edge cases for exploratory testing
 
 - **Case sensitivity**:
-    - `pdetails` requires **exact case**; try mismatched case to confirm rejection.
-    - `pdelete` matches **case-insensitively**; try mixed case to confirm acceptance.
+    - `pdelete` and `pdetails` matches **case-insensitively**; try mixed case to confirm acceptance.
     - `padd`/`pedit` name clashes are enforced **ignoring case** per UG notes in those sections; try creating/renaming with only case differences.
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
 - **Deadlines**: Past dates should be rejected on create/edit.
