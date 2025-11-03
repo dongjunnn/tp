@@ -658,17 +658,17 @@ pshow all
 ```
 **Expected:** Project panel lists all projects.
 
-**Project details (case-sensitive exact match, per UG)**
+**Project details**
 ```text
 pdetails n/Web Series Pilot
 ```
-**Expected:** Right panel shows deadline, priority, and members for exactly "Web Series Pilot".
+**Expected:** Right panel shows deadline, priority, and members for the project "Web Series Pilot".
 
-**Case mismatch should fail (per UG for `pdetails`)**
+**Different case should work for project details**
 ```text
 pdetails n/web series pilot
 ```
-**Expected:** Error (exact case required).
+**Expected:** Right panel shows deadline, priority, and members for the project as above.
 
 ---
 
