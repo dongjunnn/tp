@@ -563,6 +563,7 @@ Supported formats:
 
 ### Tags
 * Alphanumeric characters only (no spaces or special characters)
+* No longer than 35 characters
 * Each tag is displayed as a separate label
 * Tags are automatically sorted alphabetically on display
 
