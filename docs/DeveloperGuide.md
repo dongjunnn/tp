@@ -537,10 +537,10 @@ Use these to set up a predictable contact list for the rest of the tests.
 ```text
 clear
 add n/Alex p/87438807 e/a@gmail.com a/Blk 30 pr/LOW t/client
-add n/Bernice p/9928 e/bernice@c.com a/Lorong 3 pr/MEDIUM dc/bernice#1111 t/collab
+add n/Bernice p/9928 e/bernice@c.com a/Lorong 3 pr/MEDIUM dc/bernice t/collab
 add n/Charlotte p/93210283 e/char@example.com a/Marymount pr/HIGH ig/@charlotte
 add n/David p/91031282 e/david@outlk.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
-add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
+add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/@irfan
 list
 ```
 **Expected:** 5 contacts appear in order 1…5.
@@ -831,10 +831,10 @@ Use this if you want a single, guided walkthrough that touches each feature once
 ```text
 clear
 add n/Alex p/87438807 e/alex@gmail.com a/Geylang 29 pr/LOW t/client
-add n/Bernice  p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
+add n/Bernice p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
 add n/Charlotte p/93210283 e/ch@example.com a/Marymount pr/HIGH ig/@charlotte
 add n/David p/91031282 e/d@outlok.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
-add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/irfan
+add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/@irfan
 tag 1 3 t/urgent
 find @gmail.com
 sort pr/desc
@@ -860,8 +860,7 @@ exit
 ## Notes on edge cases for exploratory testing
 
 - **Case sensitivity**:
-    - `pdetails` requires **exact case**; try mismatched case to confirm rejection.
-    - `pdelete` matches **case-insensitively**; try mixed case to confirm acceptance.
+    - `pdelete` and `pdetails` matches **case-insensitively**; try mixed case to confirm acceptance.
     - `padd`/`pedit` name clashes are enforced **ignoring case** per UG notes in those sections; try creating/renaming with only case differences.
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
 - **Deadlines**: Past dates should be rejected on create/edit.
