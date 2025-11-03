@@ -103,7 +103,7 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
 
-        if (editPersonDescriptor.getName().isPresent()) {
+        if (!personToEdit.equals(editedPerson)) {
             List<Project> projectList = model.getFilteredProjectList();
 
             for (Project project : projectList) {

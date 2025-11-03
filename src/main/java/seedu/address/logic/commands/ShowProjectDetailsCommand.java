@@ -19,7 +19,7 @@ public class ShowProjectDetailsCommand extends Command {
     public static final String COMMAND_WORD = "pdetails";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows details for the project by *exact* name (case-sensitive).\n"
+            + ": Shows details for the project by name (case-insensitive).\n"
             + "Parameters: n/PROJECT_NAME\n"
             + "Example: " + COMMAND_WORD + " n/IndiDex Website Revamp";
 
@@ -42,9 +42,9 @@ public class ShowProjectDetailsCommand extends Command {
         requireNonNull(model);
         List<Project> projectList = model.getFilteredProjectList();
 
-        // Find project by exact name (case-sensitive)
+        // Find project by name (case-insensitive)
         Project targetProject = projectList.stream()
-                .filter(p -> p.getName() != null && p.getName().equals(projectName))
+                .filter(p -> p.getName() != null && p.getName().equalsIgnoreCase(projectName))
                 .findFirst()
                 .orElse(null);
 

@@ -197,9 +197,9 @@ Editing a contact to have the same details as another existing contact will be r
 </div>
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` - Edits the phone number and email address of the 1st contact.
-* `edit 2 n/Betsy Crower t/` - Edits the name of the 2nd contact and clears all existing tags.
-* `edit 3 pr/HIGH dc/newhandle ig/@newinsta` - Updates priority and social media profiles of the 3rd contact.
+* `edit 1 p/91234567 e/johndoe@example.com` - Edits the phone number and email address of the 1st contact
+* `edit 2 n/Betsy Crower t/` - Edits the name of the 2nd contact and clears all existing tags
+* `edit 3 pr/HIGH dc/newhandle ig/@newinsta` - Updates priority and social media profiles of the 3rd contact
 
 ### Finding contacts: `find`
 
@@ -262,9 +262,9 @@ This operation cannot be undone. Make sure you are deleting the correct contact(
 </div>
 
 Examples:
-* `delete 2` deletes the 2nd contact in IndiDex.
-* `find Betsy` followed by `delete 1` deletes the 1st contact in the results of the `find` command.
-* `delete 3 5 7` deletes the 3rd, 5th, and 7th contacts in the current displayed list.
+* `delete 2` deletes the 2nd contact in IndiDex
+* `find Betsy` followed by `delete 1` deletes the 1st contact in the results of the `find` command
+* `delete 3 5 7` deletes the 3rd, 5th, and 7th contacts in the current displayed list
 
 ### Sorting contacts : `sort`
 
@@ -291,7 +291,7 @@ Creates a new project in IndiDex and assigns at least one team member to it.
 
 Format: `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…​`
 * **Required fields:**
-    * `n/PROJECT_NAME` - Name of the project (case-insensitive)
+    * `n/PROJECT_NAME` - Name of the project (case-insensitive) and restricted to 35 characters
     * `d/DEADLINE` - Project deadline in `yyyy-MM-dd` format (e.g., 2025-12-31; cannot be in the past)
     * `pr/PRIORITY` - Priority level: `LOW`, `MEDIUM`, or `HIGH`
     *  `m/MEMBER_INDEX` – At least one member index (you can add multiple)
@@ -393,8 +393,8 @@ involved in. Use `pshow all` to get an overview of all your projects.
 Examples:
 * `pshow 1` - Shows all projects that the 1st contact is a member of
 * `pshow all` - Shows all projects in IndiDex
-* `find John` followed by `pshow 1` - Shows projects for the 1st person in
-  the search results
+* `find John` followed by `pshow 1` - Shows projects belonging to the 1st person in
+  the search results (if there is at least one person found after the search)
 
 ### Showing project details: `pdetails`
 
@@ -405,13 +405,16 @@ Displays detailed information for a specific project by its exact name.
 Format: `pdetails n/PROJECT_NAME`
 
 * **Required field:**
-    * `n/PROJECT_NAME` - The exact name of the project (case-sensitive)
+    * `n/PROJECT_NAME` - The name of the project (case-insensitive)
 
-* Project name matching is **case-sensitive** and must be exact
 * Displays the project's deadline, priority, and team members in the project
   panel
-* Note that if a person's projects are listed using `pshow`, executing `pdetails n/PROJECT_NAME` for a project belonging to 
-  that member will show project details in the same pane. It would be standalone otherwise is no `pshow` is used.
+* Note that executing `pdetails n/PROJECT_NAME`:
+  * After executing `pshow all` will show project details under the list of all projects rendered using `pshow all`.
+  * After executing `pshow INDEX` will show project details under the selected person's (using `pshow`) project list
+    if and only if the project belongs to that selected member. Project details would be shown standalone 
+    otherwise if the project doesn't belong to the selected member.
+  * Without executing any `pshow` command prior will show project details only.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 The project name must match exactly (case-sensitive). Hence, "Web Series" and "web
@@ -470,7 +473,7 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 ## Field Constraints and Validation
 
 ### Name
-* Can contain any characters
+* Can contain only contain alphanumeric characters and spaces.
 * Cannot be blank
 
 ### Phone Number
@@ -501,12 +504,13 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 ### Social Media Profiles
 * All social media fields are **optional**.  
 * Empty fields will simply not be displayed.
+* **Note:** The application does not check for duplicate social media handles across different persons, as users may legitimately share handles for group, community, or institutional accounts. Enforcing uniqueness could unnecessarily restrict valid entries.
 
 **Discord**
-* Must be **2–32 characters long**.
-* Can only contain **lowercase letters**, **digits**, **periods (.)**, or **underscores (_)**.
-* Cannot **start or end** with a period or underscore.
-* Cannot have **consecutive periods or underscores**.
+* Must be **2–32 characters long**
+* Can only contain **lowercase letters**, **digits**, **periods (.)**, or **underscores (_)**
+* Cannot **start or end** with a period or underscore
+* Cannot have **consecutive periods or underscores**
 * **Examples:**
     * ✅ `john_doe`
     * ❌ `_johndoe` (starts with underscore)
@@ -514,10 +518,10 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 
 **Instagram**
-* Must **start with '@'** followed by **1–30 characters**.
-* Can contain **letters**, **numbers**, **underscores (_)**, or **periods (.)**.
-* Cannot **start or end** with a period.
-* Cannot have **consecutive periods**.
+* Must **start with '@'** followed by **1–30 characters**
+* Can contain **letters**, **numbers**, **underscores (_)**, or **periods (.)**
+* Cannot **start or end** with a period
+* Cannot have **consecutive periods**
 * **Examples:**
     * ✅ `@john.doe_23`
     * ❌ `@.johndoe` (starts with period)
@@ -526,32 +530,32 @@ Furthermore, certain edits can cause IndiDex to behave in unexpected ways (e.g.,
 
 **LinkedIn**
 * Must be a **valid LinkedIn profile URL** that starts with  
-  `'https://www.linkedin.com/in/'`, `'www.linkedin.com/in/'` or `'linkedin.com/in/'`.
-* Must be followed by your **profile identifier** (letters, digits, hyphens, or underscores).
+  `'https://www.linkedin.com/in/'`, `'www.linkedin.com/in/'` or `'linkedin.com/in/'`
+* Must be followed by your **profile identifier** (letters, digits, hyphens, or underscores)
 * **Examples:**
     * ✅ `https://www.linkedin.com/in/john-doe`
     * ❌ `linkedin.com/johndoe` (missing `/in/` segment)
 
 
 **YouTube**
-* Must be a **valid YouTube URL** or **handle**, starting with `https://www.youtube.com/`, `www.youtube.com/` or `youtube.com/`.  
+* Must be a **valid YouTube URL** or **handle**, starting with `https://www.youtube.com/`, `www.youtube.com/` or `youtube.com/`  
 
 Supported formats:
 - `youtube.com/@handle`
-    * Handle must be **3–30 characters long**.
-    * Can include **letters**, **digits**, **underscores (_)**, **hyphens (-)**, or **periods (.)**.
-    * Cannot **start or end** with an underscore or hyphen.
+    * Handle must be **3–30 characters long**
+    * Can include **letters**, **digits**, **underscores (_)**, **hyphens (-)**, or **periods (.)**
+    * Cannot **start or end** with an underscore or hyphen
 
 - `youtube.com/channel/UCxxxxxxxxxxxxxxxxxxxxxx`
-    * Must start with `UC` and be **24 characters long**.
-    * Remaining 22 characters may include **letters**, **digits**, **underscores**, or **hyphens**.
+    * Must start with `UC` and be **24 characters long**
+    * Remaining 22 characters may include **letters**, **digits**, **underscores**, or **hyphens**
 
 - `youtube.com/c/customName`
-    * Can include **letters**, **digits**, **underscores**, or **hyphens**.
-    * Cannot **start or end** with an underscore or hyphen.
+    * Can include **letters**, **digits**, **underscores**, or **hyphens**
+    * Cannot **start or end** with an underscore or hyphen
 
 - `youtube.com/user/username`
-    * Can include **letters**, **digits**, **underscores**, or **hyphens**.
+    * Can include **letters**, **digits**, **underscores**, or **hyphens**
 
   **Examples:**
     * ✅ `https://www.youtube.com/@john_doe`
@@ -562,6 +566,7 @@ Supported formats:
 
 ### Tags
 * Alphanumeric characters only (no spaces or special characters)
+* No longer than 35 characters
 * Each tag is displayed as a separate label
 * Tags are automatically sorted alphabetically on display
 
@@ -579,7 +584,7 @@ Supported formats:
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous IndiDex home folder.
 
 **Q**: Can I add the same person twice to IndiDex?<br>
@@ -611,26 +616,26 @@ Supported formats:
 
 ## Command summary
 
-| Action                   | Format, Examples                                                                                                                                                                                                                                               |
-|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Action                   | Format, Examples                                                                                                                                                                                                                                             |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Contact**          | `add n/NAME p/PHONE e/EMAIL a/ADDRESS [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123 Clementi Rd pr/HIGH dc/jamesho t/friend` |
-| **List**                 | `list`                                                                                                                                                                                                                                                         |
-| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                             |
-| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                                                  |
-| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                                                 |
-| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                                             |
-| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                                                   |
-| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                                      |
-| **Edit Project**         | `pedit OLD_PROJECT_NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                                            |
-| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                                                 |
-| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                                               |
-| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                                                  |
-| **Show Projects**        | `pshow all` or <br> `pshow INDEX`  e.g., `pshow 1`,                                                                                                                                                                                                            |
-| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                                              |
-| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                                                     |
-| **Clear**                | `clear`                                                                                                                                                                                                                                                        |
-| **Help**                 | `help`                                                                                                                                                                                                                                                         |
-| **Exit**                 | `exit`                                                                                                                                                                                                                                                         |
+| **List**                 | `list`                                                                                                                                                                                                                                                       |
+| **Edit**                 | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pr/PRIORITY] [dc/DISCORD_HANDLE] [li/LINKEDIN_PROFILE] [ig/INSTAGRAM_HANDLE] [yt/YOUTUBE_CHANNEL] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com pr/MEDIUM`                           |
+| **Find**                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`, `find @gmail.com`                                                                                                                                                                                |
+| **Tag**                  | `tag INDEX [MORE_INDICES] t/TAG [t/MORE_TAGS]…​`<br> e.g., `tag 1 2 3 t/collaborator t/urgent`                                                                                                                                                               |
+| **Delete**               | `delete INDEX [MORE_INDICES]`<br> e.g., `delete 3`, `delete 1 3 5`                                                                                                                                                                                           |
+| **Sort**                 | `sort (n/\|p/\|e/\|pr/\|a/)[asc/desc] ​`<br> e.g., `sort p/desc`, `sort pr/`                                                                                                                                                                                 |
+| **Add Project**          | `padd n/PROJECT_NAME d/DEADLINE pr/PRIORITY m/MEMBER_INDEX [m/MEMBER_INDEX]…` <br> e.g., `padd n/Web Series d/2025-12-31 pr/HIGH m/1 2 3`                                                                                                                    |
+| **Edit Project**         | `pedit OLD_PROJECT_NAME [n/NEW_PROJECT_NAME] [d/DEADLINE] [pr/PRIORITY]​`<br> e.g., `pedit Web Series n/Web Series Season 1 d/2025-12-15 pr/MEDIUM`                                                                                                          |
+| **Join Project**         | `join n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `join n/Web Series m/1 m/2`                                                                                                                                                               |
+| **Leave Project**        | `leave n/PROJECT NAME m/MEMBER_INDEX [m/MEMBER_INDEX]...` <br> e.g. `leave n/Web Series m/3 m/4`                                                                                                                                                             |
+| **Delete Project**       | `pdelete n/PROJECT_NAME`<br> e.g., `pdelete Web Series Pilot`                                                                                                                                                                                                |
+| **Show Projects**        | `pshow all` or `pshow INDEX` <br> e.g., `pshow 1`                                                                                                                                                                                                            |
+| **Show Project Details** | `pdetails n/PROJECT_NAME`<br> e.g., `pdetails n/Web Series Pilot`                                                                                                                                                                                            |
+| **Show Deadlines**       | `deadline`                                                                                                                                                                                                                                                   |
+| **Clear**                | `clear`                                                                                                                                                                                                                                                      |
+| **Help**                 | `help`                                                                                                                                                                                                                                                       |
+| **Exit**                 | `exit`                                                                                                                                                                                                                                                       |
 
 --------------------------------------------------------------------------------------------------------------------
 
