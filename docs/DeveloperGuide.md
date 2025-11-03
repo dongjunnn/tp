@@ -885,3 +885,5 @@ Team Size: 5
 7. **Make `Phone` and `address` fields optional:** For many content creators, private information such as phone numbers or addresses is not necessary to share. Making these fields optional reduces friction when adding contacts and protects personal privacy.
 
 8. **Introduce `untag` ommand:** While the `tag` command exists, the opposite does not. We plan to add it to allow users to remove tags efficiently.
+
+9. **Support for additional social media handles:** Extend the app to accommodate a wider range of social media platforms, such as X, TikTok and more, allowing users to store and manage multiple types of handles efficiently.
