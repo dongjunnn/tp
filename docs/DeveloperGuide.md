@@ -405,7 +405,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | ***      | content creator               | update a contact’s details                              | keep information accurate                                                     |
 | ***      | content creator               | associate contacts with specific projects and videos    | see who is involved in which project at a glance                              |
 | ***      | content creator               | see what projects have upcoming deadlines               | finish them on time and be reminded to contact the associated persons         |
-| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |                                 |
+| **       | content creator               | bookmark certain contacts as high priority              | know which contacts to pay more attention to                                  |
 | *        | content creator               | sort contacts based on various fields                   | skim through all of them in differing orders                                  |
 
 
