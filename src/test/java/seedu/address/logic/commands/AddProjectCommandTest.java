@@ -332,4 +332,160 @@ public class AddProjectCommandTest {
             // no-op
         }
     }
+
+    @Test
+    void execute_blankName_throwsCommandException() {
+        ModelStubWithPersons model = new ModelStubWithPersons(
+                FXCollections.observableArrayList(ALICE)); // index 1 is valid
+        AddProjectCommand cmd = new AddProjectCommand(
+                "   ", // blank after trim
+                LocalDate.now().plusDays(1),
+                Priority.LOW,
+                List.of(Index.fromOneBased(1))
+        );
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Invalid parameter: name must not be blank.", ex.getMessage());
+    }
+
+    @Test
+    void execute_nameTooLong_throwsCommandException() {
+        String tooLong = "A".repeat(36); // > MAX_NAME_LENGTH (35)
+        ModelStubWithPersons model = new ModelStubWithPersons(
+                FXCollections.observableArrayList(ALICE)); // index 1 is valid
+        AddProjectCommand cmd = new AddProjectCommand(
+                tooLong,
+                LocalDate.now().plusDays(1),
+                Priority.MEDIUM,
+                List.of(Index.fromOneBased(1))
+        );
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Invalid parameter: name must be at most 35 characters.", ex.getMessage());
+    }
+
+    @Test
+    void execute_deadlineInPast_throwsCommandException() {
+        ModelStubWithPersons model = new ModelStubWithPersons(
+                FXCollections.observableArrayList(ALICE)); // index 1 is valid
+        AddProjectCommand cmd = new AddProjectCommand(
+                "Proj",
+                LocalDate.now().minusDays(1), // past
+                Priority.HIGH,
+                List.of(Index.fromOneBased(1))
+        );
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Invalid parameter: deadline cannot be in the past.", ex.getMessage());
+    }
+
+    @Test
+    void execute_duplicateMemberIndexes_throwsCommandException() {
+        // Need at least 2 persons so both indices are in range
+        ModelStubWithPersons model = new ModelStubWithPersons(
+                FXCollections.observableArrayList(ALICE, BOB));
+        AddProjectCommand cmd = new AddProjectCommand(
+                "Proj",
+                LocalDate.now().plusDays(2),
+                Priority.LOW,
+                List.of(Index.fromOneBased(1), Index.fromOneBased(1)) // duplicate indices
+        );
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals("Invalid parameter: duplicate member indexes are not allowed.", ex.getMessage());
+    }
+
+    @Test
+    void execute_success_addsProjectAndReturnsMessage() throws Exception {
+        // Use accepting stub and seed its person list so member indices resolve
+        ModelStubAcceptingProjectAdded model = new ModelStubAcceptingProjectAdded();
+        model.persons.addAll(ALICE, BOB);
+
+        AddProjectCommand cmd = new AddProjectCommand(
+                "IndiDex v1.4",
+                LocalDate.now().plusDays(10),
+                Priority.MEDIUM,
+                List.of(Index.fromOneBased(1), Index.fromOneBased(2))
+        );
+
+        var result = cmd.execute(model);
+
+        // Project recorded
+        assertEquals(1, model.added.size());
+
+        // Feedback includes header and each member on its own line with (index)
+        String feedback = result.getFeedbackToUser();
+        assertTrue(feedback.startsWith("New project added: "));
+        assertTrue(feedback.contains("Members (each shown on a new line):"));
+        assertTrue(feedback.contains(ALICE.getName().fullName + " (1)"));
+        assertTrue(feedback.contains(BOB.getName().fullName + " (2)"));
+    }
+
+    // -------------------- equals(), hashCode(), toString() --------------------
+
+    @Test
+    void equalsCaseInsensitiveName() {
+        AddProjectCommand a = new AddProjectCommand(
+                "Alpha",
+                LocalDate.of(2025, 1, 1),
+                Priority.LOW,
+                List.of()
+        );
+        AddProjectCommand b = new AddProjectCommand(
+                "alpha", // different case
+                LocalDate.of(2025, 1, 1),
+                Priority.LOW,
+                List.of()
+        );
+        assertTrue(a.equals(b));
+        assertTrue(b.equals(a));
+    }
+
+    @Test
+    void hashCode_caseInsensitiveName_equal() {
+        AddProjectCommand a = new AddProjectCommand(
+                "MiXeD",
+                LocalDate.of(2025, 1, 1),
+                Priority.HIGH,
+                List.of(Index.fromOneBased(2))
+        );
+        AddProjectCommand b = new AddProjectCommand(
+                "mixed", // same after toLowerCase()
+                LocalDate.of(2025, 1, 1),
+                Priority.HIGH,
+                List.of(Index.fromOneBased(2))
+        );
+        assertEquals(a.hashCode(), b.hashCode());
+    }
+
+    @Test
+    void toString_containsAllFields() {
+        LocalDate d = LocalDate.of(2025, 1, 1);
+        AddProjectCommand cmd = new AddProjectCommand(
+                "Zeta",
+                d,
+                Priority.LOW,
+                List.of(Index.fromOneBased(3))
+        );
+        String s = cmd.toString();
+        assertTrue(s.contains("name=Zeta"));
+        assertTrue(s.contains("deadline=" + d));
+        assertTrue(s.contains("priority=LOW"));
+        assertTrue(s.contains("memberIndexes"));
+    }
+
+    // -------------------- constructor null-guards --------------------
+
+    @Test
+    void constructor_nullGuards_throwNullPointerException() {
+        List<Index> list = List.of(Index.fromOneBased(1));
+
+        assertThrows(NullPointerException.class, () -> new AddProjectCommand(null, LocalDate.now(),
+                Priority.LOW, list));
+        assertThrows(NullPointerException.class, () -> new AddProjectCommand("Name", null, Priority.LOW, list));
+        assertThrows(NullPointerException.class, () -> new AddProjectCommand("Name", LocalDate.now(), null, list));
+        assertThrows(NullPointerException.class, () -> new AddProjectCommand("Name", LocalDate.now(),
+                Priority.HIGH, null));
+    }
+
 }
