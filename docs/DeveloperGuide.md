@@ -44,6 +44,7 @@ title: Developer Guide
     - [13. Clear & Exit](#13-clear--exit)
     - [Suggested end-to-end path (copy-paste block)](#suggested-end-to-end-path-copy-paste-block)
     - [Notes on edge cases for exploratory testing](#notes-on-edge-cases-for-exploratory-testing)
+- [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -865,3 +866,23 @@ exit
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
 - **Deadlines**: Past dates should be rejected on create/edit.
 - **Join/Leave safety**: Ensure projects never end up with zero members; leaving the last member or deleting that only contact should be blocked.
+
+## Appendix: Planned Enhancements
+
+Team Size: 5
+
+1. **Strengthen email validation further:** Enhance existing validation rules to support a wider variety of legitimate email formats and edge cases, ensuring greater robustness and reliability. 
+
+2. **Standardise case sensitivity:** Standardise case-handling for fields such as names and tags to improve search accuracy.
+
+3. **Make the app support other languages:** Ensure full functionality for languages such as Arabic such as proper UI rendering. This allows a broader range of creators internationally to use the app.
+
+4. **Revive help/deadline Window after minimising:** Fix the current issue where minimising the pop-up windows causes them to disappear until they are clicked in the computer dock.
+
+5. **Modify deadline to handle timezone changes:** When users travel or change timezone settings, deadlines should automatically adjust accordingly to maintain accuracy.
+
+6. **Support international phone numbers:** Allow the `+` character for international formats for use across different countries and platforms.
+
+7. **Make `Phone` and `address` fields optional:** For many content creators, private information such as phone numbers or addresses is not necessary to share. Making these fields optional reduces friction when adding contacts and protects personal privacy.
+
+8. **Introduce `untag` ommand:** While the `tag` command exists, the opposite does not. We plan to add it to allow users to remove tags efficiently.
