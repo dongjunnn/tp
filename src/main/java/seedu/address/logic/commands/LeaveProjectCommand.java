@@ -106,7 +106,7 @@ public class LeaveProjectCommand extends Command {
                 .map(i -> personList.get(i.getZeroBased()).getName().toString())
                 .collect(Collectors.joining(", "));
 
-        logger.info("Successfully executed JoinProjectCommand for project: " + name);
+        logger.info("Successfully executed LeaveProjectCommand for project: " + name);
 
         return new CommandResult(String.format(MESSAGE_LEAVE_SUCCESS
                 + "\n%2$s", project.getName(), removedNames));
