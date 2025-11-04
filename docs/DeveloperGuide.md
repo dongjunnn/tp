@@ -417,9 +417,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  IndiDex shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  IndiDex deletes the person
 
     Use case ends.
 
@@ -431,18 +431,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. IndiDex shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 
 **Use Case: Add a tag to a person**
 
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  IndiDex shows a list of persons
 3.  User requests to add a specific person's tags from the list of persons
-4.  AddressBook adds tags to the person
+4.  IndiDex adds tags to the person
 
     Use case ends.
 
@@ -454,32 +454,35 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. IndiDex shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends.
 * 3b. The given tag is invalid.
-    * 3b1. AddressBook shows an error message.
-      Use case resumes at step 2.
+    * 3b1. IndiDex shows an error message.
+      
+      Use case ends.
 
 **Use Case: Add a person**
 
 **MSS**
 
 1.  User requests to add a new person with their details.
-2.  AddressBook adds the person with their details.
+2.  IndiDex adds the person with their details.
 
     Use case ends.
 
 **Extensions**
 
 * 1a. The person's details are invalid.
-    * 1a1. AddressBook shows an error message.
-      Use case ends.
+    * 1a1. IndiDex shows an error message.
+      
+        Use case ends.
 
 * 1b. The person has a duplicate name with another contact.
 
-    * 1a1. AddressBook shows a warning message edits the newest person's name with a number behind.
-      Use case resumes at step 2.
+    * 1b1. IndiDex shows a error message.
+      
+       Use case ends.
 
 
 ### Non-Functional Requirements
@@ -488,7 +491,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  Should be able to respond to user input within 1 second.
-5.  A user should be able to make use of every feature in the AddressBook within the CLI.
+5.  A user should be able to make use of every feature in the IndiDex within the CLI.
 6.  IndiDex should maintain data persistence so that user data remains consistent and recoverable across restarts.
 7.  IndiDex should provide clear feedback messages for all invalid commands or inputs, without crashing.
 8.  Input commands' results and help messages should follow structurally consistent text formatting across all commands.
