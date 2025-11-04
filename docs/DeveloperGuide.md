@@ -539,8 +539,8 @@ clear
 add n/Alex p/87438807 e/a@gmail.com a/Blk 30 pr/LOW t/client
 add n/Bernice p/9928 e/bernice@c.com a/Lorong 3 pr/MEDIUM dc/bernice t/collab
 add n/Charlotte p/93210283 e/char@example.com a/Marymount pr/HIGH ig/@charlotte
-add n/David p/91031282 e/david@outlk.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
-add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/@irfan
+add n/David p/91031282 e/david@outlk.com a/Ubi pr/LOW li/linkedin.com/in/davidli
+add n/Irfan p/92492021 e/irfan@gmail.com a/Bedok 2 pr/MEDIUM yt/youtube.com/@irfan
 list
 ```
 **Expected:** 5 contacts appear in order 1…5.
@@ -833,8 +833,8 @@ clear
 add n/Alex p/87438807 e/alex@gmail.com a/Geylang 29 pr/LOW t/client
 add n/Bernice p/99272758 e/b@creator.com a/Lorong pr/MEDIUM dc/bernice t/collab
 add n/Charlotte p/93210283 e/ch@example.com a/Marymount pr/HIGH ig/@charlotte
-add n/David p/91031282 e/d@outlok.com a/Clementi Ave pr/LOW li/linkedin.com/in/davidli
-add n/Irfan p/92492021 e/irfan@gmail.com a/Tampines 2 pr/MEDIUM yt/youtube.com/@irfan
+add n/David p/91031282 e/david@outlk.com a/Ubi pr/LOW li/linkedin.com/in/davidli
+add n/Irfan p/92492021 e/irfan@gmail.com a/Bedok 2 pr/MEDIUM yt/youtube.com/@irfan
 tag 1 3 t/urgent
 find @gmail.com
 sort pr/desc
