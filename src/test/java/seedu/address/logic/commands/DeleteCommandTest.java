@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -9,6 +10,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -121,4 +124,62 @@ public class DeleteCommandTest {
 
         assertTrue(model.getFilteredPersonList().isEmpty());
     }
+
+    @Test
+    public void execute_emptyIndexList_throwsCommandException() {
+        DeleteCommand deleteCommand = new DeleteCommand(Collections.emptyList());
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_multipleIndexes_dedupSuccess() {
+        // Grab persons 1 and 3 from the unfiltered list
+        Person p1 = model.getFilteredPersonList().get(Index.fromOneBased(1).getZeroBased());
+        Person p3 = model.getFilteredPersonList().get(Index.fromOneBased(3).getZeroBased());
+
+        // Provide out-of-order + duplicate indexes to exercise normalization path
+        DeleteCommand deleteCommand = new DeleteCommand(Arrays.asList(
+                Index.fromOneBased(3), Index.fromOneBased(1), Index.fromOneBased(3), Index.fromOneBased(1)));
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(p1) + ",\n" + Messages.format(p3));
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        // Delete in DESC order (to mirror command’s internal behavior)
+        expectedModel.deletePerson(p3);
+        expectedModel.deletePerson(p1);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_mixedValidAndInvalidIndexes() {
+        // valid = 1, invalid = (size + 1)
+        Index valid = Index.fromOneBased(1);
+        Index invalid = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        DeleteCommand deleteCommand = new DeleteCommand(Arrays.asList(valid, invalid));
+
+        // Should validate all indexes before any deletion — so it fails and model remains unchanged
+        Model expectedUnchanged = new ModelManager(model.getAddressBook(), new UserPrefs());
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        // The helper already checks state, but keep an explicit sanity check:
+        assertEquals(expectedUnchanged.getAddressBook(), model.getAddressBook());
+        assertEquals(expectedUnchanged.getFilteredPersonList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void toString_multipleIndexes_containsAll() {
+        Index i1 = Index.fromOneBased(1);
+        Index i3 = Index.fromOneBased(3);
+        DeleteCommand cmd = new DeleteCommand(Arrays.asList(i3, i1, i3)); // will normalize
+
+        String s = cmd.toString();
+        // Should mention the field name and the zero-based forms of 0 and 2
+        assertTrue(s.contains("targetIndexes"));
+        assertTrue(s.contains(String.valueOf(i1.getZeroBased()))); // 0
+        assertTrue(s.contains(String.valueOf(i3.getZeroBased()))); // 2
+    }
+
 }

@@ -221,4 +221,85 @@ public class DeleteProjectCommandTest {
             projects.remove(project);
         }
     }
+
+    @Test
+    public void constructor_nullName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new DeleteProjectCommand(null));
+    }
+
+    @Test
+    public void execute_caseInsensitiveMatch_deletesAndReturnsMessage() throws Exception {
+        Project p1 = new Project(
+                "IndiDex Website Revamp",
+                Priority.HIGH,
+                LocalDate.of(2025, 12, 31),
+                java.util.Set.of()
+        );
+        Project p2 = new Project(
+                "Other Project",
+                Priority.LOW,
+                LocalDate.of(2026, 1, 1),
+                java.util.Set.of()
+        );
+        ObservableList<Project> list = FXCollections.observableArrayList(List.of(p1, p2));
+        ModelStubWithProjects model = new ModelStubWithProjects(list);
+
+        // lowercased query should still find and delete the project
+        DeleteProjectCommand cmd = new DeleteProjectCommand("indidex website revamp");
+        CommandResult result = cmd.execute(model);
+
+        String expectedMsg = String.format(
+                DeleteProjectCommand.MESSAGE_DELETE_PROJECT_SUCCESS, Messages.format(p1)
+        );
+        assertEquals(expectedMsg, result.getFeedbackToUser());
+        assertEquals(1, model.deleted.size());
+        assertEquals(p1, model.deleted.get(0));
+    }
+
+    @Test
+    public void execute_trimmedNameMatch_deletesAndReturnsMessage() throws Exception {
+        Project p = new Project(
+                "Other Project",
+                Priority.LOW,
+                LocalDate.of(2026, 1, 1),
+                java.util.Set.of()
+        );
+        ObservableList<Project> list = FXCollections.observableArrayList(List.of(p));
+        ModelStubWithProjects model = new ModelStubWithProjects(list);
+
+        // leading/trailing spaces should be trimmed by constructor
+        DeleteProjectCommand cmd = new DeleteProjectCommand("  Other Project   ");
+        CommandResult result = cmd.execute(model);
+
+        String expectedMsg = String.format(
+                DeleteProjectCommand.MESSAGE_DELETE_PROJECT_SUCCESS, Messages.format(p)
+        );
+        assertEquals(expectedMsg, result.getFeedbackToUser());
+        assertEquals(1, model.deleted.size());
+        assertEquals(p, model.deleted.get(0));
+    }
+
+    @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        DeleteProjectCommand cmd = new DeleteProjectCommand("Anything");
+        assertThrows(NullPointerException.class, () -> cmd.execute(null));
+    }
+
+    @Test
+    public void equals_caseInsensitiveAndTrimmed() {
+        DeleteProjectCommand a = new DeleteProjectCommand("Alpha");
+        DeleteProjectCommand aUpper = new DeleteProjectCommand("ALPHA");
+        DeleteProjectCommand aSpacedLower = new DeleteProjectCommand("  alpha   ");
+        DeleteProjectCommand b = new DeleteProjectCommand("Beta");
+
+        // equals is case-insensitive and constructor trims
+        assertTrue(a.equals(aUpper));
+        assertTrue(a.equals(aSpacedLower));
+        assertFalse(a.equals(b));
+
+        // hashCode uses toLowerCase, so case-insensitive equality implies same hash
+        assertEquals(a.hashCode(), aUpper.hashCode());
+        assertEquals(a.hashCode(), aSpacedLower.hashCode());
+    }
+
 }
